@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Console
 {
-    class Program
+    static class Program
     {
         static void Main(string[] args)
         {
+            throw (new NotImplementedException());
         }
     }
 }

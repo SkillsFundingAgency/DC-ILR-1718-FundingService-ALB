@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F079A802-61F4-4E00-81D7-91DE75B19767}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>ESFA.DC.ILR.FundingService.ALB.Console</RootNamespace>
-    <AssemblyName>ESFA.DC.ILR.FundingService.ALB.Console</AssemblyName>
+    <ProjectGuid>{91E3D0C6-1258-48E3-B1BC-695C46DD302D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ESFA.DC.ILR.FundingService.ALB.ExternalData</RootNamespace>
+    <AssemblyName>ESFA.DC.ILR.FundingService.ALB.ExternalData</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -43,11 +41,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Interface\IReferenceDataCache.cs" />
+    <Compile Include="LARS\LARSReferenceDataService.cs" />
+    <Compile Include="LARS\Model\LARSFunding.cs" />
+    <Compile Include="LARS\Model\LARSLearningDelivery.cs" />
+    <Compile Include="PostcodeFactors\Interface\IPostcodeFactorsReferenceDataService.cs" />
+    <Compile Include="PostcodeFactors\Model\SfaAreaCost.cs" />
+    <Compile Include="PostcodeFactors\PostcodeFactorsReferenceDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
