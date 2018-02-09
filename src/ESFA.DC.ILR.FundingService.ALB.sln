@@ -9,6 +9,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests", "ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests\ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.csproj", "{C7F6629D-BE03-4866-A22F-479264714C5C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{31B7304E-A9D4-4DCB-BD53-8BEFA22D9C31}"
+	ProjectSection(SolutionItems) = preProject
+		SonarQube\DC-ILR-1718-FundingService-ALBCSharp.ruleset = SonarQube\DC-ILR-1718-FundingService-ALBCSharp.ruleset
+		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
