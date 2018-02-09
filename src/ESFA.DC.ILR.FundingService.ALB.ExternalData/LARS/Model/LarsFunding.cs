@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model
 {
-    public class LARSFunding
+    public class LARSFunding 
     {
         public string LearnAimRef { get; set; }
         public string FundingCategory { get; set; }

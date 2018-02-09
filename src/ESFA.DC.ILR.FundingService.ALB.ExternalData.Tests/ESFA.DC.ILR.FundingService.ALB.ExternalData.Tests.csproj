@@ -72,15 +72,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\GlobalSuppressions.cs" />
+    <Compile Include="LARS\LARSReferenceDataServiceTests.cs" />
     <Compile Include="PostcodeFactors\PostcodeFactorsReferenceDataServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="LARS\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.8.1.4648\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.8.1.4648\analyzers\SonarAnalyzer.CSharp.dll" />

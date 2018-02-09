@@ -41,11 +41,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Config\GlobalSuppressions.cs" />
     <Compile Include="Interface\IReferenceDataCache.cs" />
+    <Compile Include="LARS\Interface\ILARSReferenceDataService.cs" />
     <Compile Include="LARS\LARSReferenceDataService.cs" />
     <Compile Include="LARS\Model\LARSFunding.cs" />
     <Compile Include="LARS\Model\LARSLearningDelivery.cs" />
+    <Compile Include="LARS\Model\LARSVersion.cs" />
     <Compile Include="PostcodeFactors\Interface\IPostcodeFactorsReferenceDataService.cs" />
+    <Compile Include="PostcodeFactors\Model\PostcodeVersion.cs" />
     <Compile Include="PostcodeFactors\Model\SfaAreaCost.cs" />
     <Compile Include="PostcodeFactors\PostcodeFactorsReferenceDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,5 +62,6 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.8.1.4648\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.8.1.4648\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,13 +7,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface
     public interface IReferenceDataCache
     {
         Dictionary<string, List<LARSFunding>> LarsFunding { get; }
-        Dictionary<string, LARSLearningDelivery> LarsLearningDeliveries { get; }
+        Dictionary<string, LARSLearningDelivery> LarsLearningDelivery { get; }
 
-        string LarsVersion { get; set; }
+        string LarsVersion { get; }
 
         Dictionary<string, List<SfaAreaCost>> SfaAreaCost { get; }
 
-        string PostcodeFactorsVersion { get; set; }
+        string PostcodeFactorsVersion { get; }
 
         void Populate(IEnumerable<string> learnAimRefs, IEnumerable<string> postcodes);
     }

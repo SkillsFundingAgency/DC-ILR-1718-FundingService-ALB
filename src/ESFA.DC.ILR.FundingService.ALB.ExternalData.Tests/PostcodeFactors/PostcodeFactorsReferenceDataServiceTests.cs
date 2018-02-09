@@ -1,5 +1,6 @@
 ﻿using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
 using FluentAssertions;
 using Moq;
@@ -23,10 +24,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
             referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeFactorsVersion).Returns("Version_001");
 
             //ACT
-            var postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
+            IPostcodeFactorsReferenceDataService postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
 
             //ASSERT
-            postcodeFactorsReferenceDataService.PostcodeFactorsVersion().Should().NotBeNull();
+            postcodeFactorsReferenceDataService.PostcodeFactorsVersion.Should().NotBeNull();
         }
 
         /// <summary>
@@ -40,10 +41,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
             referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeFactorsVersion).Returns("Version_001");
 
             //ACT
-            var postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
+            IPostcodeFactorsReferenceDataService postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
 
             //ASSERT
-            postcodeFactorsReferenceDataService.PostcodeFactorsVersion().Should().BeEquivalentTo("Version_001");
+            postcodeFactorsReferenceDataService.PostcodeFactorsVersion.Should().BeEquivalentTo("Version_001");
         }
 
         /// <summary>
@@ -57,10 +58,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
             referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeFactorsVersion).Returns("Version_002");
 
             //ACT
-            var postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
+            IPostcodeFactorsReferenceDataService postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
 
             //ASSERT
-            postcodeFactorsReferenceDataService.PostcodeFactorsVersion().Should().NotBeSameAs("Version_001");
+            postcodeFactorsReferenceDataService.PostcodeFactorsVersion.Should().NotBeSameAs("Version_001");
         }
 
         /// <summary>
@@ -71,95 +72,148 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
         {
             //ARRANGE
             var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            List<SfaAreaCost> sfaAreaCost = new List<SfaAreaCost>();
-            sfaAreaCost.Add(ControlSfaAreaCost());
-
-            referenceDataCacheMock.SetupGet(rdc => rdc.SfaAreaCost).Returns(new Dictionary<string, List<SfaAreaCost>>()
+            List<SfaAreaCost> sfaAreaCost = new List<SfaAreaCost>()
             {
-                { controlTestPostcode, sfaAreaCost }
-            });
-
-            //ACT
-            var postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
-
-            //ASSERT
-            postcodeFactorsReferenceDataService.SfaAreaCost().Should().NotBeNull();
-        }
-
-        /// <summary>
-        /// Return list of PostcodeFactors SFA Area Cost Entries and check value
-        /// </summary>
-        [Fact]
-        public void SFA_AreaCost_Correct()
-        {
-            //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            List<SfaAreaCost> sfaAreaCost = new List<SfaAreaCost>();
-            sfaAreaCost.Add(ControlSfaAreaCost());
-
-            referenceDataCacheMock.SetupGet(rdc => rdc.SfaAreaCost).Returns(new Dictionary<string, List<SfaAreaCost>>()
-            {
-                { controlTestPostcode, sfaAreaCost }
-            });
-
-            //ACT
-            var postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
-            var dictionary = postcodeFactorsReferenceDataService.SfaAreaCost().ToList();
-
-            //ASSERT
-            dictionary[0].Key.Should().BeEquivalentTo(controlTestPostcode);
-            dictionary[0].Value.Should().BeEquivalentTo(sfaAreaCost);           
-      
-        }
-
-        /// <summary>
-        /// Return list of PostcodeFactors SFA Area Cost Entries and check value
-        /// </summary>
-        [Fact]
-        public void SFA_AreaCost_NotCorrect()
-        {
-            //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            List<SfaAreaCost> sfaAreaCost = new List<SfaAreaCost>();
-            var testSfaAreaCost = new SfaAreaCost()
-            {
-                Postcode = "NW1 1AB",
-                AreaCostFactor = 1.2m,
-                EffectiveFrom = DateTime.Parse("2000-01-01"),
-                EffectiveTo = null
+                controlTestSfaAreaCost
             };
-            sfaAreaCost.Add(testSfaAreaCost);
 
             referenceDataCacheMock.SetupGet(rdc => rdc.SfaAreaCost).Returns(new Dictionary<string, List<SfaAreaCost>>()
             {
-                { "NW1 1AB", sfaAreaCost }
+                { controlTestPostcode, sfaAreaCost }
             });
 
             //ACT
-            var postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
-            var dictionary = postcodeFactorsReferenceDataService.SfaAreaCost().ToList();
+            IPostcodeFactorsReferenceDataService postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
+            var actual = postcodeFactorsReferenceDataService.SfaAreaCost.Where(l => l.Key == controlTestPostcode).Select(v => v.Value).DefaultIfEmpty(null).First();
 
             //ASSERT
-            var controlSfaAreaCost = ControlSfaAreaCost();
+            actual.Should().NotBeNull();
+        }
 
-            dictionary[0].Key.Should().NotBeSameAs(controlTestPostcode);
-            dictionary[0].Value.First().Should().NotBeSameAs(controlSfaAreaCost);
+        /// <summary>
+        /// Return list of PostcodeFactors SFA Area Cost Entries
+        /// </summary>
+        [Fact]
+        public void SFA_AreaCost_NotExists()
+        {
+            //ARRANGE
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            List<SfaAreaCost> sfaAreaCost = new List<SfaAreaCost>()
+            {
+                controlTestSfaAreaCost
+            };
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.SfaAreaCost).Returns(new Dictionary<string, List<SfaAreaCost>>()
+            {
+                { controlTestPostcode, sfaAreaCost }
+            });
+
+            //ACT
+            IPostcodeFactorsReferenceDataService postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
+            var actual = postcodeFactorsReferenceDataService.SfaAreaCost.Where(l => l.Key == "NW1 1AB").Select(v => v.Value).DefaultIfEmpty(null).First();
+      
+            //ASSERT
+            actual.Should().BeNull();
+        }
+
+        /// <summary>
+        /// Return list of PostcodeFactors SFA Area Cost Entries and check value
+        /// </summary>
+        [Fact]
+        public void SFA_AreaCost_Correct_Single()
+        {
+            //ARRANGE
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            List<SfaAreaCost> sfaAreaCost = new List<SfaAreaCost>()
+            {
+                controlTestSfaAreaCost
+            };
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.SfaAreaCost).Returns(new Dictionary<string, List<SfaAreaCost>>()
+            {
+                { controlTestPostcode, sfaAreaCost }
+            });
+
+            //ACT
+            IPostcodeFactorsReferenceDataService postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
+            var actual = postcodeFactorsReferenceDataService.SfaAreaCost.Where(l => l.Key == controlTestPostcode).Select(v => v.Value).DefaultIfEmpty(null).First();
+
+            //ASSERT
+            actual.Should().BeEquivalentTo(sfaAreaCost);
+        }
+
+        /// <summary>
+        /// Return list of PostcodeFactors SFA Area Cost Entries and check value
+        /// </summary>
+        [Fact]
+        public void SFA_AreaCost_Correct_Multiple()
+        {
+            //ARRANGE
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            List<SfaAreaCost> sfaAreaCost = new List<SfaAreaCost>()
+            {
+                controlTestSfaAreaCost,
+                controlTestSfaAreaCost
+            };
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.SfaAreaCost).Returns(new Dictionary<string, List<SfaAreaCost>>()
+            {
+                { controlTestPostcode, sfaAreaCost }
+            });
+
+            //ACT
+            IPostcodeFactorsReferenceDataService postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
+            var actual = postcodeFactorsReferenceDataService.SfaAreaCost.Where(l => l.Key == controlTestPostcode).Select(v => v.Value).DefaultIfEmpty(null).First();
+
+            //ASSERT
+            actual.Should().BeEquivalentTo(sfaAreaCost);
+        }
+
+        /// <summary>
+        /// Return list of PostcodeFactors SFA Area Cost Entries and check value
+        /// </summary>
+        [Fact]
+        public void SFA_AreaCost_NotCorrect_Multiple()
+        {
+            //ARRANGE
+            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
+            List<SfaAreaCost> sfaAreaCost = new List<SfaAreaCost>()
+            {
+                controlTestSfaAreaCost,
+                controlTestSfaAreaCost
+            };
+
+            referenceDataCacheMock.SetupGet(rdc => rdc.SfaAreaCost).Returns(new Dictionary<string, List<SfaAreaCost>>()
+            {
+                { controlTestPostcode, sfaAreaCost }
+            });
+
+            //ACT
+            IPostcodeFactorsReferenceDataService postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
+            var actual = postcodeFactorsReferenceDataService.SfaAreaCost.Where(l => l.Key == controlTestPostcode).Select(v => v.Value).DefaultIfEmpty(null).First();
+
+            //ASSERT
+            var expectedList = new List<SfaAreaCost>
+            {
+                controlTestSfaAreaCost
+            };
+
+            actual.Should().NotBeSameAs(expectedList);
         }
 
         #region Test Helpers
 
         readonly public string controlTestPostcode = "SW3 5DN";
 
-        public SfaAreaCost ControlSfaAreaCost()
-        {
-            return new SfaAreaCost()
+        readonly SfaAreaCost controlTestSfaAreaCost =
+            new SfaAreaCost()
             {
                 Postcode = "SW3 5DN",
                 AreaCostFactor = 1.2m,
                 EffectiveFrom = DateTime.Parse("2000-01-01"),
                 EffectiveTo = null
             };
-        }
+        
 
         #endregion
     }
