@@ -16,58 +16,58 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         /// <summary>
         /// Return LARS Version
         /// </summary>
-        [Fact]
-        public void LARSVersion_Exists()
+        [Fact(DisplayName = "LARSVersion - Does exist"), Trait("LARS", "Unit")]   
+        public void LARSCurrentVersion_Exists()
         {
             //ARRANGE
             var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.LarsVersion).Returns("Version_005");
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSCurrentVersion).Returns("Version_005");
 
             //ACT
             ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
 
             //ASSERT
-            larsReferenceDataService.LARSVersion.Should().NotBeNull();
+            larsReferenceDataService.LARSCurrentVersion.Should().NotBeNull();
         }
 
         /// <summary>
         /// Return LARS Version and check value
         /// </summary>
-        [Fact]
-        public void LARSVersion_Correct()
+        [Fact(DisplayName = "LARSVersion - Check values are correct"), Trait("LARS", "Unit")]
+        public void LARSCurrentVersion_Correct()
         {
             //ARRANGE
             var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.LarsVersion).Returns("Version_005");
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSCurrentVersion).Returns("Version_005");
 
             //ACT
             ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
             
             //ASSERT
-            larsReferenceDataService.LARSVersion.Should().BeEquivalentTo("Version_005");
+            larsReferenceDataService.LARSCurrentVersion.Should().BeEquivalentTo("Version_005");
         }
 
         /// <summary>
         /// Return LARS Version and check value
         /// </summary>
-        [Fact]
-        public void LARSVersion_Incorrect()
+        [Fact(DisplayName = "LARSVersion - Check values are not correct"), Trait("LARS", "Unit")]
+        public void LARSCurrentVersion_NotCorrect()
         {
             //ARRANGE
             var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.LarsVersion).Returns("Version_006");
+            referenceDataCacheMock.SetupGet(rdc => rdc.LARSCurrentVersion).Returns("Version_006");
 
             //ACT
             ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
            
             //ASSERT
-            larsReferenceDataService.LARSVersion.Should().NotBeSameAs("Version_005");
+            larsReferenceDataService.LARSCurrentVersion.Should().NotBeSameAs("Version_005");
         }
 
         /// <summary>
         /// Return LARS LearningDelivery
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "LARSLearningDelivery - Does exist"), Trait("LARS", "Unit")]
         public void LARSLearningDelivery_Exists()
         {
             //ARRANGE
@@ -88,7 +88,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         /// <summary>
         /// Return LARS LearningDelivery
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "LARSLearningDelivery - Does not exist"), Trait("LARS", "Unit")]
         public void LARSLearningDelivery_NotExist()
         {
             //ARRANGE
@@ -109,7 +109,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         /// <summary>
         /// Return LARS LearningDelivery and check value
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "LARSLearningDelivery - Check values are correct"), Trait("LARS", "Unit")]
         public void LARSLearningDelivery_Correct()
         {
             //ARRANGE
@@ -131,7 +131,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         /// <summary>
         /// Return LARS Funding
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "LARSFunding - Does exist"), Trait("LARS", "Unit")]
         public void LARSFunding_Exists()
         {
             //ARRANGE
@@ -157,7 +157,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         /// <summary>
         /// Return LARS Funding
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "LARSFunding - Does not exist"), Trait("LARS", "Unit")]
         public void LARSFunding_NotExists()
         {
             //ARRANGE
@@ -183,7 +183,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         /// <summary>
         /// Return LARS Funding and check values
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "LARSFunding - Check values are correct (Single)"), Trait("LARS", "Unit")]
         public void LARSFunding_Correct_Single()
         {
             //ARRANGE
@@ -209,7 +209,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         /// <summary>
         /// Return LARS Funding and check values
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "LARSFunding - Check values are correct (Multiple)"), Trait("LARS", "Unit")]
         public void LARSFunding_Correct_Multiple()
         {
             //ARRANGE
@@ -236,7 +236,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         /// <summary>
         /// Return LARS Funding and check values
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "LARSFunding - Check values are not correct (Multiple)"), Trait("LARS", "Unit")]
         public void LARSFunding_NotCorrect_Multiple()
         {
             //ARRANGE

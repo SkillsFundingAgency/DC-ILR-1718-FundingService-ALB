@@ -16,58 +16,58 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
         /// <summary>
         /// Return PostcodeFactors Version
         /// </summary>
-        [Fact]
-        public void PostcodeFactorsVersion_Exists()
+        [Fact(DisplayName ="PostcodeFactorsVersion - Does exist"),Trait("PostcodeFactors", "Unit")]
+        public void PostcodeFactorsCurrentVersion_Exists()
         {
             //ARRANGE
             var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeFactorsVersion).Returns("Version_001");
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeFactorsCurrentVersion).Returns("Version_001");
 
             //ACT
             IPostcodeFactorsReferenceDataService postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
 
             //ASSERT
-            postcodeFactorsReferenceDataService.PostcodeFactorsVersion.Should().NotBeNull();
+            postcodeFactorsReferenceDataService.PostcodeFactorsCurrentVersion.Should().NotBeNull();
         }
 
         /// <summary>
         /// Return PostcodeFactors Version and check value
         /// </summary>
-        [Fact]
-        public void PostcodeFactorsVersion_Correct()
+        [Fact(DisplayName = "PostcodeFactorsVersion - Check values are correct"), Trait("PostcodeFactors", "Unit")]
+        public void PostcodeFactorsCurrentVersion_Correct()
         {
             //ARRANGE
             var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeFactorsVersion).Returns("Version_001");
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeFactorsCurrentVersion).Returns("Version_001");
 
             //ACT
             IPostcodeFactorsReferenceDataService postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
 
             //ASSERT
-            postcodeFactorsReferenceDataService.PostcodeFactorsVersion.Should().BeEquivalentTo("Version_001");
+            postcodeFactorsReferenceDataService.PostcodeFactorsCurrentVersion.Should().BeEquivalentTo("Version_001");
         }
 
         /// <summary>
         /// Return PostcodeFactors Version and check value
         /// </summary>
-        [Fact]
-        public void PostcodeFactorsVersion_NotCorrect()
+        [Fact(DisplayName = "PostcodeFactorsVersion - Check values are not correct"), Trait("PostcodeFactors", "Unit")]
+        public void PostcodeFactorsCurrentVersion_NotCorrect()
         {
             //ARRANGE
             var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeFactorsVersion).Returns("Version_002");
+            referenceDataCacheMock.SetupGet(rdc => rdc.PostcodeFactorsCurrentVersion).Returns("Version_002");
 
             //ACT
             IPostcodeFactorsReferenceDataService postcodeFactorsReferenceDataService = new PostcodeFactorsReferenceDataService(referenceDataCacheMock.Object);
 
             //ASSERT
-            postcodeFactorsReferenceDataService.PostcodeFactorsVersion.Should().NotBeSameAs("Version_001");
+            postcodeFactorsReferenceDataService.PostcodeFactorsCurrentVersion.Should().NotBeSameAs("Version_001");
         }
 
         /// <summary>
         /// Return list of PostcodeFactors SFA Area Cost Entries
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "SFA AreaCost - Does exist"), Trait("PostcodeFactors", "Unit")]
         public void SFA_AreaCost_Exists()
         {
             //ARRANGE
@@ -93,7 +93,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
         /// <summary>
         /// Return list of PostcodeFactors SFA Area Cost Entries
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "SFA AreaCost - Does not exist"), Trait("PostcodeFactors", "Unit")]
         public void SFA_AreaCost_NotExists()
         {
             //ARRANGE
@@ -119,7 +119,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
         /// <summary>
         /// Return list of PostcodeFactors SFA Area Cost Entries and check value
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "SFA AreaCost - Check values are correct (Single)"), Trait("PostcodeFactors", "Unit")]
         public void SFA_AreaCost_Correct_Single()
         {
             //ARRANGE
@@ -145,7 +145,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
         /// <summary>
         /// Return list of PostcodeFactors SFA Area Cost Entries and check value
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "SFA AreaCost - Check values are correct (Multiple)"), Trait("PostcodeFactors", "Unit")]
         public void SFA_AreaCost_Correct_Multiple()
         {
             //ARRANGE
@@ -172,7 +172,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
         /// <summary>
         /// Return list of PostcodeFactors SFA Area Cost Entries and check value
         /// </summary>
-        [Fact]
+        [Fact(DisplayName = "SFA AreaCost - Check values are not correct (Single)"), Trait("PostcodeFactors", "Unit")]
         public void SFA_AreaCost_NotCorrect_Multiple()
         {
             //ARRANGE

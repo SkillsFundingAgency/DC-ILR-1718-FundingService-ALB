@@ -18,7 +18,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
 
         public Dictionary<string, LARSLearningDelivery> LarsLearningDelivery => _referenceDataCache.LarsLearningDelivery;
 
-        string ILARSReferenceDataService.LARSVersion =>  _referenceDataCache.LarsVersion;
+        string ILARSReferenceDataService.LARSCurrentVersion =>  _referenceDataCache.LARSCurrentVersion;
 
     }
 }

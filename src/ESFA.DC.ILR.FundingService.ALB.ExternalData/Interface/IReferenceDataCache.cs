@@ -9,11 +9,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface
         Dictionary<string, List<LARSFunding>> LarsFunding { get; }
         Dictionary<string, LARSLearningDelivery> LarsLearningDelivery { get; }
 
-        string LarsVersion { get; }
+        string LARSCurrentVersion { get; }
 
         Dictionary<string, List<SfaAreaCost>> SfaAreaCost { get; }
 
-        string PostcodeFactorsVersion { get; }
+        string PostcodeFactorsCurrentVersion { get; }
 
         void Populate(IEnumerable<string> learnAimRefs, IEnumerable<string> postcodes);
     }
