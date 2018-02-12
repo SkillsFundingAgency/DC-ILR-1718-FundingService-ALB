@@ -20,14 +20,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         public void LARSCurrentVersion_Exists()
         {
             //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.LARSCurrentVersion).Returns("Version_005");
+            var larsCurrentVersionExistsTestVal = controlTestLARSCurrentVersion;
 
             //ACT
-            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
+            var larsCurrentVersionExists = LARSCurrentVersionTestRun(larsCurrentVersionExistsTestVal);
 
             //ASSERT
-            larsReferenceDataService.LARSCurrentVersion.Should().NotBeNull();
+            larsCurrentVersionExists.Should().NotBeNull();
         }
 
         /// <summary>
@@ -37,14 +36,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         public void LARSCurrentVersion_Correct()
         {
             //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.LARSCurrentVersion).Returns("Version_005");
+            var larsCurrentVersionCorrectTestVal = controlTestLARSCurrentVersion;
 
             //ACT
-            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
-            
+            var larsCurrentVersionCorrect = LARSCurrentVersionTestRun(larsCurrentVersionCorrectTestVal);
+
             //ASSERT
-            larsReferenceDataService.LARSCurrentVersion.Should().BeEquivalentTo("Version_005");
+            larsCurrentVersionCorrect.Should().BeEquivalentTo(controlTestLARSCurrentVersion);
         }
 
         /// <summary>
@@ -54,14 +52,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         public void LARSCurrentVersion_NotCorrect()
         {
             //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.LARSCurrentVersion).Returns("Version_006");
+            var larsCurrentVersionNotCorrectTestVal = "Version_002";
 
             //ACT
-            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
-           
+            var larsCurrentVersionNotCorrect = LARSCurrentVersionTestRun(larsCurrentVersionNotCorrectTestVal);
+
             //ASSERT
-            larsReferenceDataService.LARSCurrentVersion.Should().NotBeSameAs("Version_005");
+            larsCurrentVersionNotCorrect.Should().NotBeSameAs(controlTestLARSCurrentVersion);
         }
 
         /// <summary>
@@ -71,18 +68,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         public void LARSLearningDelivery_Exists()
         {
             //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.LarsLearningDelivery).Returns(new Dictionary<string, LARSLearningDelivery>()
-            {
-                { controlTestLearnAimRef, controlTestLARSLearningDelivery }
-            });
+            var larsLearningDeliveryExistsAimRef = controlTestLearnAimRef;
 
             //ACT
-            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
-            var actual = larsReferenceDataService.LarsLearningDelivery.Where(l => l.Key == controlTestLearnAimRef).Select(v => v.Value).DefaultIfEmpty(null).First();
+            var larsLearningDeliveryCorrect = LARSLearningDeliveryTestRun(larsLearningDeliveryExistsAimRef);
 
             //ASSERT
-            actual.Should().NotBeNull();
+            larsLearningDeliveryCorrect.Should().NotBeNull();
         }
     
         /// <summary>
@@ -92,18 +84,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         public void LARSLearningDelivery_NotExist()
         {
             //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.LarsLearningDelivery).Returns(new Dictionary<string, LARSLearningDelivery>()
-            {
-                { controlTestLearnAimRef, controlTestLARSLearningDelivery }
-            });
+            var larsLearningDeliveryNotExistsAimRef = "456";
 
             //ACT
-            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
-            var actual = larsReferenceDataService.LarsLearningDelivery.Where(l => l.Key == "456").Select(v => v.Value).DefaultIfEmpty(null).First();
+            var larsLearningDeliveryCorrect = LARSLearningDeliveryTestRun(larsLearningDeliveryNotExistsAimRef);
 
             //ASSERT
-            actual.Should().BeNull();
+            larsLearningDeliveryCorrect.Should().BeNull();
         }
 
         /// <summary>
@@ -113,20 +100,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         public void LARSLearningDelivery_Correct()
         {
             //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            referenceDataCacheMock.SetupGet(rdc => rdc.LarsLearningDelivery).Returns(new Dictionary<string, LARSLearningDelivery>()
-             {
-                { controlTestLearnAimRef, controlTestLARSLearningDelivery }
-            });
+            var larsLearningDeliveryCorrectAimRef = controlTestLearnAimRef;
 
             //ACT
-            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
-            var actual = larsReferenceDataService.LarsLearningDelivery.Where(l => l.Key == controlTestLearnAimRef).Select(v => v.Value).DefaultIfEmpty(null).First();
+            var larsLearningDeliveryCorrect = LARSLearningDeliveryTestRun(larsLearningDeliveryCorrectAimRef);
 
             //ASSERT
-            controlTestLARSLearningDelivery.Should().BeEquivalentTo(actual);
+            larsLearningDeliveryCorrect.Should().BeEquivalentTo(controlTestLARSLearningDelivery);
         }
-
 
         /// <summary>
         /// Return LARS Funding
@@ -135,23 +116,17 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         public void LARSFunding_Exists()
         {
             //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            List<LARSFunding> larsFundingList = new List<LARSFunding>
+            string larsFundingExistsAimRef = controlTestLearnAimRef;
+            List<LARSFunding> larsFundingExistsTestLIst = new List<LARSFunding>
             {
                 controlTestLARSFunding
             };
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.LarsFunding).Returns(new Dictionary<string, List<LARSFunding>>()
-            {
-                { controlTestLearnAimRef, larsFundingList }
-            });
-
             //ACT
-            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
-            var actual = larsReferenceDataService.LarsFunding.Where(l => l.Key == controlTestLearnAimRef).Select(v => v.Value).DefaultIfEmpty(null).First();
+            var larsFundingExists = LARSFundingTestRun(larsFundingExistsAimRef,larsFundingExistsTestLIst);
 
             //ASSERT
-            actual.Should().NotBeNull();
+            larsFundingExists.Should().NotBeNull();
         }
 
         /// <summary>
@@ -161,23 +136,17 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         public void LARSFunding_NotExists()
         {
             //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            List<LARSFunding> larsFundingList = new List<LARSFunding>
+            string larsFundingExistsAimRef = "456";
+            List<LARSFunding> larsFundingExistsTestLIst = new List<LARSFunding>
             {
                 controlTestLARSFunding
             };
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.LarsFunding).Returns(new Dictionary<string, List<LARSFunding>>()
-            {
-                { controlTestLearnAimRef, larsFundingList }
-            });
-
             //ACT
-            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
-            var actual = larsReferenceDataService.LarsFunding.Where(l => l.Key == "456").Select(v => v.Value).DefaultIfEmpty(null).First();
+            var larsFundingNotExists = LARSFundingTestRun(larsFundingExistsAimRef, larsFundingExistsTestLIst);
 
             //ASSERT
-            actual.Should().BeNull();
+            larsFundingNotExists.Should().BeNull();
         }
 
         /// <summary>
@@ -187,23 +156,17 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         public void LARSFunding_Correct_Single()
         {
             //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            List<LARSFunding> larsFundingList = new List<LARSFunding>
+            string larsFundingExistsAimRef = controlTestLearnAimRef;
+            List<LARSFunding> larsFundingExistsTestLIst = new List<LARSFunding>
             {
                 controlTestLARSFunding
             };
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.LarsFunding).Returns(new Dictionary<string, List<LARSFunding>>()
-            {
-                { controlTestLearnAimRef, larsFundingList }
-            });
-
             //ACT
-            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
-            var actual = larsReferenceDataService.LarsFunding.Where(l => l.Key == controlTestLearnAimRef).Select(v => v.Value).DefaultIfEmpty(null).First();
+            var larsFundingCorrectSingle = LARSFundingTestRun(larsFundingExistsAimRef, larsFundingExistsTestLIst);
 
             //ASSERT
-            actual.Should().BeEquivalentTo(controlTestLARSFunding);
+            larsFundingCorrectSingle.Should().BeEquivalentTo(controlTestLARSFunding);
         }
 
         /// <summary>
@@ -213,24 +176,24 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         public void LARSFunding_Correct_Multiple()
         {
             //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            List<LARSFunding> larsFundingList = new List<LARSFunding>
+            string larsFundingExistsAimRef = controlTestLearnAimRef;
+            List<LARSFunding> larsFundingExistsTestLIst = new List<LARSFunding>
             {
                 controlTestLARSFunding,
                 controlTestLARSFunding
             };
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.LarsFunding).Returns(new Dictionary<string, List<LARSFunding>>()
-            {
-                { controlTestLearnAimRef, larsFundingList }
-            });
-
             //ACT
-            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
-            var actual = larsReferenceDataService.LarsFunding.Where(l => l.Key == controlTestLearnAimRef).Select(v => v.Value).DefaultIfEmpty(null).First();
+            var larsFundingCorrectMultiple = LARSFundingTestRun(larsFundingExistsAimRef, larsFundingExistsTestLIst);
 
             //ASSERT
-            actual.Should().BeEquivalentTo(larsFundingList);
+            var expectedListCorrect = new List<LARSFunding>
+            {
+                controlTestLARSFunding,
+                controlTestLARSFunding
+            };
+
+            larsFundingCorrectMultiple.Should().BeEquivalentTo(expectedListCorrect);
         }
 
         /// <summary>
@@ -240,34 +203,74 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
         public void LARSFunding_NotCorrect_Multiple()
         {
             //ARRANGE
-            var referenceDataCacheMock = new Mock<IReferenceDataCache>();
-            List<LARSFunding> larsFundingList = new List<LARSFunding>
+            string larsFundingExistsAimRef = controlTestLearnAimRef;
+            List<LARSFunding> larsFundingExistsTestLIst = new List<LARSFunding>
+            {
+                controlTestLARSFunding
+            };
+
+            //ACT
+            var larsFundingNotCorrectMultiple = LARSFundingTestRun(larsFundingExistsAimRef, larsFundingExistsTestLIst);
+
+            //ASSERT
+            var expectedListNotCorrect = new List<LARSFunding>
             {
                 controlTestLARSFunding,
                 controlTestLARSFunding
             };
 
-            referenceDataCacheMock.SetupGet(rdc => rdc.LarsFunding).Returns(new Dictionary<string, List<LARSFunding>>()
+            larsFundingNotCorrectMultiple.Should().NotBeSameAs(expectedListNotCorrect);
+        }
+
+        #region Test Helpers
+
+        public string LARSCurrentVersionTestRun(string larsVersion)
+        {
+            var larsCurrentVersionMock = referenceDataCacheMock;
+            larsCurrentVersionMock.SetupGet(rdc => rdc.LARSCurrentVersion).Returns(larsVersion);
+
+            var mockData = MockTestObject(larsCurrentVersionMock.Object);
+                       
+            return mockData.LARSCurrentVersion;
+        }
+
+        public LARSLearningDelivery LARSLearningDeliveryTestRun(string learnAimRef)
+        {
+            var larsLearningDeliveryMock = referenceDataCacheMock;
+            larsLearningDeliveryMock.SetupGet(rdc => rdc.LarsLearningDelivery).Returns(new Dictionary<string, LARSLearningDelivery>()
+             {
+                { controlTestLearnAimRef, controlTestLARSLearningDelivery }
+            });
+
+            var mockData = MockTestObject(larsLearningDeliveryMock.Object);           
+            var larsLearningDelivery = mockData.LarsLearningDelivery.Where(l => l.Key == learnAimRef).Select(v => v.Value).DefaultIfEmpty(null).First();
+
+            return larsLearningDelivery;
+        }
+
+        public List<LARSFunding> LARSFundingTestRun(string learnAimRef, List<LARSFunding> larsFundingList)
+        {
+            var larsFundingMock = referenceDataCacheMock;
+            larsFundingMock.SetupGet(rdc => rdc.LarsFunding).Returns(new Dictionary<string, List<LARSFunding>>()
             {
                 { controlTestLearnAimRef, larsFundingList }
             });
 
-            //ACT
-            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(referenceDataCacheMock.Object);
-            var actual = larsReferenceDataService.LarsFunding.Where(l => l.Key == controlTestLearnAimRef).Select(v => v.Value).DefaultIfEmpty(null).First();
+            var mockData = MockTestObject(larsFundingMock.Object);
+            var larsFunding = mockData.LarsFunding.Where(l => l.Key == learnAimRef).Select(v => v.Value).DefaultIfEmpty(null).First();
 
-            //ASSERT
-            var expectedList = new List<LARSFunding>
-            {
-                controlTestLARSFunding
-            };
-
-            actual.Should().NotBeSameAs(expectedList);
+            return larsFunding;
         }
 
+        private ILARSReferenceDataService MockTestObject(IReferenceDataCache @object)
+        {
+            ILARSReferenceDataService larsReferenceDataService = new LARSReferenceDataService(@object);
 
-        #region Test Helpers
+            return larsReferenceDataService;
+        }
 
+        readonly Mock<IReferenceDataCache> referenceDataCacheMock = new Mock<IReferenceDataCache>();
+        readonly static string controlTestLARSCurrentVersion = "Version_005";
         readonly static string controlTestLearnAimRef = "123456";
 
         readonly static LARSLearningDelivery controlTestLARSLearningDelivery =
