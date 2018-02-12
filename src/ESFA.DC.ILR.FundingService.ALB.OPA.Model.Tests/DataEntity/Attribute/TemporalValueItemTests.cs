@@ -68,7 +68,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             var temporalValueItemChangePointDate = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
 
             //ASSERT
-            temporalValueItemChangePointDate.ChangePoint.Should().Equals(changePointDefaultDate);
+            temporalValueItemChangePointDate.ChangePoint.Should().BeSameDateAs(changePointDefaultDate);
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             var temporalValueItemValue = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
 
             //ASSERT
-            temporalValueItemValue.Value.Should().Equals(changePointDefaultValue);
+            temporalValueItemValue.Value.Should().BeEquivalentTo(changePointDefaultValue);
         }
 
         /// <summary>
@@ -128,7 +128,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             var temporalValueItemType = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
 
             //ASSERT
-            temporalValueItemType.Type.Should().Equals(changePointDefaultType);
+            temporalValueItemType.Type.Should().BeEquivalentTo(changePointDefaultType);
         }
 
         /// <summary>
