@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="SonarQube - DC-ILR-1718-FundingService-ALB Sonar way" ToolsVersion="15.0">
+  <Include Path="..\sonarqube\dc-ilr-1718-fundingservice-albcsharp.ruleset" Action="Default" />
+</RuleSet>
