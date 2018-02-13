@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
 using ESFA.DC.ILR.FundingService.ALB.OPA.Model.DataEntity.Attribute;
@@ -14,8 +10,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         /// <summary>
         /// Return Temporal Value Item
         /// /// </summary>
-        [Fact(DisplayName = "TemporalValueItem - Not Null"), Trait("OPA Model", "Unit")]
-        public void OPA_TemporalValueItem_NotNull()
+        [Fact(DisplayName = "TemporalValueItem - Does Exist"), Trait("OPA Model", "Unit")]
+        public void OPA_TemporalValueItem_DoesExist()
         {
             //ARRANGE
                 // Use Test Helpers
