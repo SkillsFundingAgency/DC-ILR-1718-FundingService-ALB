@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{91E3D0C6-1258-48E3-B1BC-695C46DD302D}</ProjectGuid>
+    <ProjectGuid>{8982E202-D685-416C-8D11-E937BEDF4E3D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ESFA.DC.ILR.FundingService.ALB.ExternalData</RootNamespace>
-    <AssemblyName>ESFA.DC.ILR.FundingService.ALB.ExternalData</AssemblyName>
+    <RootNamespace>ESFA.DC.ILR.FundingService.ALB.OPA.Model</RootNamespace>
+    <AssemblyName>ESFA.DC.ILR.FundingService.ALB.OPA.Model</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.ExternalData.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.OPA.Model.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,7 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.ExternalData.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.OPA.Model.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -43,23 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interface\IReferenceDataCache.cs" />
-    <Compile Include="LARS\Interface\ILARSReferenceDataService.cs" />
-    <Compile Include="LARS\LARSReferenceDataService.cs" />
-    <Compile Include="LARS\Model\LARSFunding.cs" />
-    <Compile Include="LARS\Model\LARSLearningDelivery.cs" />
-    <Compile Include="LARS\Model\LARSVersion.cs" />
-    <Compile Include="PostcodeFactors\Interface\IPostcodeFactorsReferenceDataService.cs" />
-    <Compile Include="PostcodeFactors\Model\PostcodeVersion.cs" />
-    <Compile Include="PostcodeFactors\Model\SfaAreaCost.cs" />
-    <Compile Include="PostcodeFactors\PostcodeFactorsReferenceDataService.cs" />
+    <Compile Include="Models\DataEntity\Attribute\AttributeData.cs" />
+    <Compile Include="Models\DataEntity\Attribute\TemporalValueItem.cs" />
+    <Compile Include="Models\DataEntity\DataEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ESFA.DC.ILR.FundingService.ALB.ExternalData.ruleset" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="ESFA.DC.ILR.FundingService.ALB.OPA.Model.ruleset" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.8.1.4648\analyzers\Google.Protobuf.dll" />
