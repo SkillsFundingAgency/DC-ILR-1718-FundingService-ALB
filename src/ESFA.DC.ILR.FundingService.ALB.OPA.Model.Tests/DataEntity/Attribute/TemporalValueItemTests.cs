@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 using FluentAssertions;
-using ESFA.DC.ILR.FundingService.ALB.OPA.Model.DataEntity.Attribute;
+using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity.Attribute;
 
 namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
 {
