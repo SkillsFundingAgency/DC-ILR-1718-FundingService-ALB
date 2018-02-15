@@ -607,7 +607,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             addChildCount.AddChild(entityLearnerDefault);
 
             //ASSERT
-            addChildCount.Children.Count().Should().Be(1);
+            addChildCount.Children.Count.Should().Be(1);
         }
 
         #endregion
@@ -680,7 +680,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             addChildrenCount.AddChildren(childList);
 
             //ASSERT
-            addChildrenCount.Children.Count().Should().Be(2);
+            addChildrenCount.Children.Count.Should().Be(2);
         }
 
         #endregion
@@ -716,12 +716,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             };
         private readonly string attributeDataDefaultName = "Attribute1";
         private readonly AttributeData attributeDataDefault = new AttributeData("Attribute1", 10);
-
-        private readonly Dictionary<string, AttributeData> attributesLearnerDictionary
-            = new Dictionary<string, AttributeData>()
-            {
-                { "LearnRefNumber", new AttributeData("LearnRefNumber", "LearnerTest1") }
-            };
         private readonly string attributeDataLearnerName = "LearnRefNumber";
         private readonly AttributeData attributeDataLearnerDefault = new AttributeData("LearnRefNumber", "LearnerTest1");
 
