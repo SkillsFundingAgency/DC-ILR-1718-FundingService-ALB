@@ -7,6 +7,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
 {
     public class TemporalValueItemTests
     {
+        #region TemporalValueItem Tests
+
         /// <summary>
         /// Return Temporal Value Item
         /// /// </summary>
@@ -51,6 +53,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             //ASSERT
             temporalValueItemNotMatch.Should().NotBeSameAs(temporalValueItemDefault);
         }
+
+        #endregion
+
+        #region TemporalValueItem ChangePoint Tests
 
         /// <summary>
         /// Return Temporal Value Item and check ChangePoint Date
@@ -142,6 +148,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             temporalValueItemTypeNotMatch.Type.Should().NotBeSameAs(changePointDefaultType);
         }
 
+        #endregion
 
         #region Test Helpers
 

@@ -30,7 +30,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Item and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_DoesMatch()
@@ -46,7 +46,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Item and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_DoesNotMatch()
@@ -66,7 +66,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         #region Data Entity Name Tests
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity EntityName and check values
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - EntityName Does Exist"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_EntityName_DoesExist()
@@ -82,7 +82,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity EntityName and check values
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - EntityName Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_EntityName_DoesMatch()
@@ -98,7 +98,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity EntityName and check values
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - EntityName Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_EntityName_DoesNotMatch()
@@ -114,7 +114,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity EntityName and check values
         /// </summary>
         [Fact(DisplayName = "DataEntity - EntityName Children Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_EntityName_Children_DoesMatch()
@@ -137,7 +137,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         #region Data Entity Attributes Tests
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Attributes and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Atrributes Does Exist Empty"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Attributes_DoesExistEmpty()
@@ -152,9 +152,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             attributesExistEmpty.Attributes.Should().BeEmpty();
         }
 
-
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Attributes and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Atrributes Does Exist Not Empty"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Attributes_DoesExistNotEmpty()
@@ -168,9 +167,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             //ASSERT
             attributesExistNotEmpty.Attributes.Should().NotBeEmpty();
         }
-        
+
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Attributes and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Atrributes Count = zero"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Attributes_CountZero()
@@ -186,7 +185,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Attributes and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Atrributes Count = one"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Attributes_CountOne()
@@ -202,7 +201,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Attributes and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Atrributes Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Attributes_DoesMatch()
@@ -218,7 +217,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Attributes and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Atrributes Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Attributes_DoesNotMatch()
@@ -238,7 +237,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         #region Data Entity Parent Tests
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Parent and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Parent Does Exist"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Parent_DoesExist()
@@ -254,7 +253,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Parent and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Parent Does Not Exist"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Parent_DoesNotExist()
@@ -270,7 +269,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Parent and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Parent Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Parent_DoesMatch()
@@ -286,7 +285,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Parent and check value
         /// /// </summary>
         [Fact(DisplayName = "DataEntity - Parent Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Parent_DoesNotMatch()
@@ -306,7 +305,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         #region Data Entity Children Tests
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Children
         /// </summary>
         [Fact(DisplayName = "DataEntity - Children Does Exist"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Children_DoesExist()
@@ -325,7 +324,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Children and check values
         /// </summary>
         [Fact(DisplayName = "DataEntity - Children Does Not Exist"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Children_DoesNotExist()
@@ -342,7 +341,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Children and check values
         /// </summary>
         [Fact(DisplayName = "DataEntity - Children Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Children_DoesMatch()
@@ -361,7 +360,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Children and check values
         /// </summary>
         [Fact(DisplayName = "DataEntity - Children Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Children_DoesNotMatch()
@@ -380,7 +379,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Children and check values
         /// </summary>
         [Fact(DisplayName = "DataEntity - Children Does Match (Many)"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_Children_DoesMatchMany()
@@ -404,7 +403,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         #region Data Entity LearnRefNumber Tests
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity and check LearnRefNumber
         /// </summary>
         [Fact(DisplayName = "DataEntity - LearnRefNumber Does Exist"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_LearnRefNumber_DoesExist()
@@ -421,7 +420,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity and check LearnRefNumber
         /// </summary>
         [Fact(DisplayName = "DataEntity - LearnRefNumber Does Not Exist"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_LearnRefNumber_DoesNotExist()
@@ -438,7 +437,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
 
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity and check LearnRefNumber
         /// </summary>
         [Fact(DisplayName = "DataEntity - LearnRefNumber Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_LearnRefNumber_DoesMatch()
@@ -456,7 +455,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
 
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity and check LearnRefNumber
         /// </summary>
         [Fact(DisplayName = "DataEntity - LearnRefNumber Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_LearnRefNumber_DoesNotMatch()
@@ -478,7 +477,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         #region Data Entity IsGlobal Tests
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Item and check IsGlobal flag
         /// </summary>
         [Fact(DisplayName = "DataEntity - IsGLobal True"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_IsGLobal_True()
@@ -494,7 +493,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Item and check IsGlobal flag
         /// </summary>
         [Fact(DisplayName = "DataEntity - IsGLobal False EntityNameNotMatch"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_IsGLobal_False_EntityNameNotMatch()
@@ -510,7 +509,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Item and check IsGlobal flag
         /// </summary>
         [Fact(DisplayName = "DataEntity - IsGLobal False EntityNameNull"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_IsGLobal_False_EntityNameNull()
@@ -527,7 +526,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Item and check IsGlobal flag
         /// </summary>
         [Fact(DisplayName = "DataEntity - IsGLobal False EntityNameNull And NameNotMatch"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_IsGLobal_False_EntityNameNullAndNotMatch()
@@ -548,7 +547,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         #region Data Entity AddChild Tests
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Child and check value
         /// </summary>
         [Fact(DisplayName = "DataEntity - AddChild Does Exist"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_AddChild_DoesExist()
@@ -564,7 +563,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Child and check value
         /// </summary>
         [Fact(DisplayName = "DataEntity - AddChild Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_AddChild_DoesMatch()
@@ -580,7 +579,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Child and check value
         /// </summary>
         [Fact(DisplayName = "DataEntity - AddChild Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_AddChild_DoesNotMatch()
@@ -596,7 +595,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Child and check value
         /// </summary>
         [Fact(DisplayName = "DataEntity - AddChild Count"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_AddChild_Count()
@@ -614,9 +613,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         #endregion
 
         #region Data Entity AddChildren Tests
-        
+
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Children and check value
         /// </summary>
         [Fact(DisplayName = "DataEntity - AddChildren Does Exist"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_AddChildren_DoesExist()
@@ -632,7 +631,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Children and check value
         /// </summary>
         [Fact(DisplayName = "DataEntity - AddChildren Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_AddChildren_DoesMatch()
@@ -648,7 +647,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
 
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Children and check values
         /// </summary>
         [Fact(DisplayName = "DataEntity - AddChildren Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_AddChildren_DoesNotMatch()
@@ -669,7 +668,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         }
         
         /// <summary>
-        /// Return DataEntity Item
+        /// Return DataEntity Children and count values
         /// </summary>
         [Fact(DisplayName = "DataEntity - AddChildren Count"), Trait("OPA Model", "Unit")]
         public void OPA_DataEntity_AddChildren_Count()

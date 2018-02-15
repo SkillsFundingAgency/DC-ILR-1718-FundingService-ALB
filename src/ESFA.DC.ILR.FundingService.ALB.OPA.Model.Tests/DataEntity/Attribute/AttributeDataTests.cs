@@ -9,6 +9,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
 {
     public class AttributeDataTests
     {
+        #region AttributeData Tests
+
         /// <summary>
         /// Return AttributeData Item
         /// /// </summary>
@@ -26,7 +28,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData Item
+        /// Return AttributeData Item and check values
         /// /// </summary>
         [Fact(DisplayName = "AttributeData - Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_DoesMatch()
@@ -42,7 +44,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData Item
+        /// Return AttributeData Item and check values
         /// /// </summary>
         [Fact(DisplayName = "AttributeData - Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_DoesNotMatch()
@@ -56,6 +58,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             //ASSERT
             attributeDataDoesNotMatch.Should().NotBeSameAs(attributeDataDefault);
         }
+
+        #endregion
+
+        #region AttributeData Name Tests
 
         /// <summary>
         /// Return AttributeData Name
@@ -74,7 +80,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData Name
+        /// Return AttributeData Name and check value
         /// /// </summary>
         [Fact(DisplayName = "AttributeData - Name Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_Name_DoesMatch()
@@ -90,7 +96,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData Name
+        /// Return AttributeData Name and check value
         /// /// </summary>
         [Fact(DisplayName = "AttributeData - Name Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_Name_DoesNotMatch()
@@ -104,6 +110,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             //ASSERT
             attributeDataNameNotMatch.Name.Should().NotBeSameAs(attributeDataDefaultName);
         }
+
+        #endregion
+
+        #region AttributeData Value Tests
 
         /// <summary>
         /// Return AttributeData Value
@@ -122,7 +132,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData Value
+        /// Return AttributeData Value and check value
         /// /// </summary>
         [Fact(DisplayName = "AttributeData - Value Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_Value_DoesMatch()
@@ -138,7 +148,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData Value
+        /// Return AttributeData Value and check value
         /// /// </summary>
         [Fact(DisplayName = "AttributeData - Value Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_Value_DoesNotMatch()
@@ -152,6 +162,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             //ASSERT
             attributeDataValueNotMatch.Value.Should().NotBeSameAs(attributeDataDefaultValue);
         }
+
+        #endregion
+
+        #region AttributeData ChangePoint Tests
 
         /// <summary>
         /// Return AttributeData Changepoints
@@ -187,7 +201,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData Changepoints
+        /// Return AttributeData Changepoints and check values
         /// /// </summary>
         [Fact(DisplayName = "AttributeData - Changepoints Does Match"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_Changepoints_DoesMatch()
@@ -204,7 +218,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData Changepoints
+        /// Return AttributeData Changepoints and check values
         /// /// </summary>
         [Fact(DisplayName = "AttributeData - Changepoints Does Not Match"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_Changepoints_DoesNotMatch()
@@ -221,7 +235,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData Changepoints
+        /// Return AttributeData Changepoints and count values
         /// /// </summary>
         [Fact(DisplayName = "AttributeData - Changepoints Count Correct"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_Changepoints_CountCorrect()
@@ -242,8 +256,12 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             attributeDataChangepointsCountMatch.Changepoints.Count().Should().Be(3);
         }
 
+        #endregion
+
+        #region AttributeData IsTemporal Tests
+
         /// <summary>
-        /// Return AttributeData IsTemporal
+        /// Return AttributeData IsTemporal True
         /// /// </summary>
         [Fact(DisplayName = "AttributeData - IsTemporal True"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_IsTemporal_NullValueOneCP()
@@ -260,9 +278,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData IsTemporal
+        /// Return AttributeData IsTemporal False
         /// /// </summary>
-        [Fact(DisplayName = "AttributeData - IsTemporal False 1"), Trait("OPA Model", "Unit")]
+        [Fact(DisplayName = "AttributeData - IsTemporal False NullValueZeroCP"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_IsTemporal_NullValueZeroCP()
         {
             //ARRANGE
@@ -276,9 +294,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData IsTemporal
+        /// Return AttributeData IsTemporal False
         /// /// </summary>
-        [Fact(DisplayName = "AttributeData - IsTemporal False 2"), Trait("OPA Model", "Unit")]
+        [Fact(DisplayName = "AttributeData - IsTemporal False ValueZeroCP"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_IsTemporal_ValueZeroCP()
         {
             //ARRANGE
@@ -292,9 +310,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         }
 
         /// <summary>
-        /// Return AttributeData IsTemporal
+        /// Return AttributeData IsTemporal False
         /// /// </summary>
-        [Fact(DisplayName = "AttributeData - IsTemporal False 3"), Trait("OPA Model", "Unit")]
+        [Fact(DisplayName = "AttributeData - IsTemporal False ValueAndCP"), Trait("OPA Model", "Unit")]
         public void OPA_AttributeData_IsTemporal_ValueAndCP()
         {
             //ARRANGE
@@ -308,7 +326,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             attributeDataCIsTemporalValueAndCP.IsTemporal.Should().BeFalse();
         }
 
-
+        #endregion
+        
         #region Test Helpers
 
         private readonly string attributeDataDefaultName = "Attribute1";
