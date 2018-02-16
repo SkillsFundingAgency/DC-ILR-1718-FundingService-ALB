@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Interface.DataEntity;
 
 namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity
 {
-    public class DataEntity
+    public class DataEntity : IDataEntity
     {
         #region Constants
 

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interface\DataEntity\IDataEntity.cs" />
     <Compile Include="Models\DataEntity\Attribute\AttributeData.cs" />
     <Compile Include="Models\DataEntity\Attribute\TemporalValueItem.cs" />
     <Compile Include="Models\DataEntity\DataEntity.cs" />
@@ -55,6 +56,9 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.8.1.4648\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.8.1.4648\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.8.1.4648\analyzers\SonarAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interface\DataEntity\Attribute\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
