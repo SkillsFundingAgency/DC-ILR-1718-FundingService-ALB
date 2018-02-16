@@ -179,7 +179,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
 
             //ACT
             IAttributeData attributeDataChangepointsExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
-            attributeDataChangepointsExists.Changepoints.Add(attributeTemporalValueItemDefault);
+            attributeDataChangepointsExists.AddChangepoint(new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType));
 
             //ASSERT
             attributeDataChangepointsExists.Changepoints.Should().NotBeNull();
@@ -244,9 +244,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             //ARRANGE
             IList<TemporalValueItem> changePointCountValues = new List<TemporalValueItem>
             {
-                attributeTemporalValueItemDefault,
-                attributeTemporalValueItemDefault,
-                attributeTemporalValueItemDefault
+                new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType),
+                new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType),
+                new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType)
             };
 
             //ACT
@@ -272,7 +272,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
 
             //ACT
             IAttributeData attributeDataIsTemporalTrue = new AttributeData(attributeDataDefaultName, null);
-            attributeDataIsTemporalTrue.AddChangepoint(attributeTemporalValueItemDefault);
+            attributeDataIsTemporalTrue.AddChangepoint(new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType));
 
             //ASSERT
             attributeDataIsTemporalTrue.IsTemporal.Should().BeTrue();
@@ -321,7 +321,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
 
             //ACT
             IAttributeData attributeDataCIsTemporalValueAndCP = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
-            attributeDataCIsTemporalValueAndCP.AddChangepoint(attributeTemporalValueItemDefault);
+            attributeDataCIsTemporalValueAndCP.AddChangepoint(new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType));
 
             //ASSERT
             attributeDataCIsTemporalValueAndCP.IsTemporal.Should().BeFalse();
@@ -341,7 +341,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             IAttributeData addChangePointExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
 
             //ACT
-            addChangePointExists.AddChangepoint(attributeTemporalValueItemDefault);
+            addChangePointExists.AddChangepoint(new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType));
 
             //ASSERT
             addChangePointExists.Changepoints.Should().NotBeNull();
@@ -456,7 +456,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         private readonly object attributeCPDefaultValue = 100;
         private readonly string attributeCPDefaultType = "Type1";
 
-        private readonly TemporalValueItem attributeTemporalValueItemDefault =
+        private readonly ITemporalValueItem attributeTemporalValueItemDefault =
             new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "Type1");
 
         private readonly IEnumerable<TemporalValueItem> attributeTemporalValueItemDefaultList =
