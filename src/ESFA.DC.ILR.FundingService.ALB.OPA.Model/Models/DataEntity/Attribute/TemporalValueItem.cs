@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Interface.DataEntity.Attribute;
 
 namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity.Attribute
 {
-    public class TemporalValueItem
+    public class TemporalValueItem : ITemporalValueItem
     {
         public TemporalValueItem(DateTime changePoint, object value, string type)
         {
-            this.ChangePoint = changePoint;
-            this.Value = value;
-            this.Type = type;
+            ChangePoint = changePoint;
+            Value = value;
+            Type = type;
         }
 
-        public DateTime ChangePoint { get; private set; }
-        public object Value { get; private set; }
-        public string Type { get; private set; }
+        public DateTime ChangePoint { get; }
+        public object Value { get; }
+        public string Type { get; }
 
         
     }        

@@ -1,4 +1,5 @@
 ﻿using System;
+using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Interface.DataEntity.Attribute;
 using Xunit;
 using FluentAssertions;
 using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity.Attribute;
@@ -16,9 +17,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         public void OPA_TemporalValueItem_DoesExist()
         {
             //ARRANGE
-                // Use Test Helpers
+            // Use Test Helpers
+
             //ACT
-            var temporalValueItemNotNull = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
+            ITemporalValueItem temporalValueItemNotNull = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
 
             //ASSERT
             temporalValueItemNotNull.Should().NotBeNull();
@@ -32,8 +34,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         {
             //ARRANGE
             // Use Test Helpers
+
             //ACT
-            var temporalValueItemMatch = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
+            ITemporalValueItem temporalValueItemMatch = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
 
             //ASSERT
             temporalValueItemMatch.Should().BeEquivalentTo(temporalValueItemDefault);
@@ -47,8 +50,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         {
             //ARRANGE
             object changePointValueNotMatch = 200;
+
             //ACT
-            var temporalValueItemNotMatch = new TemporalValueItem(changePointDefaultDate, changePointValueNotMatch, changePointDefaultType);
+            ITemporalValueItem temporalValueItemNotMatch = new TemporalValueItem(changePointDefaultDate, changePointValueNotMatch, changePointDefaultType);
 
             //ASSERT
             temporalValueItemNotMatch.Should().NotBeSameAs(temporalValueItemDefault);
@@ -66,8 +70,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         {
             //ARRANGE
             // Use Test Helpers
+
             //ACT
-            var temporalValueItemChangePointDate = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
+            ITemporalValueItem temporalValueItemChangePointDate = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
 
             //ASSERT
             temporalValueItemChangePointDate.ChangePoint.Should().BeSameDateAs(changePointDefaultDate);
@@ -81,8 +86,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         {
             //ARRANGE
             var changePointDateNotMatch = changePointDefaultDate.AddDays(10);
+
             //ACT
-            var temporalValueItemChangePointDateNotMatch = new TemporalValueItem(changePointDateNotMatch, changePointDefaultValue, changePointDefaultType);
+            ITemporalValueItem temporalValueItemChangePointDateNotMatch = new TemporalValueItem(changePointDateNotMatch, changePointDefaultValue, changePointDefaultType);
 
             //ASSERT
             temporalValueItemChangePointDateNotMatch.ChangePoint.Should().NotBeSameDateAs(changePointDefaultDate);
@@ -96,8 +102,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         {
             //ARRANGE
             // Use Test Helpers
+
             //ACT
-            var temporalValueItemValue = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
+            ITemporalValueItem temporalValueItemValue = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
 
             //ASSERT
             temporalValueItemValue.Value.Should().BeEquivalentTo(changePointDefaultValue);
@@ -111,8 +118,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         {
             //ARRANGE
             object changePointDefaultValueNotMatch = 200;
+
             //ACT
-            var temporalValueItemValueNotMatch = new TemporalValueItem(changePointDefaultDate, changePointDefaultValueNotMatch, changePointDefaultType);
+            ITemporalValueItem temporalValueItemValueNotMatch = new TemporalValueItem(changePointDefaultDate, changePointDefaultValueNotMatch, changePointDefaultType);
 
             //ASSERT
             temporalValueItemValueNotMatch.Value.Should().NotBeSameAs(changePointDefaultValue);
@@ -126,8 +134,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         {
             //ARRANGE
             // Use Test Helpers
+
             //ACT
-            var temporalValueItemType = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
+            ITemporalValueItem temporalValueItemType = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultType);
 
             //ASSERT
             temporalValueItemType.Type.Should().BeEquivalentTo(changePointDefaultType);
@@ -141,8 +150,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         {
             //ARRANGE
             string changePointDefaultTypeNotMatch = "Unmatched Type";
+
             //ACT
-            var temporalValueItemTypeNotMatch = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultTypeNotMatch);
+            ITemporalValueItem temporalValueItemTypeNotMatch = new TemporalValueItem(changePointDefaultDate, changePointDefaultValue, changePointDefaultTypeNotMatch);
 
             //ASSERT
             temporalValueItemTypeNotMatch.Type.Should().NotBeSameAs(changePointDefaultType);
@@ -160,6 +170,5 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "Type1");
         
         #endregion
-
     }
 }

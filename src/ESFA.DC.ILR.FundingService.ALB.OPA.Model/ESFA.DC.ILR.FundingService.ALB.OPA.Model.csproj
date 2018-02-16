@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interface\DataEntity\Attribute\IAttributeData.cs" />
+    <Compile Include="Interface\DataEntity\Attribute\ITemporalValueItem.cs" />
     <Compile Include="Interface\DataEntity\IDataEntity.cs" />
     <Compile Include="Models\DataEntity\Attribute\AttributeData.cs" />
     <Compile Include="Models\DataEntity\Attribute\TemporalValueItem.cs" />
