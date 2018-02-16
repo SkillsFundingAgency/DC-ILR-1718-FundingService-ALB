@@ -254,7 +254,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             attributeDataChangepointsCountMatch.AddChangepoints(changePointCountValues);
                 
             //ASSERT
-            attributeDataChangepointsCountMatch.Changepoints.Count().Should().Be(3);
+            attributeDataChangepointsCountMatch.Changepoints.Count.Should().Be(3);
         }
 
         #endregion
