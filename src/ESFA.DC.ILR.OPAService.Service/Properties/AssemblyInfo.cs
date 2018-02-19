@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("ESFA.DC.ILR.OPAService.Model.Tests")]
+[assembly: AssemblyTitle("ESFA.DC.ILR.OPAService.Service")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("HP Inc.")]
-[assembly: AssemblyProduct("ESFA.DC.ILR.OPAService.Model.Tests")]
+[assembly: AssemblyProduct("ESFA.DC.ILR.OPAService.Service")]
 [assembly: AssemblyCopyright("Copyright © HP Inc. 2018")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0e379a91-5d6c-40db-a8fa-5de7d2a52290")]
+[assembly: Guid("e52cd69d-4d3a-4866-8116-3d2f22b5b3bf")]
 
 // Version information for an assembly consists of the following four values:
 //

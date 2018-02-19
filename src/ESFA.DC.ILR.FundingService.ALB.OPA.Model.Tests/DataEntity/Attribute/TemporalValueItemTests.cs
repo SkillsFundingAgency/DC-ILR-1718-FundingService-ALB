@@ -1,10 +1,10 @@
 ﻿using System;
-using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Interface.DataEntity.Attribute;
+using ESFA.DC.ILR.OPAService.Model.Interface.DataEntity.Attribute;
 using Xunit;
 using FluentAssertions;
-using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity.Attribute;
+using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 
-namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
+namespace ESFA.DC.ILR.OPAService.Model.Tests.DataEntity.Attribute
 {
     public class TemporalValueItemTests
     {

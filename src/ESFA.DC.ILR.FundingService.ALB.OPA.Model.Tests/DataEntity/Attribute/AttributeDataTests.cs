@@ -1,12 +1,12 @@
 ﻿using System;
 using Xunit;
 using FluentAssertions;
-using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity.Attribute;
+using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 using System.Linq;
 using System.Collections.Generic;
-using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Interface.DataEntity.Attribute;
+using ESFA.DC.ILR.OPAService.Model.Interface.DataEntity.Attribute;
 
-namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
+namespace ESFA.DC.ILR.OPAService.Model.Tests.DataEntity.Attribute
 {
     public class AttributeDataTests
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Interface.DataEntity.Attribute
+namespace ESFA.DC.ILR.OPAService.Model.Interface.DataEntity.Attribute
 {
     public interface ITemporalValueItem
     {

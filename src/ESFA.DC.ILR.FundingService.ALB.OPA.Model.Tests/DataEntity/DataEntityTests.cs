@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Interface.DataEntity;
-using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity.Attribute;
+using ESFA.DC.ILR.OPAService.Model.Interface.DataEntity;
+using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 using Xunit;
 using FluentAssertions;
 
 
-namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
+namespace ESFA.DC.ILR.OPAService.Model.Tests.DataEntity
 {
     public class DataEntityTests
     {
