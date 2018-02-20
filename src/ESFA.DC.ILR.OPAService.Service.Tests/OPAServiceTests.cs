@@ -9,6 +9,7 @@ using Xunit;
 using FluentAssertions;
 using ESFA.DC.ILR.OPAService.Service.Interface;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
+using ESFA.DC.ILR.OPAService.Service.Builders.Implementation;
 using Moq;
 using Oracle.Determinations.Engine;
 
@@ -37,7 +38,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
         /// <summary>
         /// Return OPA Service
         /// </summary>
-        [Fact(DisplayName = "OPA Service - Initiate ad check entity name"), Trait("OPA Service", "Unit")]
+        [Fact(DisplayName = "OPA Service - Initiate and check entity name"), Trait("OPA Service", "Unit")]
         public void OPAService_InitiateAndCheckEntityName()
         {
             //ARRANGE
@@ -48,6 +49,23 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
        
             //ASSERT
             result.EntityName.Should().BeEquivalentTo("global");
+
+        }
+
+        /// <summary>
+        /// Return OPA Service
+        /// </summary>
+        [Fact(DisplayName = "OPA Service - Initiate and check child entity name"), Trait("OPA Service", "Unit")]
+        public void OPAService_InitiateAndCheckChildEntityName()
+        {
+            //ARRANGE
+            DataEntity dataEntity = new DataEntity("global");
+
+            //ACT
+            var result = OPAServiceRun(dataEntity);
+
+            //ASSERT
+            result.Children.First().EntityName.Should().BeEquivalentTo("Learner");
 
         }
 
@@ -76,7 +94,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
         
         private IOPAService MockTestObject(string @object)
         {
-            IOPAService opaService = new Implementation.OPAService(@object);
+            IOPAService opaService = new Implementation.OPAService(new SessionBuilder(), @object);
 
             return opaService;
         }
