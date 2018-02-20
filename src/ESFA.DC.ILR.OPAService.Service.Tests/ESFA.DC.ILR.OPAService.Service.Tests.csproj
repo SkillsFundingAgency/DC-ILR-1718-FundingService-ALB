@@ -43,11 +43,13 @@
     <Reference Include="Moq, Version=4.8.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.8.1\lib\net45\Moq.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.Determinations.Engine">
-      <HintPath>..\packages\oracle.determinations.10.4.4\Oracle.Determinations.Engine.dll</HintPath>
+    <Reference Include="Oracle.Determinations.Engine, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Oracle.Determinations.Engine.dll</HintPath>
     </Reference>
-    <Reference Include="Oracle.Determinations.Masquerade">
-      <HintPath>..\packages\oracle.determinations.10.4.4\Oracle.Determinations.Masquerade.dll</HintPath>
+    <Reference Include="Oracle.Determinations.Masquerade, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Oracle.Determinations.Masquerade.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
