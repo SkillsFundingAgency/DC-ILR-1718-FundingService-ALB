@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\Implementation\SessionBuilder.cs" />
+    <Compile Include="Builders\Interface\ISessionBuilder.cs" />
     <Compile Include="Implementation\OPAService.cs" />
     <Compile Include="Interface\IOPAService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
