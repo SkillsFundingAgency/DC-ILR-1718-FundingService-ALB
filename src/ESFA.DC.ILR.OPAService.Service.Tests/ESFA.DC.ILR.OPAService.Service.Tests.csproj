@@ -43,6 +43,12 @@
     <Reference Include="Moq, Version=4.8.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.8.1\lib\net45\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.Determinations.Engine">
+      <HintPath>..\packages\oracle.determinations.10.4.4\Oracle.Determinations.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.Determinations.Masquerade">
+      <HintPath>..\packages\oracle.determinations.10.4.4\Oracle.Determinations.Masquerade.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -73,14 +79,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="OPAServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Rulebase\Loans Bursary 17_18.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.7.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.OPA.Model\ESFA.DC.ILR.OPAService.Model.csproj">
+      <Project>{8982E202-D685-416C-8D11-E937BEDF4E3D}</Project>
+      <Name>ESFA.DC.ILR.OPAService.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.OPAService.Service\ESFA.DC.ILR.OPAService.Service.csproj">
+      <Project>{E52CD69D-4D3A-4866-8116-3D2F22B5B3BF}</Project>
+      <Name>ESFA.DC.ILR.OPAService.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
