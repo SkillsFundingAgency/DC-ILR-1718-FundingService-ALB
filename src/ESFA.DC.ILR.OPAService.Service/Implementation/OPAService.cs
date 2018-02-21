@@ -25,13 +25,8 @@ namespace ESFA.DC.ILR.OPAService.Service.Implementation
 
         public DataEntity ExecuteSession(DataEntity globalEntity)
         {
-            Session session = _sessionBuilder.CreateSession(_rulebaseZipFile);
-
-            var inputGlobalInstance = session.GetGlobalEntityInstance();
-
-            //Map Entity to OPA
-            //  MapGlobalDataEntityToOpa(globalEntity, session, inputGlobalEntityInstance);
-
+            Session session = _sessionBuilder.CreateOPASession(_rulebaseZipFile, globalEntity);
+            
             session.Think();
 
             var outputGlobalInstance = session.GetGlobalEntityInstance();
