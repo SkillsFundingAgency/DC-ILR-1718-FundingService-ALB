@@ -279,7 +279,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             var sessionPost = TestSession();
 
             //ACT
-            sessionBuilder.MapGlobalDataEntityToOpa(testGlobalEntity, sessionPost, sessionPost.GetGlobalEntityInstance());
+            sessionBuilder.MapDataEntityToOpa(testGlobalEntity, sessionPost, sessionPost.GetGlobalEntityInstance());
             var learnerPre = EntityList(sessionPre);
             var learnerPost = EntityList(sessionPost);
 
@@ -358,27 +358,6 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             var ukprn = AttributeValue(session, "UKPRN");
 
             ukprn.Should().BeNull();
-        }
-
-        /// <summary>
-        /// Return OPA Session and check if the attributes have mapped as expected
-        /// </summary>
-        [Fact(DisplayName = "MapToOPA - Set Attribute - No changepoints set"), Trait("OPA Session Builder", "Unit")]
-        public void SessionBuilder_SetAttribute_ChangePointValuesNull()
-        {
-            //ARRANGE
-            var sessionBuilder = new SessionBuilder();
-            var session = TestSession();
-            var instance = session.GetGlobalEntityInstance();
-            var entity = instance.GetEntity();
-
-            //ACT
-            sessionBuilder.SetAttribute(entity, instance, TestAttributeData);
-
-            //ASSERT         
-            var ukprn = AttributeValue(session, "UKPRN");
-
-            ukprn.Should().BeEquivalentTo(12345678);
         }
 
         /// <summary>
@@ -543,14 +522,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             return entityInstanceList;
         }
 
-        //private EntityInstance EntityInstance(Session session, string dataEntityName)
-        //{
-        //    var sessionBuilder = new SessionBuilder();
-        //    var instance = sessionBuilder.MapDataEntityToOpa(new DataEntity(dataEntityName), session, session.GetGlobalEntityInstance());
-
-        //    return instance;
-        //}
-
+        
         #endregion
     }
 }
