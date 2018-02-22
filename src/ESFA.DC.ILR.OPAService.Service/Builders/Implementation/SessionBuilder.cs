@@ -15,7 +15,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
         internal bool RulebaseInitialised { get; set; }
         internal Rulebase Rulebase { get; set; }
         internal Engine Engine => _engine;
-        
+            
         private readonly Engine _engine = Engine.INSTANCE;
 
         public Session CreateOPASession(string rulebaseZipFile, DataEntity globalEntity)

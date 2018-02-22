@@ -42,7 +42,13 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
         public void OPAService_InitiateAndCheckEntityName()
         {
             //ARRANGE
-            DataEntity dataEntity = new DataEntity("global");
+            DataEntity dataEntity = new DataEntity("global")
+            {
+                Children = new List<DataEntity>()
+                {
+                    new DataEntity("Learner")
+                }
+            };
 
             //ACT
             var result = OPAServiceRun(dataEntity);
@@ -59,7 +65,13 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
         public void OPAService_InitiateAndCheckChildEntityName()
         {
             //ARRANGE
-            DataEntity dataEntity = new DataEntity("global");
+            DataEntity dataEntity = new DataEntity("global")
+            {
+                Children = new List<DataEntity>()
+                {
+                    new DataEntity("Learner")
+                }
+            };
 
             //ACT
             var result = OPAServiceRun(dataEntity);
@@ -71,19 +83,10 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
 
         #endregion
 
-        #region OPA Entity to Session Mapper Tests
-
-
-        #endregion
-
-        #region OPA Session to Entity Mapper Tests
-
-
-        #endregion
-
-
+      
         #region OPA Entity Output Tests
 
+        //todo: tests
 
         #endregion
 
@@ -94,7 +97,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
         
         private IOPAService MockTestObject(string @object)
         {
-            IOPAService opaService = new Implementation.OPAService(new SessionBuilder(), @object);
+            IOPAService opaService = new Implementation.OPAService(new SessionBuilder(), new DataEntityBuilder(), @object);
 
             return opaService;
         }

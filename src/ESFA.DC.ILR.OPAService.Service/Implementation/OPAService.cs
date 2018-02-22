@@ -15,11 +15,13 @@ namespace ESFA.DC.ILR.OPAService.Service.Implementation
     public class OPAService : IOPAService
     {
         private readonly ISessionBuilder _sessionBuilder;
+        private readonly IDataEntityBuilder _dataEntityBuilder;
         private readonly string _rulebaseZipFile;
 
-        public OPAService(ISessionBuilder sessionBuilder, string rulebaseZipFile)
+        public OPAService(ISessionBuilder sessionBuilder, IDataEntityBuilder dataEntityBuilder, string rulebaseZipFile)
         {
             _sessionBuilder = sessionBuilder;
+            _dataEntityBuilder = dataEntityBuilder;
             _rulebaseZipFile = rulebaseZipFile;
         }
 
@@ -30,18 +32,9 @@ namespace ESFA.DC.ILR.OPAService.Service.Implementation
             session.Think();
 
             var outputGlobalInstance = session.GetGlobalEntityInstance();
-
-            //Map OPA to Entity
-            //var OutputEntity = MapOpaToEntity(globalInstance, null);
-
+            var outputEntity = _dataEntityBuilder.CreateDataEntity(outputGlobalInstance, null);
             
-
-            //Placeholders
-            DataEntity OutputEntity = new DataEntity("global");
-
-            OutputEntity.AddChild(new DataEntity("Learner"));
-
-            return OutputEntity;
+            return outputEntity;
         }
     }
 }
