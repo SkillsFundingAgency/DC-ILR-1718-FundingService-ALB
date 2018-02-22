@@ -143,7 +143,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
 
         }
 
-        private ArrayList MapTemporalValue(IList<TemporalValueItem> valueList)
+        protected internal ArrayList MapTemporalValue(IList<TemporalValueItem> valueList)
         {
             ArrayList changepoints = new ArrayList();
             foreach (var temporalValueItem in valueList)

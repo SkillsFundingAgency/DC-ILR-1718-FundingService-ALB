@@ -334,6 +334,230 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             learnerPostlist.Count.Should().Be(1);
         }
 
+        #endregion Set Attribute Tests
+
+        #region SetAttribute Tests    
+    
+        /// <summary>
+        /// Return OPA Session and check if the attributes have mapped as expected
+        /// </summary>
+        [Fact(DisplayName = "MapToOPA - Set Attribute - Attribute Exists"), Trait("OPA Session Builder", "Unit")]
+        public void SessionBuilder_SetAttribute_AttributeExists()
+        {
+            //ARRANGE
+            var sessionBuilder = new SessionBuilder();
+            Session session = testEngine.CreateSession(testRulebase);
+            var instance = session.GetGlobalEntityInstance();
+            var entity = instance.GetEntity();
+            var attributeData = new AttributeData("UKPRN", 12345678);
+
+            //ACT
+            sessionBuilder.SetAttribute(entity, instance, attributeData);
+
+            //ASSERT
+            var ukprn = session.GetGlobalEntityInstance().GetEntity()
+                .GetAttribute("UKPRN").GetValue(session.GetGlobalEntityInstance());
+
+            ukprn.Should().NotBeNull();
+        }
+
+
+        /// <summary>
+        /// Return OPA Session and check if the attributes have mapped as expected
+        /// </summary>
+        [Fact(DisplayName = "MapToOPA - Set Attribute - Attribute Correct"), Trait("OPA Session Builder", "Unit")]
+        public void SessionBuilder_SetAttribute_AttributeCorrect()
+        {
+            //ARRANGE
+            var sessionBuilder = new SessionBuilder();
+            Session session = testEngine.CreateSession(testRulebase);
+            var instance = session.GetGlobalEntityInstance();
+            var entity = instance.GetEntity();
+            var attributeData = new AttributeData("UKPRN", 12345678);
+
+            //ACT
+            sessionBuilder.SetAttribute(entity, instance, attributeData);
+
+            //ASSERT
+            var ukprn = session.GetGlobalEntityInstance().GetEntity()
+                .GetAttribute("UKPRN").GetValue(session.GetGlobalEntityInstance());
+
+            ukprn.Should().BeEquivalentTo(12345678);
+        }
+
+        /// <summary>
+        /// Return OPA Session and check if the attributes have mapped as expected
+        /// </summary>
+        [Fact(DisplayName = "MapToOPA - Set Attribute - No attributes or changepoints set"), Trait("OPA Session Builder", "Unit")]
+        public void SessionBuilder_SetAttribute_AttributeAndChangePointValuesNull()
+        {
+            //ARRANGE
+            var sessionBuilder = new SessionBuilder();
+            Session session = testEngine.CreateSession(testRulebase);
+            var instance = session.GetGlobalEntityInstance();
+            var entity = instance.GetEntity();
+            var attributeData = new AttributeData("UKPRN", null);
+
+            //ACT
+            sessionBuilder.SetAttribute(entity, instance, attributeData);
+
+            //ASSERT         
+            var ukprn = session.GetGlobalEntityInstance().GetEntity()
+                .GetAttribute("UKPRN").GetValue(session.GetGlobalEntityInstance());
+
+            ukprn.Should().BeNull();
+        }
+
+
+        /// <summary>
+        /// Return OPA Session and check if the attributes have mapped as expected
+        /// </summary>
+        [Fact(DisplayName = "MapToOPA - Set Attribute - No changepoints set"), Trait("OPA Session Builder", "Unit")]
+        public void SessionBuilder_SetAttribute_ChangePointValuesNull()
+        {
+            //ARRANGE
+            var sessionBuilder = new SessionBuilder();
+            Session session = testEngine.CreateSession(testRulebase);
+            var instance = session.GetGlobalEntityInstance();
+            var entity = instance.GetEntity();
+            var attributeData = new AttributeData("UKPRN", 12345678);
+
+            //ACT
+            sessionBuilder.SetAttribute(entity, instance, attributeData);
+
+            //ASSERT         
+            var ukprn = session.GetGlobalEntityInstance().GetEntity()
+                .GetAttribute("UKPRN").GetValue(session.GetGlobalEntityInstance());
+
+            ukprn.Should().BeEquivalentTo(12345678);
+        }
+
+        /// <summary>
+        /// Return OPA Session and check if the attributes have mapped as expected
+        /// </summary>
+        [Fact(DisplayName = "MapToOPA - Set Attribute - Attribute and changepoints set"), Trait("OPA Session Builder", "Unit")]
+        public void SessionBuilder_SetAttribute_ChangePointValuesExist()
+        {
+            //ARRANGE
+            var sessionBuilder = new SessionBuilder();
+            Session session = testEngine.CreateSession(testRulebase);
+            var instance = session.GetGlobalEntityInstance();
+            var entity = instance.GetEntity();
+            
+            var attributeData = new AttributeData("UKPRN", 12345678);
+            IEnumerable<TemporalValueItem> changePoints =
+                new List<TemporalValueItem>()
+                {
+                    new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "currency"),
+                    new TemporalValueItem(DateTime.Parse("2017-09-01"), 100, "currency")
+                };
+            attributeData.AddChangepoints(changePoints);
+
+           
+            //ACT
+            sessionBuilder.SetAttribute(entity, instance, attributeData);
+
+            //ASSERT         
+      
+            var ukprnChangePoint = entity.GetAttribute("UKPRN").GetValue(instance);
+
+            ukprnChangePoint.Should().NotBeNull();
+           
+            ukprnChangePoint.ToString().Should().BeEquivalentTo("{unknown, 100.0 from 2017-08-01, 100.0 from 2017-09-01}");
+        }
+
+        #endregion
+
+        #region MapTemporalValue Tests
+
+        /// <summary>
+        /// Return OPA Instance
+        /// </summary>
+        [Fact(DisplayName = "MapToOPA - MapTemporal exists"), Trait("OPA Session Builder", "Unit")]
+        public void SessionBuilder_MapTemporal_Exists()
+        {
+            //ARRANGE
+            var sessionBuilder = new SessionBuilder();
+            Session session = testEngine.CreateSession(testRulebase);
+            var instance = session.GetGlobalEntityInstance();
+            var entity = instance.GetEntity();
+
+            var attributeData = new AttributeData("UKPRN", 12345678);
+            IEnumerable<TemporalValueItem> changePoints =
+                new List<TemporalValueItem>()
+                {
+                    new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "currency"),
+                    new TemporalValueItem(DateTime.Parse("2017-09-01"), 100, "currency")
+                };
+            attributeData.AddChangepoints(changePoints);
+
+
+            //ACT
+            var temporal = sessionBuilder.MapTemporalValue(attributeData.Changepoints);
+
+            //ASSERT         
+            temporal.Should().NotBeNull();
+        }
+        
+        /// <summary>
+        /// Return OPA Instance
+        /// </summary>
+        [Fact(DisplayName = "MapToOPA - MapTemporal Count"), Trait("OPA Session Builder", "Unit")]
+        public void SessionBuilder_MapTemporal_Count()
+        {
+            //ARRANGE
+            var sessionBuilder = new SessionBuilder();
+            Session session = testEngine.CreateSession(testRulebase);
+            var instance = session.GetGlobalEntityInstance();
+            var entity = instance.GetEntity();
+
+            var attributeData = new AttributeData("UKPRN", 12345678);
+            IEnumerable<TemporalValueItem> changePoints =
+                new List<TemporalValueItem>()
+                {
+                    new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "currency"),
+                    new TemporalValueItem(DateTime.Parse("2017-09-01"), 100, "currency")
+                };
+            attributeData.AddChangepoints(changePoints);
+
+            //ACT
+            var temporal = sessionBuilder.MapTemporalValue(attributeData.Changepoints);
+
+            //ASSERT         
+            temporal.Count.Should().Be(2);
+        }
+
+        /// <summary>
+        /// Return OPA Instance
+        /// </summary>
+        [Fact(DisplayName = "MapToOPA - MapTemporal values correct"), Trait("OPA Session Builder", "Unit")]
+        public void SessionBuilder_MapTemporal_Correct()
+        {
+            //ARRANGE
+            var sessionBuilder = new SessionBuilder();
+            Session session = testEngine.CreateSession(testRulebase);
+            var instance = session.GetGlobalEntityInstance();
+            var entity = instance.GetEntity();
+
+            var attributeData = new AttributeData("UKPRN", 12345678);
+            IEnumerable<TemporalValueItem> changePoints =
+                new List<TemporalValueItem>()
+                {
+                    new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "currency"),
+                    new TemporalValueItem(DateTime.Parse("2017-09-01"), 100, "currency")
+                };
+            attributeData.AddChangepoints(changePoints);
+
+
+            //ACT
+            var temporal = sessionBuilder.MapTemporalValue(attributeData.Changepoints);
+
+            //ASSERT         
+            temporal.Should().NotBeNull();
+            temporal[0].ToString().Should().BeEquivalentTo("100.0@2017-08-01");
+            temporal[1].ToString().Should().BeEquivalentTo("100.0@2017-09-01");
+        }
+
         #endregion
 
 
