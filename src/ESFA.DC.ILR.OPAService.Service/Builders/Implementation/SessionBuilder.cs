@@ -12,20 +12,20 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
 {
     public class SessionBuilder : ISessionBuilder
     {
-        public bool rulebaseInitialised { get; set; }
-        public Rulebase rulebase { get; set; }
-        public Engine engine => _engine;
+        internal bool RulebaseInitialised { get; set; }
+        internal Rulebase Rulebase { get; set; }
+        internal Engine Engine => _engine;
         
         private readonly Engine _engine = Engine.INSTANCE;
 
         public Session CreateOPASession(string rulebaseZipFile, DataEntity globalEntity)
         {
-            if (!rulebaseInitialised)
+            if (!RulebaseInitialised)
             {
-                rulebase = engine.GetRulebase(rulebaseZipFile);
-                rulebaseInitialised = true;
+                Rulebase = Engine.GetRulebase(rulebaseZipFile);
+                RulebaseInitialised = true;
             }
-            Session session = engine.CreateSession(rulebase);
+            Session session = Engine.CreateSession(Rulebase);
 
             var inputGlobalInstance = session.GetGlobalEntityInstance();
 
@@ -140,7 +140,6 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
             {
                 //Log something
             }
-
         }
 
         protected internal ArrayList MapTemporalValue(IList<TemporalValueItem> valueList)
