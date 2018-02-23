@@ -55,6 +55,27 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
                 }
             }
         }
+        
+        protected internal AttributeData MapOpaAttributeToDataEntity(EntityInstance entityInstance, RBAttr attr)
+        {
+            object value = attr.GetValue(entityInstance);
+            if (value is TemporalValue)
+            {
+                var attributeData = new AttributeData(attr.GetName(), null);
+                var temporalValue = value as TemporalValue;
+                var startDate = new DateTime(2017, 8, 1); //TODO: date and period values in config?
+                for (int period = 0; period < 12; period++) //TODO: date and period values in config?
+                {
+                    var date = startDate.AddMonths(period);
+                    var index = temporalValue.FindChangePointIndex(new ChangePointDate(date.Year, date.Month, date.Day));
+                    var val = temporalValue.GetValue(index);
+                    attributeData.Changepoints.Add(new TemporalValueItem(date, val, string.Empty));
+                }
+                return attributeData;
+            }
+
+            return new AttributeData(attr.GetName(), value is String ? value.ToString().Trim() : value);
+        }
 
         protected internal void MapEntities(EntityInstance instance, List childEntities, DataEntity dataEntity)
         {
@@ -68,28 +89,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
             }
         }
 
-        protected internal AttributeData MapOpaAttributeToDataEntity(EntityInstance entityInstance, RBAttr attr)
-        {
-            object value = attr.GetValue(entityInstance);
-            if (value is TemporalValue)
-            {
-                var attributeData = new AttributeData(attr.GetName(), null);
-                var temporalValue = value as TemporalValue;
-                var startDate = new DateTime(2017, 8, 1);
-                for (int period = 0; period < 12; period++)
-                {
-                    var date = startDate.AddMonths(period);
-                    var index = temporalValue.FindChangePointIndex(new ChangePointDate(date.Year, date.Month, date.Day));
-                    var val = temporalValue.GetValue(index);
-                    attributeData.Changepoints.Add(new TemporalValueItem(date, val, string.Empty));
-                }
-                return attributeData;
-            }
-            return new AttributeData(attr.GetName(), value is String ? value.ToString().Trim() : value);
-
-        }
-
         #endregion
-        
+
     }
 }
