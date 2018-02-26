@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity;
-using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity.Attribute;
+using ESFA.DC.ILR.OPAService.Model.Interface.DataEntity;
+using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 using Xunit;
 using FluentAssertions;
 
 
-namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
+namespace ESFA.DC.ILR.OPAService.Model.Tests.DataEntity
 {
     public class DataEntityTests
     {
@@ -23,7 +23,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             // Use Test Helpers
 
             //ACT
-            var dataEntityExists = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity dataEntityExists = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ASSERT
             dataEntityExists.Should().NotBeNull();
@@ -39,7 +39,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             // Use Test Helpers
 
             //ACT
-            var dataEntityMatch = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity dataEntityMatch = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ASSERT
             dataEntityMatch.Should().BeEquivalentTo(entityDefault);
@@ -55,7 +55,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             string dataEntityNotMatchEntityVal = "Entity";
 
             //ACT
-            var dataEntityNotMatch = new Models.DataEntity.DataEntity(dataEntityNotMatchEntityVal);
+            IDataEntity dataEntityNotMatch = new Models.DataEntity.DataEntity(dataEntityNotMatchEntityVal);
 
             //ASSERT
             dataEntityNotMatch.Should().NotBeSameAs(entityDefault);
@@ -75,7 +75,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             // Use Test Helpers
 
             //ACT
-            var entityNameExists = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity entityNameExists = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ASSERT
             entityNameExists.EntityName.Should().NotBeNull();
@@ -91,7 +91,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             // Use Test Helpers
 
             //ACT
-            var entityNameMatch = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity entityNameMatch = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ASSERT
             entityNameMatch.EntityName.Should().BeEquivalentTo(entityNameDefault);
@@ -107,7 +107,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             string dataEntityNotMatchEntityVal = "Entity";
 
             //ACT
-            var entityNameNotMatch = new Models.DataEntity.DataEntity(dataEntityNotMatchEntityVal);
+            IDataEntity entityNameNotMatch = new Models.DataEntity.DataEntity(dataEntityNotMatchEntityVal);
 
             //ASSERT
             entityNameNotMatch.EntityName.Should().NotBeSameAs(entityNameDefault);
@@ -120,13 +120,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_EntityName_Children_DoesMatch()
         {
             //ARRANGE
-            var entityChildNameMatch = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity entityChildNameMatch = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT
-            entityChildNameMatch.Children = new List<Models.DataEntity.DataEntity>()
-            {
-                entityChildDefault
-            };
+            entityChildNameMatch.AddChild(entityChildDefault);
+            
 
             //ASSERT
             entityChildNameMatch.Children.Select(c => c.EntityName).First().Should().BeEquivalentTo(entityChildNameDefault);
@@ -146,7 +144,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             //Use Test Helpers
 
             //ACT
-            var attributesExistEmpty = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity attributesExistEmpty = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ASSERT
             attributesExistEmpty.Attributes.Should().BeEmpty();
@@ -159,7 +157,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Attributes_DoesExistNotEmpty()
         {
             //ARRANGE
-            var attributesExistNotEmpty = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity attributesExistNotEmpty = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT
             attributesExistNotEmpty.Attributes.Add(attributeDataDefaultName, attributeDataDefault);
@@ -176,9 +174,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         {
             //ARRANGE
             //Use Test Helpers
-            
+
             //ACT
-            var attributesCountZero = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity attributesCountZero = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ASSERT
             attributesCountZero.Attributes.Count.Should().Be(0);
@@ -191,7 +189,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Attributes_CountOne()
         {
             //ARRANGE
-            var attributesCountOne = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity attributesCountOne = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT  
             attributesCountOne.Attributes.Add(attributeDataDefaultName, attributeDataDefault);
@@ -207,7 +205,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Attributes_DoesMatch()
         {
             //ARRANGE
-            var attributesMatch = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity attributesMatch = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT
             attributesMatch.Attributes.Add(attributeDataDefaultName, attributeDataDefault);
@@ -223,7 +221,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Attributes_DoesNotMatch()
         {
             //ARRANGE
-            var attributesNotMatch = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity attributesNotMatch = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT
             attributesNotMatch.Attributes.Add("Attribute100", new AttributeData("Attribute100", 100));
@@ -243,13 +241,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Parent_DoesExist()
         {
             //ARRANGE
-            var parentExists = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity parentExists = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT
-            parentExists.Parent = new Models.DataEntity.DataEntity(entityParentNameDefault);
+            parentExists.AddChild(entityChildDefault);
+            parentExists.Children.First().Parent = new Models.DataEntity.DataEntity(entityNameDefault); 
 
-            //ASSERT
-            parentExists.Parent.Should().NotBeNull();
+           //ASSERT
+            parentExists.Children.First().Parent.Should().NotBeNull();
         }
 
         /// <summary>
@@ -259,13 +258,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Parent_DoesNotExist()
         {
             //ARRANGE
-            //Use Test Helpers
+            IDataEntity parentNotExists = new Models.DataEntity.DataEntity(entityParentNameDefault);
 
             //ACT
-            var parentNotExists = new Models.DataEntity.DataEntity(entityParentNameDefault);
+            parentNotExists.AddChild(entityChildDefault);
 
             //ASSERT
-            parentNotExists.Parent.Should().BeNull();
+            parentNotExists.Children.First().Parent.Should().BeNull();
         }
 
         /// <summary>
@@ -275,13 +274,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Parent_DoesMatch()
         {
             //ARRANGE
-            var parentMatch = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity parentMatch = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT
-            parentMatch.Parent = new Models.DataEntity.DataEntity(entityParentNameDefault);
+            parentMatch.AddChild(entityChildDefault);
+            parentMatch.Children.First().Parent = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ASSERT
-            parentMatch.Parent.Should().BeEquivalentTo(entityParentDefault);
+            parentMatch.Children.First().Parent.Should().BeEquivalentTo(entityDefault);
         }
 
         /// <summary>
@@ -291,13 +291,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Parent_DoesNotMatch()
         {
             //ARRANGE
-            var parentNotMatch = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity parentNotMatch = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT
-            parentNotMatch.Parent = new Models.DataEntity.DataEntity("NotParent");
+            parentNotMatch.AddChild(entityChildDefault);
+            parentNotMatch.Children.First().Parent = new Models.DataEntity.DataEntity("NotParent");
 
             //ASSERT
-            parentNotMatch.Parent.Should().NotBeSameAs(entityParentDefault);
+            parentNotMatch.Children.First().Parent.Should().NotBeSameAs(entityParentDefault);
         }
 
         #endregion
@@ -311,13 +312,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Children_DoesExist()
         {
             //ARRANGE
-            var childrenExists = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity childrenExists = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT
-            childrenExists.Children = new List<Models.DataEntity.DataEntity>()
+            childrenExists.AddChildren(new List<Models.DataEntity.DataEntity>()
             {
-                entityChildDefault
-            };
+                new Models.DataEntity.DataEntity("Child")
+            });
 
             //ASSERT
             childrenExists.Children.Should().NotBeNullOrEmpty();
@@ -333,7 +334,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             //UseTest Helpers
 
             //ACT
-            var childrenNotExists = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity childrenNotExists = new Models.DataEntity.DataEntity(entityNameDefault);
 
 
             //ASSERT
@@ -347,13 +348,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Children_DoesMatch()
         {
             //ARRANGE
-            var childrenMatch = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity childrenMatch = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT
-            childrenMatch.Children = new List<Models.DataEntity.DataEntity>()
+            childrenMatch.AddChildren(new List<Models.DataEntity.DataEntity>()
             {
-                entityChildDefault
-            };
+                new Models.DataEntity.DataEntity("Child")
+            });
 
             //ASSERT
             childrenMatch.Children.Should().BeEquivalentTo(entityChildDefault);
@@ -366,13 +367,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Children_DoesNotMatch()
         {
             //ARRANGE
-            var childrenNotMatch = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity childrenNotMatch = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT
-            childrenNotMatch.Children = new List<Models.DataEntity.DataEntity>()
+            childrenNotMatch.AddChildren(new List<Models.DataEntity.DataEntity>()
             {
                 new Models.DataEntity.DataEntity("NotChild")
-            };
+            });
 
             //ASSERT
             childrenNotMatch.Children.First().Should().NotBeSameAs(entityChildDefault);
@@ -385,14 +386,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_Children_DoesMatchMany()
         {
             //ARRANGE
-            var childrenMatchList = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity childrenMatchList = new Models.DataEntity.DataEntity(entityNameDefault);
 
             //ACT
-            childrenMatchList.Children = new List<Models.DataEntity.DataEntity>()
+            childrenMatchList.AddChildren(new List<Models.DataEntity.DataEntity>()
             {
                 new Models.DataEntity.DataEntity("Child1"),
                 new Models.DataEntity.DataEntity("Child2")
-            };
+            });
 
             //ASSERT
             childrenMatchList.Children.Should().BeEquivalentTo(childList);
@@ -409,7 +410,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_LearnRefNumber_DoesExist()
         {
             //ARRANGE
-            var learnRefNumberAttributeExists = new Models.DataEntity.DataEntity(entityLearnerNameDefault);
+            IDataEntity learnRefNumberAttributeExists = new Models.DataEntity.DataEntity(entityLearnerNameDefault);
             learnRefNumberAttributeExists.Attributes.Add(attributeDataLearnerName, attributeDataLearnerDefault);
 
             //ACT
@@ -426,7 +427,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_LearnRefNumber_DoesNotExist()
         {
             //ARRANGE
-            var learnRefNumberAttributeNotExists = new Models.DataEntity.DataEntity(entityLearnerNameDefault);
+            IDataEntity learnRefNumberAttributeNotExists = new Models.DataEntity.DataEntity(entityLearnerNameDefault);
 
             //ACT
             var learnRefNumberNotExists = learnRefNumberAttributeNotExists.LearnRefNumber;
@@ -443,7 +444,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_LearnRefNumber_DoesMatch()
         {
             //ARRANGE
-            var learnRefNumberAttributeMatch = new Models.DataEntity.DataEntity(entityLearnerNameDefault);
+            IDataEntity learnRefNumberAttributeMatch = new Models.DataEntity.DataEntity(entityLearnerNameDefault);
             learnRefNumberAttributeMatch.Attributes.Add(attributeDataLearnerName, attributeDataLearnerDefault);
 
             //ACT
@@ -461,7 +462,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_LearnRefNumber_DoesNotMatch()
         {
             //ARRANGE
-            var learnRefNumberAttributeNotMatch = new Models.DataEntity.DataEntity(entityLearnerNameDefault);
+            IDataEntity learnRefNumberAttributeNotMatch = new Models.DataEntity.DataEntity(entityLearnerNameDefault);
             learnRefNumberAttributeNotMatch.Attributes
                 .Add(attributeDataLearnerName, new AttributeData("LearnRefNumber", "LearnerTest20"));
 
@@ -483,7 +484,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         public void OPA_DataEntity_IsGLobal_True()
         {
             //ARRANGE
-            var dataEntityIsGlobalTrue = new Models.DataEntity.DataEntity(entityNameDefault);
+            IDataEntity dataEntityIsGlobalTrue = new Models.DataEntity.DataEntity(entityNameDefault);
             
             //ACT
             var isGlobalTrue = dataEntityIsGlobalTrue.IsGlobal;
@@ -495,11 +496,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
         /// <summary>
         /// Return DataEntity Item and check IsGlobal flag
         /// </summary>
-        [Fact(DisplayName = "DataEntity - IsGLobal False EntityNameNotMatch"), Trait("OPA Model", "Unit")]
-        public void OPA_DataEntity_IsGLobal_False_EntityNameNotMatch()
+        [Fact(DisplayName = "DataEntity - IsGLobal False"), Trait("OPA Model", "Unit")]
+        public void OPA_DataEntity_IsGLobal_False()
         {
             //ARRANGE
-            var dataEntityIsGlobalFalseNameNotMatch = new Models.DataEntity.DataEntity("NotGlobal");
+            IDataEntity dataEntityIsGlobalFalseNameNotMatch = new Models.DataEntity.DataEntity("NotGlobal");
             
             //ACT
             var isGlobalFalseNameNotMatch = dataEntityIsGlobalFalseNameNotMatch.IsGlobal;
@@ -507,41 +508,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             //ASSERT
             isGlobalFalseNameNotMatch.Should().BeFalse();
         }
-
-        /// <summary>
-        /// Return DataEntity Item and check IsGlobal flag
-        /// </summary>
-        [Fact(DisplayName = "DataEntity - IsGLobal False EntityNameNull"), Trait("OPA Model", "Unit")]
-        public void OPA_DataEntity_IsGLobal_False_EntityNameNull()
-        {
-            //ARRANGE
-            var dataEntityIsGlobalFalseNameNull = new Models.DataEntity.DataEntity(entityNameDefault);
-            dataEntityIsGlobalFalseNameNull.EntityName = String.Empty;
-
-            //ACT
-            var isGlobalFalseNameNull = dataEntityIsGlobalFalseNameNull.IsGlobal;
-
-            //ASSERT
-            isGlobalFalseNameNull.Should().BeFalse();
-        }
-
-        /// <summary>
-        /// Return DataEntity Item and check IsGlobal flag
-        /// </summary>
-        [Fact(DisplayName = "DataEntity - IsGLobal False EntityNameNull And NameNotMatch"), Trait("OPA Model", "Unit")]
-        public void OPA_DataEntity_IsGLobal_False_EntityNameNullAndNotMatch()
-        {
-            //ARRANGE
-            var dataEntityIsGlobalFalseEntityNameNullAndNotMatch = new Models.DataEntity.DataEntity("NotGlobal");
-            dataEntityIsGlobalFalseEntityNameNullAndNotMatch.EntityName = String.Empty;
-
-            //ACT
-            var isGlobalFalseNameNullAndNotMatch = dataEntityIsGlobalFalseEntityNameNullAndNotMatch.IsGlobal;
-
-            //ASSERT
-            isGlobalFalseNameNullAndNotMatch.Should().BeFalse();
-        }
-
+        
         #endregion
 
         #region Data Entity AddChild Tests
@@ -556,7 +523,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             var addChildExists = entityDefault;
 
             //ACT
-            addChildExists.AddChild(entityLearnerDefault);
+            addChildExists.AddChild(new Models.DataEntity.DataEntity("Learner"));
 
             //ASSERT
             addChildExists.Children.Should().NotBeNullOrEmpty();
@@ -572,7 +539,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             var addChildMatch = entityDefault;
 
             //ACT
-            addChildMatch.AddChild(entityLearnerDefault);
+            addChildMatch.AddChild(new Models.DataEntity.DataEntity("Learner"));
 
             //ASSERT
             addChildMatch.Children.Should().BeEquivalentTo(entityLearnerDefault);
@@ -588,7 +555,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             var addChildNotMatch = entityDefault;
 
             //ACT
-            addChildNotMatch.AddChild(entityChildDefault);
+            addChildNotMatch.AddChild(new Models.DataEntity.DataEntity("Learner"));
 
             //ASSERT
             addChildNotMatch.Children.First().Should().NotBeSameAs(entityLearnerDefault);
@@ -604,7 +571,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
             var addChildCount = entityDefault;
 
             //ACT
-            addChildCount.AddChild(entityLearnerDefault);
+            addChildCount.AddChild(new Models.DataEntity.DataEntity("Learner"));
 
             //ASSERT
             addChildCount.Children.Count.Should().Be(1);
@@ -689,10 +656,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
 
         //Entity
         private readonly string entityNameDefault = "global";
-        private readonly Models.DataEntity.DataEntity entityDefault =
+        private readonly IDataEntity entityDefault =
             new Models.DataEntity.DataEntity("global");
         private readonly string entityParentNameDefault = "Parent";
-        private readonly Models.DataEntity.DataEntity entityParentDefault =
+        private readonly IDataEntity entityParentDefault =
             new Models.DataEntity.DataEntity("Parent");
         private readonly string entityChildNameDefault = "Child";
         private readonly Models.DataEntity.DataEntity entityChildDefault =
@@ -704,7 +671,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity
                 new Models.DataEntity.DataEntity("Child2")
             };
         private readonly string entityLearnerNameDefault = "Learner";
-        private readonly Models.DataEntity.DataEntity entityLearnerDefault =
+        private readonly IDataEntity entityLearnerDefault =
             new Models.DataEntity.DataEntity("Learner");
         
 

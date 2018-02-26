@@ -243,7 +243,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
             });
 
             var mockData = MockTestObject(larsLearningDeliveryMock.Object);           
-            var larsLearningDelivery = mockData.LarsLearningDelivery.Where(l => l.Key == learnAimRef).Select(v => v.Value).DefaultIfEmpty(null).First();
+            var larsLearningDelivery = mockData.LarsLearningDelivery.Where(l => l.Key == learnAimRef).Select(v => v.Value).SingleOrDefault();
 
             return larsLearningDelivery;
         }
@@ -257,7 +257,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
             });
 
             var mockData = MockTestObject(larsFundingMock.Object);
-            var larsFunding = mockData.LarsFunding.Where(l => l.Key == learnAimRef).Select(v => v.Value).DefaultIfEmpty(null).First();
+            var larsFunding = mockData.LarsFunding.Where(l => l.Key == learnAimRef).Select(v => v.Value).SingleOrDefault();
 
             return larsFunding;
         }

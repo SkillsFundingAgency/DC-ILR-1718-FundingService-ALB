@@ -195,7 +195,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
             });
 
             var mockData = MockTestObject(sfaAreaCostMock.Object);
-            var sfaAreaCost = mockData.SfaAreaCost.Where(l => l.Key == postcode).Select(v => v.Value).DefaultIfEmpty(null).First();
+            var sfaAreaCost = mockData.SfaAreaCost.Where(l => l.Key == postcode).Select(v => v.Value).SingleOrDefault();
 
             return sfaAreaCost;
         }

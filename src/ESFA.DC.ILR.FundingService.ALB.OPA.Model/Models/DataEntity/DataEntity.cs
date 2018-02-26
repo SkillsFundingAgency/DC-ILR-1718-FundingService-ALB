@@ -1,13 +1,14 @@
-﻿using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity.Attribute;
+﻿using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ESFA.DC.ILR.OPAService.Model.Interface.DataEntity;
 
-namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity
+namespace ESFA.DC.ILR.OPAService.Model.Models.DataEntity
 {
-    public class DataEntity
+    public class DataEntity : IDataEntity
     {
         #region Constants
 

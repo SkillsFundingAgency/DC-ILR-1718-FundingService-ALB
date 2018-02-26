@@ -1,11 +1,12 @@
 ﻿using System;
 using Xunit;
 using FluentAssertions;
-using ESFA.DC.ILR.FundingService.ALB.OPA.Model.Models.DataEntity.Attribute;
+using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 using System.Linq;
 using System.Collections.Generic;
+using ESFA.DC.ILR.OPAService.Model.Interface.DataEntity.Attribute;
 
-namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
+namespace ESFA.DC.ILR.OPAService.Model.Tests.DataEntity.Attribute
 {
     public class AttributeDataTests
     {
@@ -19,9 +20,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         {
             //ARRANGE
             // Use Test Helpers
-           
+
             //ACT
-            var attributeDataExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IAttributeData attributeDataExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
 
             //ASSERT
             attributeDataExists.Should().NotBeNull();
@@ -37,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             // Use Test Helpers
 
             //ACT
-            var attributeDataDoesMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IAttributeData attributeDataDoesMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
 
             //ASSERT
             attributeDataDoesMatch.Should().BeEquivalentTo(attributeDataDefault);
@@ -53,7 +54,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             string attributeDataNotMatchNameString = "Attribute25";
 
             //ACT
-            var attributeDataDoesNotMatch = new AttributeData(attributeDataNotMatchNameString, attributeDataDefaultValue);
+            IAttributeData attributeDataDoesNotMatch = new AttributeData(attributeDataNotMatchNameString, attributeDataDefaultValue);
 
             //ASSERT
             attributeDataDoesNotMatch.Should().NotBeSameAs(attributeDataDefault);
@@ -73,7 +74,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             // Use Test Helpers
 
             //ACT
-            var attributeDataNameExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IAttributeData attributeDataNameExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
 
             //ASSERT
             attributeDataNameExists.Name.Should().NotBeNull();
@@ -89,7 +90,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             // Use Test Helpers
 
             //ACT
-            var attributeDataNameMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IAttributeData attributeDataNameMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
 
             //ASSERT
             attributeDataNameMatch.Name.Should().BeEquivalentTo(attributeDataDefaultName);
@@ -105,7 +106,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             string attributeDataNameNotMatchString = "Attribute25";
 
             //ACT
-            var attributeDataNameNotMatch = new AttributeData(attributeDataNameNotMatchString, attributeDataDefaultValue);
+            IAttributeData attributeDataNameNotMatch = new AttributeData(attributeDataNameNotMatchString, attributeDataDefaultValue);
 
             //ASSERT
             attributeDataNameNotMatch.Name.Should().NotBeSameAs(attributeDataDefaultName);
@@ -125,7 +126,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             // Use Test Helpers
 
             //ACT
-            var attributeDataValueExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IAttributeData attributeDataValueExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
 
             //ASSERT
             attributeDataValueExists.Value.Should().NotBeNull();
@@ -141,7 +142,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             // Use Test Helpers
 
             //ACT
-            var attributeDataValueMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IAttributeData attributeDataValueMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
 
             //ASSERT
             attributeDataValueMatch.Value.Should().BeEquivalentTo(attributeDataDefaultValue);
@@ -157,7 +158,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             object attributeDataValueNotMatchObj = 8000;
 
             //ACT
-            var attributeDataValueNotMatch = new AttributeData(attributeDataDefaultName, attributeDataValueNotMatchObj);
+            IAttributeData attributeDataValueNotMatch = new AttributeData(attributeDataDefaultName, attributeDataValueNotMatchObj);
 
             //ASSERT
             attributeDataValueNotMatch.Value.Should().NotBeSameAs(attributeDataDefaultValue);
@@ -177,8 +178,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             // Use Test Helpers
 
             //ACT
-            var attributeDataChangepointsExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
-            attributeDataChangepointsExists.Changepoints.Add(attributeTemporalValueItemDefault);
+            IAttributeData attributeDataChangepointsExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            attributeDataChangepointsExists.AddChangepoint(new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType));
 
             //ASSERT
             attributeDataChangepointsExists.Changepoints.Should().NotBeNull();
@@ -194,7 +195,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             // Use Test Helpers
 
             //ACT
-            var attributeDataChangepointsNotExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IAttributeData attributeDataChangepointsNotExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
             
             //ASSERT
             attributeDataChangepointsNotExists.Changepoints.Should().BeNullOrEmpty();
@@ -208,9 +209,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         {
             //ARRANGE
             var changePointMatch = new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType);
-          
+
             //ACT
-            var attributeDataChangepointsMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IAttributeData attributeDataChangepointsMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
             attributeDataChangepointsMatch.Changepoints.Add(changePointMatch);
 
             //ASSERT
@@ -227,7 +228,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             var changePointNotMatch = new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, "IncorrectType");
 
             //ACT
-            var attributeDataChangepointsNotMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IAttributeData attributeDataChangepointsNotMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
             attributeDataChangepointsNotMatch.Changepoints.Add(changePointNotMatch);
 
             //ASSERT
@@ -243,17 +244,17 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             //ARRANGE
             IList<TemporalValueItem> changePointCountValues = new List<TemporalValueItem>
             {
-                attributeTemporalValueItemDefault,
-                attributeTemporalValueItemDefault,
-                attributeTemporalValueItemDefault
-            };               
+                new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType),
+                new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType),
+                new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType)
+            };
 
             //ACT
-            var attributeDataChangepointsCountMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
-            attributeDataChangepointsCountMatch.Changepoints = changePointCountValues;
-
+            IAttributeData attributeDataChangepointsCountMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            attributeDataChangepointsCountMatch.AddChangepoints(changePointCountValues);
+                
             //ASSERT
-            attributeDataChangepointsCountMatch.Changepoints.Count().Should().Be(3);
+            attributeDataChangepointsCountMatch.Changepoints.Count.Should().Be(3);
         }
 
         #endregion
@@ -270,8 +271,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             // Use Test Helpers
 
             //ACT
-            var attributeDataIsTemporalTrue = new AttributeData(attributeDataDefaultName, null);
-            attributeDataIsTemporalTrue.Changepoints.Add(attributeTemporalValueItemDefault);
+            IAttributeData attributeDataIsTemporalTrue = new AttributeData(attributeDataDefaultName, null);
+            attributeDataIsTemporalTrue.AddChangepoint(new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType));
 
             //ASSERT
             attributeDataIsTemporalTrue.IsTemporal.Should().BeTrue();
@@ -287,7 +288,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             // Use Test Helpers
 
             //ACT
-            var attributeDataIsTemporalFalseNullValueZeroCP = new AttributeData(attributeDataDefaultName, null);
+            IAttributeData attributeDataIsTemporalFalseNullValueZeroCP = new AttributeData(attributeDataDefaultName, null);
 
             //ASSERT
             attributeDataIsTemporalFalseNullValueZeroCP.IsTemporal.Should().BeFalse();
@@ -303,7 +304,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             // Use Test Helpers
 
             //ACT
-            var attributeDataIsTemporalFalseValueZeroCP = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IAttributeData attributeDataIsTemporalFalseValueZeroCP = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
             
             //ASSERT
             attributeDataIsTemporalFalseValueZeroCP.IsTemporal.Should().BeFalse();
@@ -319,13 +320,129 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
             // Use Test Helpers
 
             //ACT
-            var attributeDataCIsTemporalValueAndCP = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
-            attributeDataCIsTemporalValueAndCP.Changepoints.Add(attributeTemporalValueItemDefault);
+            IAttributeData attributeDataCIsTemporalValueAndCP = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            attributeDataCIsTemporalValueAndCP.AddChangepoint(new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType));
 
             //ASSERT
             attributeDataCIsTemporalValueAndCP.IsTemporal.Should().BeFalse();
         }
 
+        #endregion
+
+        #region AttributeData AddChangePoint Tests
+
+        /// <summary>
+        /// Return AttributeData ChangePoint and check value
+        /// </summary>
+        [Fact(DisplayName = "AttributeData - AddChangePoint Does Exist"), Trait("OPA Model", "Unit")]
+        public void OPA_AttributeData_AddChangePoint_DoesExist()
+        {
+            //ARRANGE
+            IAttributeData addChangePointExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+
+            //ACT
+            addChangePointExists.AddChangepoint(new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType));
+
+            //ASSERT
+            addChangePointExists.Changepoints.Should().NotBeNull();
+        }
+
+        /// <summary>
+        /// Return AttributeData ChangePoint and check value
+        /// </summary>
+        [Fact(DisplayName = "AttributeData - AddChangePoint Does Match"), Trait("OPA Model", "Unit")]
+        public void OPA_AttributeData_AddChangePoint_DoesMatch()
+        {
+            //ARRANGE
+            IAttributeData addChangePointMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+
+            //ACT
+            addChangePointMatch.AddChangepoint(new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, attributeCPDefaultType ));
+
+            //ASSERT
+            addChangePointMatch.Changepoints.Should().BeEquivalentTo(attributeTemporalValueItemDefault);
+        }
+
+        /// <summary>
+        /// Return AttributeData ChangePoint and check value
+        /// </summary>
+        [Fact(DisplayName = "AttributeData - AddChangePoint Does Not Match"), Trait("OPA Model", "Unit")]
+        public void OPA_AttributeData_AddChangePoint_DoesNotMatch()
+        {
+            //ARRANGE
+            IAttributeData addChangePointNotMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+
+            //ACT
+            addChangePointNotMatch.AddChangepoint(new TemporalValueItem(attributeCPDefaultDate, attributeCPDefaultValue, "Type25"));
+
+            //ASSERT
+            addChangePointNotMatch.Changepoints.First().Should().NotBeSameAs(attributeTemporalValueItemDefault);
+        }
+
+        #endregion
+
+        #region AttributeData AddChangePoints Tests
+
+        /// <summary>
+        /// Return AttributeData ChangePoints and check value
+        /// </summary>
+        [Fact(DisplayName = "AttributeData - AddChangePoints Does Exist"), Trait("OPA Model", "Unit")]
+        public void OPA_AttributeData_AddChangePoints_DoesExist()
+        {
+            //ARRANGE
+            IAttributeData addChangePointsExists = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+
+            //ACT
+            addChangePointsExists.AddChangepoints(attributeTemporalValueItemDefaultList);
+
+            //ASSERT
+            addChangePointsExists.Changepoints.Should().NotBeNull();
+        }
+
+        /// <summary>
+        /// Return AttributeData ChangePoints and check value
+        /// </summary>
+        [Fact(DisplayName = "AttributeData - AddChangePoints Does Match"), Trait("OPA Model", "Unit")]
+        public void OPA_AttributeData_AddChangePoints_DoesMatch()
+        {
+            //ARRANGE
+            IAttributeData addChangePointsMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IEnumerable<TemporalValueItem> addChangePointsMatchList =
+                new List<TemporalValueItem>()
+                {
+                    new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "Type1"),
+                    new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "Type2")
+                };
+
+            //ACT
+            addChangePointsMatch.AddChangepoints(addChangePointsMatchList);
+
+            //ASSERT
+            addChangePointsMatch.Changepoints.Should().BeEquivalentTo(attributeTemporalValueItemDefaultList);
+        }
+
+        /// <summary>
+        /// Return AttributeData ChangePoints and check value
+        /// </summary>
+        [Fact(DisplayName = "AttributeData - AddChangePoints Does Not Match"), Trait("OPA Model", "Unit")]
+        public void OPA_AttributeData_AddChangePoints_DoesNotMatch()
+        {
+            //ARRANGE
+            IAttributeData addChangePointsNotMatch = new AttributeData(attributeDataDefaultName, attributeDataDefaultValue);
+            IEnumerable<TemporalValueItem> addChangePointsNotMatchList =
+                new List<TemporalValueItem>()
+                {
+                    new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "Type15"),
+                    new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "Type25")
+                };
+
+            //ACT
+            addChangePointsNotMatch.AddChangepoints(addChangePointsNotMatchList);
+
+            //ASSERT
+            addChangePointsNotMatch.Changepoints.First().Should().NotBeSameAs(attributeTemporalValueItemDefault);
+        }
+        
         #endregion
         
         #region Test Helpers
@@ -333,16 +450,22 @@ namespace ESFA.DC.ILR.FundingService.ALB.OPA.Model.Tests.DataEntity.Attribute
         private readonly string attributeDataDefaultName = "Attribute1";
         private readonly object attributeDataDefaultValue = 10;
 
-        private readonly AttributeData attributeDataDefault = new AttributeData("Attribute1", 10);
+        private readonly IAttributeData attributeDataDefault = new AttributeData("Attribute1", 10);
 
         private readonly DateTime attributeCPDefaultDate = DateTime.Parse("2017-08-01");
         private readonly object attributeCPDefaultValue = 100;
         private readonly string attributeCPDefaultType = "Type1";
 
-        private readonly TemporalValueItem attributeTemporalValueItemDefault =
+        private readonly ITemporalValueItem attributeTemporalValueItemDefault =
             new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "Type1");
 
-        #endregion
+        private readonly IEnumerable<TemporalValueItem> attributeTemporalValueItemDefaultList =
+            new List<TemporalValueItem>()
+            {
+                new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "Type1"),
+                new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "Type2")
+            };
 
+        #endregion
     }
 }
