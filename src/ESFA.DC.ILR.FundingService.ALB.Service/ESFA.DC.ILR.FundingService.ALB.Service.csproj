@@ -46,10 +46,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\Implementation\AttributeBuilder.cs" />
+    <Compile Include="Builders\Implementation\DataEntityBuilder.cs" />
+    <Compile Include="Builders\Interface\IAttributeBuilder.cs" />
+    <Compile Include="Builders\Interface\IDataEntityBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Implementation\" />
+    <Folder Include="Interface\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.OPA.Model\ESFA.DC.ILR.OPAService.Model.csproj">
+      <Project>{8982E202-D685-416C-8D11-E937BEDF4E3D}</Project>
+      <Name>ESFA.DC.ILR.OPAService.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
