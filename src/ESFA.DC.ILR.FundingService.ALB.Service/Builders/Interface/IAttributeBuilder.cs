@@ -41,11 +41,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
             Decimal areaCosFactor);
 
         IDictionary<string, AttributeData> BuildLearningDeliveryLarsFundingAttributes(
-            string lARSFundCategory,
-            DateTime lARSFundEffectiveFrom,
-            DateTime? lARSFundEffectiveTo,
-            Decimal? lARSFundWeightedRate,
-            string lARSFundWeightingFactor);
+            string larsFundCategory,
+            DateTime larsFundEffectiveFrom,
+            DateTime? larsFundEffectiveTo,
+            Decimal? larsFundWeightedRate,
+            string larsFundWeightingFactor);
 
     }
 }

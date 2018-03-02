@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity
         /// </summary>
-        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_Exists()
         {
             //ARRANGE
@@ -37,7 +37,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity
         /// </summary>
-        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity entities correct"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity entities correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_EntitiesCorrect()
         {
             //ARRANGE
@@ -54,7 +54,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity
         /// </summary>
-        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity entities count correct"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity entities count correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_EntitiesCountCorrect()
         {
             //ARRANGE
@@ -71,7 +71,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity
         /// </summary>
-        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity Attributes correct"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity Attributes correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_AttributesCorrect()
         {
             //ARRANGE
@@ -95,7 +95,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity
         /// </summary>
-        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity Attributes count correct"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity Attributes count correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_AttributesCountCorrect()
         {
             //ARRANGE
@@ -116,7 +116,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapOpaToEntity - Global Exists"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapOpaToEntity - Global Exists"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_GlobalExists()
         {
             //ARRANGE
@@ -132,7 +132,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapOpaToEntity - Global Parent Should not exist"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapOpaToEntity - Global Parent Should not exist"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_GlobalNoParent()
         {
             //ARRANGE
@@ -148,7 +148,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapOpaToEntity - Global Correct"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapOpaToEntity - Global Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_GlobalCorrect()
         {
             //ARRANGE
@@ -165,7 +165,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapOpaToEntity - Child Exists"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapOpaToEntity - Child Exists"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_ChildExists()
         {
             //ARRANGE
@@ -181,7 +181,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapOpaToEntity - Child's Parent Exists"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapOpaToEntity - Child's Parent Exists"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_ChildsParentExists()
         {
             //ARRANGE
@@ -197,7 +197,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapOpaToEntity - Child's Parent Correct"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapOpaToEntity - Child's Parent Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_ChildsParentCorrect()
         {
             //ARRANGE
@@ -214,7 +214,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapOpaToEntity - Child Correct"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapOpaToEntity - Child Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaToEntity_ChildCorrect()
         {
             //ARRANGE
@@ -235,7 +235,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check attributes are as expected
         /// </summary>
-        [Fact(DisplayName = "MapAttributes - Attributes Exist"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapAttributes - Attributes Exist"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapAttributes_AttributesExist()
         {
             //ARRANGE
@@ -251,7 +251,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check attributes are as expected
         /// </summary>
-        [Fact(DisplayName = "MapAttributes - Attributes Correct Count"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapAttributes - Attributes Correct Count"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapAttributes_AttributesCorrectCount()
         {
             //ARRANGE
@@ -267,7 +267,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check attributes are as expected
         /// </summary>
-        [Fact(DisplayName = "MapAttributes - Attributes Correct"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapAttributes - Attributes Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapAttributes_AttributesCorrect()
         {
             //ARRANGE
@@ -290,7 +290,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check attributes are as expected
         /// </summary>
-        [Fact(DisplayName = "MapOPAAttributesToDataEntity - Attributes Exist"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapOPAAttributesToDataEntity - Attributes Exist"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaAttributesToDataEntity_AttributesExist()
         {
             //ARRANGE
@@ -307,7 +307,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check attributes are as expected
         /// </summary>
-        [Fact(DisplayName = "MapOPAAttributesToDataEntity - Attributes Count"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapOPAAttributesToDataEntity - Attributes Count"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaAttributesToDataEntity_AttributesCount()
         {
             //ARRANGE
@@ -324,7 +324,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check attributes are as expected
         /// </summary>
-        [Fact(DisplayName = "MapOPAAttributesToDataEntity - Attributes Correct"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapOPAAttributesToDataEntity - Attributes Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapOpaAttributesToDataEntity_AttributesCorrect()
         {
             //ARRANGE
@@ -346,7 +346,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapEntities - Global Exists"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapEntities - Global Exists"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalExists()
         {
             //ARRANGE
@@ -363,7 +363,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapEntities - Global Correct"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapEntities - Global Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalCorrect()
         {
             //ARRANGE
@@ -380,7 +380,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapEntities - Global Children Exists"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapEntities - Global Children Exists"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalChildrenExists()
         {
             //ARRANGE
@@ -397,7 +397,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapEntities - Global Children Count"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapEntities - Global Children Count"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalChildrenCount()
         {
             //ARRANGE
@@ -414,7 +414,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapEntities - Global Children Correct"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapEntities - Global Children Correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalChildrenCorrect()
         {
             //ARRANGE
@@ -431,7 +431,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity and check entities are as expected
         /// </summary>
-        [Fact(DisplayName = "MapEntities - Global Children Correct Parent"), Trait("Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "MapEntities - Global Children Correct Parent"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_MapEntities_GlobalChildrenCorrectParent()
         {
             //ARRANGE
