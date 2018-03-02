@@ -74,7 +74,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             };
         }
 
-        public IDictionary<string, AttributeData> BuildLearningDeliveryAttributes(int aimSeqNumber, int compStatus, DateTime? learnActEndDate, string learnAimRefType, DateTime? learnPlanEndDate, DateTime? learnStartDate, string lrnDelFAM_ADL, string lrnDelFAM_RES, string notionalNVQLevelv2, DateTime? origLearnStartDate, long? otherFundAdj, int? outcome, long? priorLearnFundAdj, int? regulatedCreditValue)
+        public IDictionary<string, AttributeData> BuildLearningDeliveryAttributes(long aimSeqNumber, long compStatus, DateTime? learnActEndDate, string learnAimRefType, DateTime? learnPlanEndDate, DateTime? learnStartDate, string lrnDelFAM_ADL, string lrnDelFAM_RES, string notionalNVQLevelv2, DateTime? origLearnStartDate, long? otherFundAdj, long? outcome, long? priorLearnFundAdj, long? regulatedCreditValue)
         {
             return new Dictionary<string, AttributeData>
             {

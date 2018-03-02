@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
@@ -36,13 +38,61 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 
         public IEnumerable<DataEntity> CreateEntities(int ukprn, IEnumerable<MessageLearner> learners)
         {
-            IEnumerable<DataEntity> globalEntities = new List<DataEntity>();
-                
-            var global = GlobalEntity(ukprn);
+            var globalEntities = learners.Select(l =>
+            {
+                //Global Entity
+                var globalEntity = GlobalEntity(ukprn);
 
+                //Learner Entity
+                var learnerEntity = LearnerEntity(l.LearnRefNumber);
+
+                //LearningDelivery Entities
+                foreach (var learningDelivery in l.LearningDelivery)
+                {
+                    _referenceDataCache.LarsLearningDelivery.TryGetValue(learningDelivery.LearnAimRef, out LARSLearningDelivery larsLearningDelivery);
+                    var learningDeliveryEntity = LearningDeliveryEntity(learningDelivery, larsLearningDelivery);
+
+                    learnerEntity.AddChild(learningDeliveryEntity);
+
+                    //LearningDeliveryFAM Entities
+                    if (learningDelivery.LearningDeliveryFAM != null)
+                    {
+                        foreach (var learningDeliveryFAM in learningDelivery.LearningDeliveryFAM)
+                        {
+                            var learningDeliveryFAMEntity = LearningDeliveryFAMEntity(learningDeliveryFAM);
+                            
+                            learningDeliveryEntity.AddChild(learningDeliveryFAMEntity);
+                        }
+                    }
+
+                    //SFA Postcode Area Cost Entities
+                    if (_referenceDataCache.SfaAreaCost.ContainsKey(learningDelivery.DelLocPostCode))
+                    {
+                        learningDeliveryEntity.AddChildren(
+                            _referenceDataCache.SfaAreaCost[learningDelivery.DelLocPostCode]
+                                .Select(sfaAreaCost => SFAAreaCostEntity(sfaAreaCost)));
+                    }
+
+                    //LARS Funding Entities
+                    if (_referenceDataCache.LarsFunding.ContainsKey(learningDelivery.LearnAimRef))
+                    {
+                        learningDeliveryEntity.AddChildren(
+                            _referenceDataCache.LarsFunding[learningDelivery.LearnAimRef]
+                                .Select(larsFunding => LARSFundingEntity(larsFunding)));
+                                    
+                    }
+                }
+
+                globalEntity.AddChild(learnerEntity);
+
+                return globalEntity;
+
+            }).AsParallel();
 
             return globalEntities;
         }
+
+        #region Entity Builders
 
         protected internal DataEntity GlobalEntity(int ukprn)
         {
@@ -54,5 +104,109 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 
             return globalDataEntity;
         }
+
+        protected internal DataEntity LearnerEntity(string learnRefNumber)
+        {
+            DataEntity learnerDataEntity = new DataEntity(EntityLearner)
+            {
+                Attributes =
+                    _attributeBuilder.BuildLearnerAttributes(learnRefNumber)
+            };
+
+            return learnerDataEntity;
+        }
+
+        protected internal DataEntity LearningDeliveryEntity(MessageLearnerLearningDelivery learningDelivery, LARSLearningDelivery larsLearningDelivery)
+        {
+            DataEntity learningDeliveryDataEntity = new DataEntity(EntityLearningDelivery)
+            {
+                Attributes =
+                    _attributeBuilder.BuildLearningDeliveryAttributes(
+                        learningDelivery.AimSeqNumber,
+                        learningDelivery.CompStatus,
+                        learningDelivery.LearnActEndDateNullable,
+                        larsLearningDelivery.LearnAimRefType,
+                        learningDelivery.LearnPlanEndDateNullable,
+                        learningDelivery.LearnStartDateNullable,
+                        GetLDFAM(learningDelivery, "ADL"),
+                        GetLDFAM(learningDelivery, "RES"),
+                        larsLearningDelivery.NotionalNVQLevelv2,
+                        learningDelivery.OrigLearnStartDateNullable,
+                        learningDelivery.OtherFundAdjNullable,
+                        learningDelivery?.Outcome,
+                        learningDelivery.PriorLearnFundAdjNullable,
+                        larsLearningDelivery?.RegulatedCreditValue
+            )};
+
+            return learningDeliveryDataEntity;
+        }
+
+        protected internal DataEntity LearningDeliveryFAMEntity(MessageLearnerLearningDeliveryLearningDeliveryFAM learningDeliveryFam)
+        {
+            DataEntity learningDeliveryFAMDataEntity = new DataEntity(EntityLearningDeliveryFAM)
+            {
+                Attributes = 
+                    _attributeBuilder.BuildLearningDeliveryFAMAttributes(
+                        learningDeliveryFam.LearnDelFAMCode,
+                        learningDeliveryFam.LearnDelFAMDateFromNullable,
+                        learningDeliveryFam.LearnDelFAMDateToNullable,
+                        learningDeliveryFam.LearnDelFAMType
+            )};
+
+            return learningDeliveryFAMDataEntity;
+        }
+
+        protected internal DataEntity SFAAreaCostEntity(SfaAreaCost sfaAreaCost)
+        {
+            var sfaAreaCostDataEntity = new DataEntity(EntityLearningDeliverySFA_PostcodeAreaCost)
+            {
+                Attributes =
+                    _attributeBuilder.BuildLearningDeliverySfaAreaCostAttributes(
+                        sfaAreaCost?.EffectiveFrom,
+                        sfaAreaCost?.EffectiveTo,
+                        sfaAreaCost.AreaCostFactor
+                    )
+            };
+
+            return sfaAreaCostDataEntity;
+        }
+
+        protected internal DataEntity LARSFundingEntity(LARSFunding larsFunding)
+        {
+            var larsFundingDataENtity = new DataEntity(EntityLearningDeliveryLARS_Funding)
+            {
+                Attributes = _attributeBuilder.BuildLearningDeliveryLarsFundingAttributes(
+                    larsFunding.FundingCategory,
+                    larsFunding.EffectiveFrom,
+                    larsFunding?.EffectiveTo,
+                    larsFunding.RateWeighted,
+                    larsFunding.WeightingFactor
+                )
+            };
+
+            return larsFundingDataENtity;
+        }
+
+        #endregion
+
+        #region Helpers
+
+        public string GetLDFAM(MessageLearnerLearningDelivery learningDelivery, string famCode)
+        {
+            string famCodeValue;
+
+            if (learningDelivery.LearningDeliveryFAM != null)
+            {
+                famCodeValue = learningDelivery.LearningDeliveryFAM
+                    .Where(w => w.LearnDelFAMType.Contains(famCode) && w.LearnDelFAMDateFromNullable != null)
+                    .Select(ldf => ldf.LearnDelFAMCode).First();
+            }
+            else famCodeValue = null;
+
+            return famCodeValue;
+        }
+        
+        #endregion
+
     }
 }

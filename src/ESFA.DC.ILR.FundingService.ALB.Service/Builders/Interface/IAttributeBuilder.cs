@@ -14,8 +14,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
         IDictionary<string, AttributeData> BuildLearnerAttributes(string learnRefNumber);
 
         IDictionary<string, AttributeData> BuildLearningDeliveryAttributes(
-            int aimSeqNumber,
-            int compStatus,
+            long aimSeqNumber,
+            long compStatus,
             DateTime? learnActEndDate,
             string learnAimRefType,
             DateTime? learnPlanEndDate,
@@ -25,9 +25,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
             string notionalNVQLevelv2,
             DateTime? origLearnStartDate,
             long? otherFundAdj,
-            int? outcome,
+            long? outcome,
             long? priorLearnFundAdj,
-            int? regulatedCreditValue);
+            long? regulatedCreditValue);
 
         IDictionary<string, AttributeData> BuildLearningDeliveryFAMAttributes(
             string learnDelFAMCode, 

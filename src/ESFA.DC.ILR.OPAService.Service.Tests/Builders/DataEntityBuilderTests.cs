@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 using ESFA.DC.ILR.OPAService.Service.Builders.Implementation;
