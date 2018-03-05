@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.Model;
+using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 
@@ -36,18 +33,18 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 
         #endregion
 
-        public IEnumerable<DataEntity> CreateEntities(int ukprn, IEnumerable<MessageLearner> learners)
+        public IEnumerable<DataEntity> CreateEntities(int ukprn, IEnumerable<ILearner> learners)
         {
-            var globalEntities = learners.Select(l =>
+            var globalEntities = learners.Select(learner =>
             {
                 //Global Entity
                 var globalEntity = GlobalEntity(ukprn);
 
                 //Learner Entity
-                var learnerEntity = LearnerEntity(l.LearnRefNumber);
+                var learnerEntity = LearnerEntity(learner.LearnRefNumber);
 
                 //LearningDelivery Entities
-                foreach (var learningDelivery in l.LearningDelivery)
+                foreach (var learningDelivery in learner.LearningDeliveries)
                 {
                     _referenceDataCache.LarsLearningDelivery.TryGetValue(learningDelivery.LearnAimRef, out LARSLearningDelivery larsLearningDelivery);
                     var learningDeliveryEntity = LearningDeliveryEntity(learningDelivery, larsLearningDelivery);
@@ -55,9 +52,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                     learnerEntity.AddChild(learningDeliveryEntity);
 
                     //LearningDeliveryFAM Entities
-                    if (learningDelivery.LearningDeliveryFAM != null)
+                    if (learningDelivery.LearningDeliveryFAMs != null)
                     {
-                        foreach (var learningDeliveryFAM in learningDelivery.LearningDeliveryFAM)
+                        foreach (var learningDeliveryFAM in learningDelivery.LearningDeliveryFAMs)
                         {
                             var learningDeliveryFAMEntity = LearningDeliveryFAMEntity(learningDeliveryFAM);
                             
@@ -116,14 +113,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             return learnerDataEntity;
         }
 
-        protected internal DataEntity LearningDeliveryEntity(MessageLearnerLearningDelivery learningDelivery, LARSLearningDelivery larsLearningDelivery)
+        protected internal DataEntity LearningDeliveryEntity(ILearningDelivery learningDelivery, LARSLearningDelivery larsLearningDelivery)
         {
             DataEntity learningDeliveryDataEntity = new DataEntity(EntityLearningDelivery)
             {
                 Attributes =
                     _attributeBuilder.BuildLearningDeliveryAttributes(
-                        learningDelivery.AimSeqNumber,
-                        learningDelivery.CompStatus,
+                        learningDelivery.AimSeqNumberNullable,
+                        learningDelivery.CompStatusNullable,
                         learningDelivery.LearnActEndDateNullable,
                         larsLearningDelivery.LearnAimRefType,
                         learningDelivery.LearnPlanEndDateNullable,
@@ -133,7 +130,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                         larsLearningDelivery.NotionalNVQLevelv2,
                         learningDelivery.OrigLearnStartDateNullable,
                         learningDelivery.OtherFundAdjNullable,
-                        learningDelivery?.Outcome,
+                        learningDelivery.OutcomeNullable,
                         learningDelivery.PriorLearnFundAdjNullable,
                         larsLearningDelivery?.RegulatedCreditValue
             )};
@@ -141,7 +138,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             return learningDeliveryDataEntity;
         }
 
-        protected internal DataEntity LearningDeliveryFAMEntity(MessageLearnerLearningDeliveryLearningDeliveryFAM learningDeliveryFam)
+        protected internal DataEntity LearningDeliveryFAMEntity(ILearningDeliveryFAM learningDeliveryFam)
         {
             DataEntity learningDeliveryFAMDataEntity = new DataEntity(EntityLearningDeliveryFAM)
             {
@@ -191,13 +188,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 
         #region Helpers
 
-        public string GetLDFAM(MessageLearnerLearningDelivery learningDelivery, string famCode)
+        public string GetLDFAM(ILearningDelivery learningDelivery, string famCode)
         {
             string famCodeValue;
 
-            if (learningDelivery.LearningDeliveryFAM != null)
+            if (learningDelivery.LearningDeliveryFAMs != null)
             {
-                famCodeValue = learningDelivery.LearningDeliveryFAM
+                famCodeValue = learningDelivery.LearningDeliveryFAMs
                     .Where(w => w.LearnDelFAMType.Contains(famCode) && w.LearnDelFAMDateFromNullable != null)
                     .Select(ldf => ldf.LearnDelFAMCode).First();
             }

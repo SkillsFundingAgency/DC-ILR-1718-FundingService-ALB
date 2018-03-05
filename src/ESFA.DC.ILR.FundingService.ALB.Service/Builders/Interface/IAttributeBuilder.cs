@@ -14,8 +14,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
         IDictionary<string, AttributeData> BuildLearnerAttributes(string learnRefNumber);
 
         IDictionary<string, AttributeData> BuildLearningDeliveryAttributes(
-            long aimSeqNumber,
-            long compStatus,
+            long? aimSeqNumber,
+            long? compStatus,
             DateTime? learnActEndDate,
             string learnAimRefType,
             DateTime? learnPlanEndDate,
