@@ -30,24 +30,26 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
         private const string EntityLearningDeliveryFAM = "LearningDeliveryFAM";
         private const string EntityLearningDeliverySFA_PostcodeAreaCost = "SFA_PostcodeAreaCost";
         private const string EntityLearningDeliveryLARS_Funding = "LearningDeliveryLARS_Funding";
+        private const string LearningDeliveryFAMTypeADL = "ADL";
+        private const string LearningDeliveryFAMTypeRES = "RES";
 
         #endregion
 
-        public IEnumerable<DataEntity> CreateEntities(int ukprn, IEnumerable<ILearner> learners)
+        public IEnumerable<DataEntity> EntityBuilder(int ukprn, IEnumerable<ILearner> learners)
         {
             var globalEntities = learners.Select(learner =>
             {
                 //Global Entity
-                var globalEntity = GlobalEntity(ukprn);
+                DataEntity globalEntity = GlobalEntity(ukprn);
 
                 //Learner Entity
-                var learnerEntity = LearnerEntity(learner.LearnRefNumber);
+                DataEntity learnerEntity = LearnerEntity(learner.LearnRefNumber);
 
                 //LearningDelivery Entities
                 foreach (var learningDelivery in learner.LearningDeliveries)
                 {
                     _referenceDataCache.LarsLearningDelivery.TryGetValue(learningDelivery.LearnAimRef, out LARSLearningDelivery larsLearningDelivery);
-                    var learningDeliveryEntity = LearningDeliveryEntity(learningDelivery, larsLearningDelivery);
+                    DataEntity learningDeliveryEntity = LearningDeliveryEntity(learningDelivery, larsLearningDelivery);
 
                     learnerEntity.AddChild(learningDeliveryEntity);
 
@@ -56,7 +58,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                     {
                         foreach (var learningDeliveryFAM in learningDelivery.LearningDeliveryFAMs)
                         {
-                            var learningDeliveryFAMEntity = LearningDeliveryFAMEntity(learningDeliveryFAM);
+                            DataEntity learningDeliveryFAMEntity = LearningDeliveryFAMEntity(learningDeliveryFAM);
                             
                             learningDeliveryEntity.AddChild(learningDeliveryFAMEntity);
                         }
@@ -125,8 +127,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                         larsLearningDelivery.LearnAimRefType,
                         learningDelivery.LearnPlanEndDateNullable,
                         learningDelivery.LearnStartDateNullable,
-                        GetLDFAM(learningDelivery, "ADL"),
-                        GetLDFAM(learningDelivery, "RES"),
+                        GetLDFAM(learningDelivery, LearningDeliveryFAMTypeADL),
+                        GetLDFAM(learningDelivery, LearningDeliveryFAMTypeRES),
                         larsLearningDelivery.NotionalNVQLevelv2,
                         learningDelivery.OrigLearnStartDateNullable,
                         learningDelivery.OtherFundAdjNullable,
@@ -188,14 +190,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 
         #region Helpers
 
-        public string GetLDFAM(ILearningDelivery learningDelivery, string famCode)
+        public string GetLDFAM(ILearningDelivery learningDelivery, string famType)
         {
             string famCodeValue;
 
             if (learningDelivery.LearningDeliveryFAMs != null)
             {
                 famCodeValue = learningDelivery.LearningDeliveryFAMs
-                    .Where(w => w.LearnDelFAMType.Contains(famCode) && w.LearnDelFAMDateFromNullable != null)
+                    .Where(w => w.LearnDelFAMType.Contains(famType) && w.LearnDelFAMDateFromNullable != null)
                     .Select(ldf => ldf.LearnDelFAMCode).First();
             }
             else famCodeValue = null;

@@ -6,6 +6,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
 {
     public interface IDataEntityBuilder
     {
-        IEnumerable<DataEntity> CreateEntities(int ukprn, IEnumerable<ILearner> learners);
+        IEnumerable<DataEntity> EntityBuilder(int ukprn, IEnumerable<ILearner> learners);
     }
 }
