@@ -21,19 +21,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Implementation
             _opaService = opaService;
         }
 
-        public IEnumerable<DataEntity> ProcessFunding(Message message)
+        public IEnumerable<DataEntity> ProcessFunding(IMessage message)
         {
             int ukprn = message.LearningProviderEntity.UKPRN;
 
-            var learners = message.Learner
-                .Where(ld => ld.LearningDelivery
-                    .Any(fm => fm.FundModel.Equals(99)))
-                .Select(l => new MessageLearner
-                {
-                    LearnRefNumber = l.LearnRefNumber,
-                    LearningDelivery = l.LearningDelivery
-                });
-
+            var learners = message.Learners.Where(ld => ld.LearningDeliveries.Any(fm => fm.FundModelNullable == 99));
 
             //Generate Funding Inputs
             var inputDataEntities = _dataEntityBuilder.EntityBuilder(ukprn, learners);

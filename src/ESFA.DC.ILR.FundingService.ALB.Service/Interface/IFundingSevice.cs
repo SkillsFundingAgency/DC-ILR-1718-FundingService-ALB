@@ -7,6 +7,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Interface
 {
     public interface IFundingSevice
     {
-        IEnumerable<DataEntity> ProcessFunding(Message message);
+        IEnumerable<DataEntity> ProcessFunding(IMessage message);
     }
 }
