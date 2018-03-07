@@ -110,12 +110,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Files\ILR-10006341-1718-20171107-113456-01.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\ILR-10006341-1718-20180118-023456-01.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Files\ILR-10006341-1718-20180118-023456-02.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
