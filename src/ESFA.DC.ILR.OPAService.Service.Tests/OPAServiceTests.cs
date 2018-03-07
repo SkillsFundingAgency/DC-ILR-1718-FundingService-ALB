@@ -332,7 +332,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
         
         private IOPAService MockTestObject()
         {
-            return new Implementation.OPAService(new SessionBuilder(), new DataEntityBuilder(), rulebaseZipFile);
+            return new Implementation.OPAService(new SessionBuilder(), new OPADataEntityBuilder(), rulebaseZipFile);
         }
         
         private DataEntity MockOPAService(DataEntity dataEntity)

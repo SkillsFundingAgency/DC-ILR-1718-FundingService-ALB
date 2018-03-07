@@ -52,16 +52,15 @@
     <Compile Include="Builders\Implementation\DataEntityBuilder.cs" />
     <Compile Include="Builders\Interface\IAttributeBuilder.cs" />
     <Compile Include="Builders\Interface\IDataEntityBuilder.cs" />
+    <Compile Include="Implementation\FundingService.cs" />
+    <Compile Include="Interface\IFundingSevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ESFA.DC.ILR.FundingService.ALB.Service.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Implementation\" />
-    <Folder Include="Interface\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.ExternalData\ESFA.DC.ILR.FundingService.ALB.ExternalData.csproj">
       <Project>{91E3D0C6-1258-48E3-B1BC-695C46DD302D}</Project>
@@ -70,6 +69,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.OPA.Model\ESFA.DC.ILR.OPAService.Model.csproj">
       <Project>{8982E202-D685-416C-8D11-E937BEDF4E3D}</Project>
       <Name>ESFA.DC.ILR.OPAService.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.OPAService.Service\ESFA.DC.ILR.OPAService.Service.csproj">
+      <Project>{E52CD69D-4D3A-4866-8116-3D2F22B5B3BF}</Project>
+      <Name>ESFA.DC.ILR.OPAService.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

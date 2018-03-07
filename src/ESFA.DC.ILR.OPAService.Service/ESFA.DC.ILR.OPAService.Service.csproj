@@ -50,9 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\Implementation\DataEntityBuilder.cs" />
+    <Compile Include="Builders\Implementation\OPADataEntityBuilder.cs" />
     <Compile Include="Builders\Implementation\SessionBuilder.cs" />
-    <Compile Include="Builders\Interface\IDataEntityBuilder.cs" />
+    <Compile Include="Builders\Interface\IOPADataEntityBuilder.cs" />
     <Compile Include="Builders\Interface\ISessionBuilder.cs" />
     <Compile Include="Implementation\OPAService.cs" />
     <Compile Include="Interface\IOPAService.cs" />

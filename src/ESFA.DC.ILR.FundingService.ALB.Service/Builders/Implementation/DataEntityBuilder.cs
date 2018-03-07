@@ -197,8 +197,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             if (learningDelivery.LearningDeliveryFAMs != null)
             {
                 famCodeValue = learningDelivery.LearningDeliveryFAMs
-                    .Where(w => w.LearnDelFAMType.Contains(famType) && w.LearnDelFAMDateFromNullable != null)
-                    .Select(ldf => ldf.LearnDelFAMCode).First();
+                    .Where(w => w.LearnDelFAMType.Contains(famType))
+                    .Select(ldf => ldf.LearnDelFAMCode).SingleOrDefault();
             }
             else famCodeValue = null;
 

@@ -8,9 +8,9 @@ using Oracle.Determinations.Masquerade.Util;
 
 namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
 {
-    public class DataEntityBuilder : IDataEntityBuilder
+    public class OPADataEntityBuilder : IOPADataEntityBuilder
     {
-        public DataEntity CreateDataEntity(EntityInstance entityInstance, DataEntity parentEntity)
+        public DataEntity CreateOPADataEntity(EntityInstance entityInstance, DataEntity parentEntity)
         {
             var globalEntity = MapOpaToEntity(entityInstance, parentEntity);
 

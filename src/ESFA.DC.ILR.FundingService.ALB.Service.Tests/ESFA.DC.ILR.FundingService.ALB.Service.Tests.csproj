@@ -78,11 +78,15 @@
   <ItemGroup>
     <Compile Include="Builders\AttributeBuilderTests.cs" />
     <Compile Include="Builders\DataEntityBuilderTests.cs" />
+    <Compile Include="FundingServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Rulebase\Loans Bursary 17_18.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.7.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
@@ -100,6 +104,21 @@
       <Project>{05FCEB04-1F18-4B30-892C-213FB0753D45}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.OPAService.Service\ESFA.DC.ILR.OPAService.Service.csproj">
+      <Project>{E52CD69D-4D3A-4866-8116-3D2F22B5B3BF}</Project>
+      <Name>ESFA.DC.ILR.OPAService.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Files\ILR-10006341-1718-20171107-113456-01.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ILR-10006341-1718-20180118-023456-01.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ILR-10006341-1718-20180118-023456-02.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -11,14 +11,14 @@ using Oracle.Determinations.Engine;
 
 namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
 {
-    public class DataEntityBuilderTests
+    public class OPADataEntityBuilderTests
     {
-        #region CreateDataEntity Tests
+        #region CreateOPADataEntity Tests
 
         /// <summary>
         /// Return Data Entity
         /// </summary>
-        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity"), Trait("OPA To Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "OPADataEntityBuilder - CreateOPADataEntity"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_Exists()
         {
             //ARRANGE
@@ -34,7 +34,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity
         /// </summary>
-        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity entities correct"), Trait("OPA To Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "OPADataEntityBuilder - CreateOPADataEntity entities correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_EntitiesCorrect()
         {
             //ARRANGE
@@ -51,7 +51,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity
         /// </summary>
-        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity entities count correct"), Trait("OPA To Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "OPADataEntityBuilder - CreateOPADataEntity entities count correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_EntitiesCountCorrect()
         {
             //ARRANGE
@@ -68,7 +68,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity
         /// </summary>
-        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity Attributes correct"), Trait("OPA To Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "OPADataEntityBuilder - CreateOPADataEntity Attributes correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_AttributesCorrect()
         {
             //ARRANGE
@@ -92,7 +92,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// <summary>
         /// Return Data Entity
         /// </summary>
-        [Fact(DisplayName = "DataEntityBuilder - CreateDataEntity Attributes count correct"), Trait("OPA To Data Entity Builder", "Unit")]
+        [Fact(DisplayName = "OPADataEntityBuilder - CreateOPADataEntity Attributes count correct"), Trait("OPA To Data Entity Builder", "Unit")]
         public void DataEntityBuilder_CreateDataEntity_AttributesCountCorrect()
         {
             //ARRANGE
@@ -479,16 +479,16 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
 
         private DataEntity GetOutputEntity()
         {
-            IDataEntityBuilder createDataEntity = new DataEntityBuilder();
+            IOPADataEntityBuilder createDataEntity = new OPADataEntityBuilder();
             EntityInstance entityInstance = TestEntityInstance();
             DataEntity dataEntity = null;
 
-            return createDataEntity.CreateDataEntity(entityInstance, dataEntity);
+            return createDataEntity.CreateOPADataEntity(entityInstance, dataEntity);
         }
 
         private DataEntity SetupMapToOpDataEntity()
         {
-            var mapToDataEntity = new DataEntityBuilder();
+            var mapToDataEntity = new OPADataEntityBuilder();
             EntityInstance entityInstance = TestEntityInstance();
             DataEntity dataEntity = null;
 
@@ -497,7 +497,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
 
         private List<AttributeData> SetupMapOpaAttribute()
         {
-            var db = new DataEntityBuilder();
+            var db = new OPADataEntityBuilder();
             var instance = TestEntityInstance();
             List<AttributeData> attributeList = new List<AttributeData>();
             var rbAttributes = instance.GetEntity().GetAttributes();
@@ -513,7 +513,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
 
         private DataEntity SetupMapAttributes()
         {
-            var mapAttributes = new DataEntityBuilder();
+            var mapAttributes = new OPADataEntityBuilder();
             EntityInstance entityInstance = TestEntityInstance();
             DataEntity dataEntity = new DataEntity(entityInstance.GetEntity().GetName());
             
@@ -524,7 +524,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
 
         private DataEntity SetupMapEntities()
         {
-            var mapEntities = new DataEntityBuilder();
+            var mapEntities = new OPADataEntityBuilder();
             var instance = TestEntityInstance();
             var childEntities = instance.GetEntity().GetChildEntities();
             var dataEntity = new DataEntity(instance.GetEntity().GetName());

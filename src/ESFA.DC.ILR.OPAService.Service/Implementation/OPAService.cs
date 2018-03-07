@@ -15,10 +15,10 @@ namespace ESFA.DC.ILR.OPAService.Service.Implementation
     public class OPAService : IOPAService
     {
         private readonly ISessionBuilder _sessionBuilder;
-        private readonly IDataEntityBuilder _dataEntityBuilder;
+        private readonly IOPADataEntityBuilder _dataEntityBuilder;
         private readonly string _rulebaseZipFile;
 
-        public OPAService(ISessionBuilder sessionBuilder, IDataEntityBuilder dataEntityBuilder, string rulebaseZipFile)
+        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder, string rulebaseZipFile)
         {
             _sessionBuilder = sessionBuilder;
             _dataEntityBuilder = dataEntityBuilder;
@@ -32,7 +32,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Implementation
             session.Think();
 
             var outputGlobalInstance = session.GetGlobalEntityInstance();
-            var outputEntity = _dataEntityBuilder.CreateDataEntity(outputGlobalInstance, null);
+            var outputEntity = _dataEntityBuilder.CreateOPADataEntity(outputGlobalInstance, null);
             
             return outputEntity;
         }

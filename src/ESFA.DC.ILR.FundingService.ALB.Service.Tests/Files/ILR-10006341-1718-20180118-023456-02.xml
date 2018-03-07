@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Message xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+
+xmlns="SFA/ILR/2017-18">
+  <Header>
+    <CollectionDetails>
+      <Collection>ILR</Collection>
+      <Year>1718</Year>
+      <FilePreparationDate>2018-07-31</FilePreparationDate>
+    </CollectionDetails>
+    <Source>
+      <ProtectiveMarking>OFFICIAL-SENSITIVE-Personal</ProtectiveMarking>
+      <UKPRN>10006341</UKPRN>
+      <SoftwareSupplier>Software Supplier</SoftwareSupplier>
+      <SoftwarePackage>Software Package</SoftwarePackage>
+      <Release>Release</Release>
+      <SerialNo>1</SerialNo>
+      <DateTime>2017-04-04T14:37:20</DateTime>
+    </Source>
+  </Header>
+  <LearningProvider>
+    <UKPRN>10006341</UKPRN>
+  </LearningProvider>
+ <Learner>
+    <LearnRefNumber>22v237</LearnRefNumber>
+    <ULN>1000000000</ULN>
+    <FamilyName>familyname</FamilyName>
+    <GivenNames>givennames</GivenNames>
+    <DateOfBirth>1990-01-01</DateOfBirth>
+    <Ethnicity>98</Ethnicity>
+    <Sex>F</Sex>
+    <LLDDHealthProb>2</LLDDHealthProb>
+    <NINumber>AB123456C</NINumber>
+    <PriorAttain>1</PriorAttain>
+    <PlanLearnHours>86</PlanLearnHours>
+    <PostcodePrior>M9 4EU</PostcodePrior>
+    <Postcode>BR1 2JS</Postcode>
+    <AddLine1>addline1</AddLine1>
+    <Email>email@email.com</Email>
+    <ContactPreference>
+      <ContPrefType>PMC</ContPrefType>
+      <ContPrefCode>1</ContPrefCode>
+    </ContactPreference>
+    <LearnerEmploymentStatus>
+      <EmpStat>10</EmpStat>
+      <DateEmpStatApp>2015-05-27</DateEmpStatApp>
+      <EmploymentStatusMonitoring>
+        <ESMType>EII</ESMType>
+        <ESMCode>3</ESMCode>
+      </EmploymentStatusMonitoring>
+    </LearnerEmploymentStatus>
+    <LearningDelivery>
+      <LearnAimRef>60005415</LearnAimRef>
+      <AimType>4</AimType>
+      <AimSeqNumber>1</AimSeqNumber>
+      <LearnStartDate>2017-04-30</LearnStartDate>
+      <LearnPlanEndDate>2018-04-01</LearnPlanEndDate>
+      <FundModel>99</FundModel>
+      <DelLocPostCode>CV1 2WT</DelLocPostCode>
+      <CompStatus>2</CompStatus>
+      <LearnActEndDate>2019-01-17</LearnActEndDate>
+      <Outcome>8</Outcome>
+      <SWSupAimId>0F53A4A8-1629-404E-A5DC-DF3D7AD5EC67</SWSupAimId>
+      <LearningDeliveryFAM>
+        <LearnDelFAMType>HHS</LearnDelFAMType>
+        <LearnDelFAMCode>3</LearnDelFAMCode>
+      </LearningDeliveryFAM>
+      <LearningDeliveryFAM>
+        <LearnDelFAMType>ALB</LearnDelFAMType>
+        <LearnDelFAMCode>2</LearnDelFAMCode>
+        <LearnDelFAMDateFrom>2017-06-30</LearnDelFAMDateFrom>
+        <LearnDelFAMDateTo>2018-01-17</LearnDelFAMDateTo>
+      </LearningDeliveryFAM>
+      <LearningDeliveryFAM>
+        <LearnDelFAMType>ALB</LearnDelFAMType>
+        <LearnDelFAMCode>1</LearnDelFAMCode>
+        <LearnDelFAMDateFrom>2017-05-15</LearnDelFAMDateFrom>
+        <LearnDelFAMDateTo>2017-06-15</LearnDelFAMDateTo>
+      </LearningDeliveryFAM>
+      <LearningDeliveryFAM>
+        <LearnDelFAMType>ADL</LearnDelFAMType>
+        <LearnDelFAMCode>1</LearnDelFAMCode>
+      </LearningDeliveryFAM>
+    </LearningDelivery>
+  </Learner>
+</Message>
