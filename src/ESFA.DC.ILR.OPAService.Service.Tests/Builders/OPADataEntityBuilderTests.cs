@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 using ESFA.DC.ILR.OPAService.Service.Builders.Implementation;
@@ -237,7 +239,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         {
             //ARRANGE
             //Use Test Helpers
-            
+
             //ACT
             var dataEntity = SetupMapAttributes();
 
@@ -258,7 +260,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             var dataEntity = SetupMapAttributes();
 
             //ASSERT
-            dataEntity.Attributes.Count.Should().Be(16); 
+            dataEntity.Attributes.Count.Should().Be(16);
         }
 
         /// <summary>
@@ -275,7 +277,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
 
             //ASSERT
             var attributes = dataEntity.Attributes.ToArray();
-            var ukprn = DecimalStrToInt(GetAttributeValues(attributes,"UKPRN"));
+            var ukprn = DecimalStrToInt(GetAttributeValues(attributes, "UKPRN"));
 
             ukprn.Should().Be(12345678);
         }
@@ -297,8 +299,8 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             var attributeList = SetupMapOpaAttribute();
 
             //ASSERT
-           attributeList.Should().NotBeNull();
-           
+            attributeList.Should().NotBeNull();
+
         }
 
         /// <summary>
@@ -333,7 +335,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             //ASSERT
             var ukprn = DecimalStrToInt(GetAttributeValues(attributeList, "UKPRN"));
             ukprn.Should().Be(12345678);
-            
+
         }
 
         #endregion
@@ -446,8 +448,6 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
 
         #region Test Helpers
 
-        private const string RulebaseZipFile = @"Rulebase\Loans Bursary 17_18.zip";
-
         private readonly DataEntity testGlobalEntity = new DataEntity("global")
         {
             Attributes = new Dictionary<string, AttributeData>()
@@ -467,11 +467,20 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             }
         };
 
+        private const string RulebaseZipPath = @".Rulebase.Loans Bursary 17_18.zip";
+
         private EntityInstance TestEntityInstance()
         {
             ISessionBuilder sessionBuilder = new SessionBuilder();
-            Session session = sessionBuilder.CreateOPASession(RulebaseZipFile, testGlobalEntity);
+            Session session;
+            var assembly = Assembly.GetCallingAssembly();
+            var rulebaseLocation = assembly.GetName().Name + RulebaseZipPath;
 
+            using (Stream stream = assembly.GetManifestResourceStream(rulebaseLocation))
+            {
+                session = sessionBuilder.CreateOPASession(stream, testGlobalEntity);
+            }
+            
             session.Think();
 
             return session.GetGlobalEntityInstance();
@@ -516,7 +525,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             var mapAttributes = new OPADataEntityBuilder();
             EntityInstance entityInstance = TestEntityInstance();
             DataEntity dataEntity = new DataEntity(entityInstance.GetEntity().GetName());
-            
+
             mapAttributes.MapAttributes(entityInstance, dataEntity);
 
             return dataEntity;

@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 using ESFA.DC.ILR.OPAService.Service.Builders.Implementation;
 using ESFA.DC.ILR.OPAService.Service.Builders.Interface;
 using FluentAssertions;
 using Oracle.Determinations.Engine;
+using Oracle.Determinations.Masquerade.IO;
 using Oracle.Determinations.Masquerade.Util;
 using Xunit;
 
@@ -19,16 +22,16 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         /// Return Session
         /// </summary>
         [Fact(DisplayName = "SessionBuilder - Create Session"), Trait("OPA Session Builder", "Unit")]
-        public void SessionBuilder_CreateSession()
+        public void CreateOPASession_SessionExists()
         {
             //ARRANGE
-            ISessionBuilder createSession = new SessionBuilder();
-
+            ISessionBuilder sessionBuilder = new SessionBuilder();
+            
             //ACT
-            createSession.CreateOPASession(RulebaseZipFile, new DataEntity("global"));
-
+            var session = CreateSessionTestSession(sessionBuilder);
+            
             //ASSERT
-            createSession.Should().NotBeNull();
+            session.Should().NotBeNull();
         }
 
         /// <summary>
@@ -42,14 +45,14 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             ISessionBuilder createSession2 = new SessionBuilder();
 
             //ACT
-            createSession1.CreateOPASession(RulebaseZipFile, new DataEntity("global"));
-            createSession2.CreateOPASession(RulebaseZipFile, new DataEntity("global"));
+            var session1 = CreateSessionTestSession(createSession1);
+            var session2 = CreateSessionTestSession(createSession2);
 
             //ASSERT
-            createSession1.Should().NotBeNull();
-            createSession2.Should().NotBeNull();
+            session1.Should().NotBeNull();
+            session2.Should().NotBeNull();
 
-            createSession2.Should().NotBeSameAs(createSession1);
+            session2.Should().NotBeSameAs(session1);
         }
 
         /// <summary>
@@ -63,7 +66,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
 
             //ACT
             var rbInitPre = sessionRBNotInitialised.RulebaseInitialised;
-            sessionRBNotInitialised.CreateOPASession(RulebaseZipFile, new DataEntity("global"));
+            CreateSessionTestSession(sessionRBNotInitialised);
             var rbInitPost = sessionRBNotInitialised.RulebaseInitialised;
 
             //ASSERT
@@ -82,11 +85,11 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
 
             //ACT
             var rbInitPreFirst = sessionRBInitialised.RulebaseInitialised;
-            sessionRBInitialised.CreateOPASession(RulebaseZipFile, new DataEntity("global"));
+            CreateSessionTestSession(sessionRBInitialised);
             var rbInitPostFirst = sessionRBInitialised.RulebaseInitialised;
 
             var rbInitPreSecond = sessionRBInitialised.RulebaseInitialised;
-            sessionRBInitialised.CreateOPASession(RulebaseZipFile, new DataEntity("global"));
+            CreateSessionTestSession(sessionRBInitialised);
             var rbInitPostSecond = sessionRBInitialised.RulebaseInitialised;
 
             //ASSERT
@@ -106,7 +109,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             SessionBuilder sessionRBExists = new SessionBuilder();
 
             //ACT
-            sessionRBExists.CreateOPASession(RulebaseZipFile, new DataEntity("global"));
+            CreateSessionTestSession(sessionRBExists);
 
             //ASSERT
             sessionRBExists.Rulebase.Should().NotBeNull();
@@ -122,7 +125,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             SessionBuilder sessionRBCorrect = new SessionBuilder();
 
             //ACT
-            sessionRBCorrect.CreateOPASession(RulebaseZipFile, new DataEntity("global"));
+            CreateSessionTestSession(sessionRBCorrect);
             var rulebaseName = sessionRBCorrect.Rulebase.GetBaseFileName();
 
             //ASSERT
@@ -139,7 +142,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             SessionBuilder sessionEngineExists = new SessionBuilder();
 
             //ACT
-            sessionEngineExists.CreateOPASession(RulebaseZipFile, new DataEntity("global"));
+            CreateSessionTestSession(sessionEngineExists);
 
             //ASSERT
             sessionEngineExists.Engine.Should().NotBeNull();
@@ -155,7 +158,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             SessionBuilder sessionEngineCorrect = new SessionBuilder();
 
             //ACT
-            sessionEngineCorrect.CreateOPASession(RulebaseZipFile, new DataEntity("global"));
+            CreateSessionTestSession(sessionEngineCorrect);
             var engineVersion = sessionEngineCorrect.Engine.GetVersion();
 
             //ASSERT
@@ -174,7 +177,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         {
             //ARRANGE
             var sessionBuilder = new SessionBuilder();
-            var session = TestSession();
+            var session = MapToOPATestSession();
 
             //ACT
             sessionBuilder.MapGlobalDataEntityToOpa(testGlobalEntity, session, session.GetGlobalEntityInstance());
@@ -191,8 +194,8 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         {
             //ARRANGE
             var sessionBuilder = new SessionBuilder();
-            var sessionPre = TestSession();
-            var sessionPost = TestSession();
+            var sessionPre = MapToOPATestSession();
+            var sessionPost = MapToOPATestSession();
 
             //ACT
             sessionBuilder.MapGlobalDataEntityToOpa(testGlobalEntity, sessionPost, sessionPost.GetGlobalEntityInstance());
@@ -213,8 +216,8 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         {
             //ARRANGE
             var sessionBuilder = new SessionBuilder();
-            var sessionPre = TestSession();
-            var sessionPost = TestSession();
+            var sessionPre = MapToOPATestSession();
+            var sessionPost = MapToOPATestSession();
 
             //ACT
             sessionBuilder.MapGlobalDataEntityToOpa(testGlobalEntity, sessionPost, sessionPost.GetGlobalEntityInstance());
@@ -239,7 +242,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         {
             //ARRANGE
             var sessionBuilder = new SessionBuilder();
-            var session = TestSession();
+            var session = MapToOPATestSession();
 
             //ACT
             var instance = sessionBuilder.MapDataEntityToOpa(new DataEntity("global"), session, session.GetGlobalEntityInstance());
@@ -257,7 +260,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         {
             //ARRANGE
             var sessionBuilder = new SessionBuilder();
-            var session = TestSession();
+            var session = MapToOPATestSession();
 
             //ACT
             var instance = sessionBuilder.MapDataEntityToOpa(new DataEntity("Learner"), session, session.GetGlobalEntityInstance());
@@ -275,8 +278,8 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         {
             //ARRANGE
             var sessionBuilder = new SessionBuilder();
-            var sessionPre = TestSession();
-            var sessionPost = TestSession();
+            var sessionPre = MapToOPATestSession();
+            var sessionPost = MapToOPATestSession();
 
             //ACT
             sessionBuilder.MapDataEntityToOpa(testGlobalEntity, sessionPost, sessionPost.GetGlobalEntityInstance());
@@ -304,7 +307,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         {
             //ARRANGE
             var sessionBuilder = new SessionBuilder();
-            var session = TestSession();
+            var session = MapToOPATestSession();
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
  
@@ -325,7 +328,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         {
             //ARRANGE
             var sessionBuilder = new SessionBuilder();
-            var session = TestSession();
+            var session = MapToOPATestSession();
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
 
@@ -346,7 +349,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         {
             //ARRANGE
             var sessionBuilder = new SessionBuilder();
-            var session = TestSession();
+            var session = MapToOPATestSession();
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
             var attributeData = new AttributeData("UKPRN", null);
@@ -368,7 +371,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         {
             //ARRANGE
             var sessionBuilder = new SessionBuilder();
-            var session = TestSession();
+            var session = MapToOPATestSession();
             var instance = session.GetGlobalEntityInstance();
             var entity = instance.GetEntity();
 
@@ -449,11 +452,11 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         }
 
         #endregion
-        
+
         #region Test Helpers
 
-        private const string RulebaseZipFile = @"Rulebase\Loans Bursary 17_18.zip";
-
+        #region Test Data
+        
         private readonly DataEntity testGlobalEntity = new DataEntity("global")
         {
             Attributes = new Dictionary<string, AttributeData>()
@@ -481,15 +484,41 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
                 new TemporalValueItem(DateTime.Parse("2017-09-01"), 100, "currency")
             };
 
-        static readonly Engine testEngine = Engine.INSTANCE;
-        static readonly Rulebase testRulebase = testEngine.GetRulebase(RulebaseZipFile);
+        #endregion
 
-        private Session TestSession()
+        #region Create Test Sessions
+        
+        private const string RulebaseZipPath = @"ESFA.DC.ILR.OPAService.Service.Tests.Rulebase.Loans Bursary 17_18.zip";
+
+        private Session CreateSessionTestSession(ISessionBuilder sessionBuilder)
         {
-            Session session = testEngine.CreateSession(testRulebase);
+            var assembly = Assembly.GetExecutingAssembly();
+            Session session;
+            using (Stream stream = assembly.GetManifestResourceStream(RulebaseZipPath))
+            {
+                session = sessionBuilder.CreateOPASession(stream, testGlobalEntity);
+            }
 
             return session;
         }
+
+        private Session MapToOPATestSession()
+        {
+            Engine testEngine = Engine.INSTANCE;
+            var assembly = Assembly.GetExecutingAssembly();
+            Session session;
+            using (Stream stream = assembly.GetManifestResourceStream(RulebaseZipPath))
+            {
+                Rulebase testRulebase = testEngine.GetRulebase(new InputStreamAdapter(stream));
+                session = testEngine.CreateSession(testRulebase);
+            }
+
+            return session;
+        }
+
+        #endregion
+
+        #region Get Session Values
 
         private object AttributeValue(Session session, string atttributeName)
         {
@@ -522,7 +551,8 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             return entityInstanceList;
         }
 
-        
+        #endregion
+
         #endregion
     }
 }

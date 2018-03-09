@@ -359,9 +359,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 
         private static readonly ISessionBuilder _sessionBuilder = new SessionBuilder();
         private static readonly IOPADataEntityBuilder _dataEntityBuilder = new OPADataEntityBuilder();
-        private static readonly string _rulebaseZipFile = @"Rulebase\Loans Bursary 17_18.zip";
+        private static readonly string _rulebaseZipPath = @".Rulebase.Loans Bursary 17_18.zip";
+       
+
         private readonly IOPAService opaService = 
-            new OPAService.Service.Implementation.OPAService(_sessionBuilder, _dataEntityBuilder, _rulebaseZipFile);
+            new OPAService.Service.Implementation.OPAService(_sessionBuilder, _dataEntityBuilder, _rulebaseZipPath);
 
         private IEnumerable<DataEntity> RunFundingService(string filePath)
         {

@@ -59,6 +59,9 @@
   <ItemGroup>
     <None Include="ESFA.DC.ILR.FundingService.ALB.Service.ruleset" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Rulebase\Loans Bursary 17_18.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
