@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 using Oracle.Determinations.Engine;
 using ESFA.DC.ILR.OPAService.Service.Builders.Interface;
 using Oracle.Determinations.Engine.Local.Temporal;
+using Oracle.Determinations.Masquerade.IO;
 using Oracle.Determinations.Masquerade.Util;
 
 namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
@@ -18,11 +20,12 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
             
         private readonly Engine _engine = Engine.INSTANCE;
 
-        public Session CreateOPASession(string rulebaseZipFile, DataEntity globalEntity)
+        public Session CreateOPASession(Stream rulebaseStream, DataEntity globalEntity)
         {
             if (!RulebaseInitialised)
             {
-                Rulebase = Engine.GetRulebase(rulebaseZipFile);
+                InputStream stream = new InputStreamAdapter(rulebaseStream);
+                Rulebase = Engine.GetRulebase(stream);
                 RulebaseInitialised = true;
             }
             Session session = Engine.CreateSession(Rulebase);
@@ -138,7 +141,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
             }
             else
             {
-                //Log something
+                //TODO: Log something
             }
         }
 

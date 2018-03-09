@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{91E3D0C6-1258-48E3-B1BC-695C46DD302D}</ProjectGuid>
+    <ProjectGuid>{05FCEB04-1F18-4B30-892C-213FB0753D45}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ESFA.DC.ILR.FundingService.ALB.ExternalData</RootNamespace>
-    <AssemblyName>ESFA.DC.ILR.FundingService.ALB.ExternalData</AssemblyName>
+    <RootNamespace>ESFA.DC.ILR.FundingService.ALB.Service</RootNamespace>
+    <AssemblyName>ESFA.DC.ILR.FundingService.ALB.Service</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.ExternalData.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.Service.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,9 +29,15 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.ExternalData.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.Service.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ESFA.DC.ILR.Model, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.1718.Model.0.1.0\lib\net461\ESFA.DC.ILR.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.ILR.1718.Model.Interface.0.1.0\lib\net461\ESFA.DC.ILR.Model.Interface.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,21 +48,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interface\IReferenceDataCache.cs" />
-    <Compile Include="LARS\Interface\ILARSReferenceDataService.cs" />
-    <Compile Include="LARS\LARSReferenceDataService.cs" />
-    <Compile Include="LARS\Model\LARSFunding.cs" />
-    <Compile Include="LARS\Model\LARSLearningDelivery.cs" />
-    <Compile Include="LARS\Model\LARSVersion.cs" />
-    <Compile Include="PostcodeFactors\Interface\IPostcodeFactorsReferenceDataService.cs" />
-    <Compile Include="PostcodeFactors\Model\PostcodeVersion.cs" />
-    <Compile Include="PostcodeFactors\Model\SfaAreaCost.cs" />
-    <Compile Include="PostcodeFactors\PostcodeFactorsReferenceDataService.cs" />
+    <Compile Include="Builders\Implementation\AttributeBuilder.cs" />
+    <Compile Include="Builders\Implementation\DataEntityBuilder.cs" />
+    <Compile Include="Builders\Interface\IAttributeBuilder.cs" />
+    <Compile Include="Builders\Interface\IDataEntityBuilder.cs" />
+    <Compile Include="Implementation\FundingService.cs" />
+    <Compile Include="Interface\IFundingSevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ESFA.DC.ILR.FundingService.ALB.ExternalData.ruleset" />
+    <None Include="ESFA.DC.ILR.FundingService.ALB.Service.ruleset" />
     <None Include="packages.config" />
+    <EmbeddedResource Include="Rulebase\Loans Bursary 17_18.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.ExternalData\ESFA.DC.ILR.FundingService.ALB.ExternalData.csproj">
+      <Project>{91E3D0C6-1258-48E3-B1BC-695C46DD302D}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ALB.ExternalData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.OPA.Model\ESFA.DC.ILR.OPAService.Model.csproj">
+      <Project>{8982E202-D685-416C-8D11-E937BEDF4E3D}</Project>
+      <Name>ESFA.DC.ILR.OPAService.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.OPAService.Service\ESFA.DC.ILR.OPAService.Service.csproj">
+      <Project>{E52CD69D-4D3A-4866-8116-3D2F22B5B3BF}</Project>
+      <Name>ESFA.DC.ILR.OPAService.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.8.2.4717\analyzers\Google.Protobuf.dll" />

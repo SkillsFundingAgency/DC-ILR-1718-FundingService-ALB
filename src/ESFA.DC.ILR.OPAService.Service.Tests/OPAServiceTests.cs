@@ -72,7 +72,6 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
 
         #endregion
 
-
         #region OPA Entity Structure Output Tests
 
         /// <summary>
@@ -307,7 +306,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
 
         #region Test Helpers
 
-        private const string rulebaseZipFile = @"Rulebase\Loans Bursary 17_18.zip";
+        #region Test Data
 
         private readonly DataEntity testDataEntity = 
             new DataEntity("Global")
@@ -328,11 +327,17 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
                 }
             };
 
+        #endregion
+
+        #region Create Test Service
+        
+        private const string rulebaseZipPath = @".Rulebase.Loans Bursary 17_18.zip";
+
         private readonly Mock<IOPAService> opaServiceMock = new Mock<IOPAService>();
         
         private IOPAService MockTestObject()
         {
-            return new Implementation.OPAService(new SessionBuilder(), new DataEntityBuilder(), rulebaseZipFile);
+            return new Implementation.OPAService(new SessionBuilder(), new OPADataEntityBuilder(), rulebaseZipPath);
         }
         
         private DataEntity MockOPAService(DataEntity dataEntity)
@@ -345,11 +350,17 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             return mockData.ExecuteSession(dataEntity);
         }
 
+        #endregion
+
+        #region Get Session Values
+
         private object AttributeValue(DataEntity dataEntity, string attributeName)
         {
             return dataEntity.Attributes.Where(k => k.Key == attributeName).Select(v => v.Value.Value).Single();
         }
-        
+
+        #endregion
+
         #endregion
 
     }

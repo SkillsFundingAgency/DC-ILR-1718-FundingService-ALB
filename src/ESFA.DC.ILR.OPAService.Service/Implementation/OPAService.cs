@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
@@ -15,24 +16,33 @@ namespace ESFA.DC.ILR.OPAService.Service.Implementation
     public class OPAService : IOPAService
     {
         private readonly ISessionBuilder _sessionBuilder;
-        private readonly IDataEntityBuilder _dataEntityBuilder;
-        private readonly string _rulebaseZipFile;
+        private readonly IOPADataEntityBuilder _dataEntityBuilder;
+        private readonly string _rulebaseZipPath;
 
-        public OPAService(ISessionBuilder sessionBuilder, IDataEntityBuilder dataEntityBuilder, string rulebaseZipFile)
+        public OPAService(ISessionBuilder sessionBuilder, IOPADataEntityBuilder dataEntityBuilder, string rulebaseZipPath)
         {
             _sessionBuilder = sessionBuilder;
             _dataEntityBuilder = dataEntityBuilder;
-            _rulebaseZipFile = rulebaseZipFile;
+            _rulebaseZipPath = rulebaseZipPath;
         }
 
         public DataEntity ExecuteSession(DataEntity globalEntity)
         {
-            Session session = _sessionBuilder.CreateOPASession(_rulebaseZipFile, globalEntity);
-            
-            session.Think();
+            var assembly = Assembly.GetCallingAssembly();
 
+            var rulebaseLocation = assembly.GetName().Name + _rulebaseZipPath;
+
+            Session session;
+
+            using (Stream stream = assembly.GetManifestResourceStream(rulebaseLocation))
+            {
+                session = _sessionBuilder.CreateOPASession(stream, globalEntity);
+            }
+
+            session.Think();
+            
             var outputGlobalInstance = session.GetGlobalEntityInstance();
-            var outputEntity = _dataEntityBuilder.CreateDataEntity(outputGlobalInstance, null);
+            var outputEntity = _dataEntityBuilder.CreateOPADataEntity(outputGlobalInstance, null);
             
             return outputEntity;
         }
