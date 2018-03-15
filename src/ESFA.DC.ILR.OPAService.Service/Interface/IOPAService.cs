@@ -1,10 +1,10 @@
-﻿using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
+﻿using ESFA.DC.OPA.Model.Interface;
 using Oracle.Determinations.Engine;
 
 namespace ESFA.DC.ILR.OPAService.Service.Interface
 {
     public interface IOPAService
     {
-        DataEntity ExecuteSession(DataEntity globalEntity);
+        IDataEntity ExecuteSession(IDataEntity globalEntity);
     }
 }

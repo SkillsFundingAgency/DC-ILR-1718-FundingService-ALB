@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
+using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.ILR.OPAService.Service.Builders.Implementation;
 using ESFA.DC.ILR.OPAService.Service.Builders.Interface;
+using ESFA.DC.OPA.Model;
 using FluentAssertions;
 using Oracle.Determinations.Engine;
 using Oracle.Determinations.Masquerade.IO;
@@ -180,7 +180,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             var session = MapToOPATestSession();
 
             //ACT
-            sessionBuilder.MapGlobalDataEntityToOpa(testGlobalEntity, session, session.GetGlobalEntityInstance());
+            sessionBuilder.MapGlobalDataEntityToOpa(TestGlobalEntity(), session, session.GetGlobalEntityInstance());
 
             //ASSERT
             session.Should().NotBeNull();
@@ -198,7 +198,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             var sessionPost = MapToOPATestSession();
 
             //ACT
-            sessionBuilder.MapGlobalDataEntityToOpa(testGlobalEntity, sessionPost, sessionPost.GetGlobalEntityInstance());
+            sessionBuilder.MapGlobalDataEntityToOpa(TestGlobalEntity(), sessionPost, sessionPost.GetGlobalEntityInstance());
             var ukprnPre = AttributeValue(sessionPre, "UKPRN");
             var ukprnPost = AttributeValue(sessionPost, "UKPRN");
            
@@ -220,7 +220,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             var sessionPost = MapToOPATestSession();
 
             //ACT
-            sessionBuilder.MapGlobalDataEntityToOpa(testGlobalEntity, sessionPost, sessionPost.GetGlobalEntityInstance());
+            sessionBuilder.MapGlobalDataEntityToOpa(TestGlobalEntity(), sessionPost, sessionPost.GetGlobalEntityInstance());
             var learnerPre = EntityList(sessionPre);
             var learnerPost = EntityList(sessionPost);
 
@@ -282,7 +282,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             var sessionPost = MapToOPATestSession();
 
             //ACT
-            sessionBuilder.MapDataEntityToOpa(testGlobalEntity, sessionPost, sessionPost.GetGlobalEntityInstance());
+            sessionBuilder.MapDataEntityToOpa(TestGlobalEntity(), sessionPost, sessionPost.GetGlobalEntityInstance());
             var learnerPre = EntityList(sessionPre);
             var learnerPost = EntityList(sessionPost);
 
@@ -456,29 +456,33 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
         #region Test Helpers
 
         #region Test Data
-        
-        private readonly DataEntity testGlobalEntity = new DataEntity("global")
-        {
-            Attributes = new Dictionary<string, AttributeData>()
-            {
-                {"UKPRN", new AttributeData("UKPRN", 12345678)}
-            },
-            Children =  new List<DataEntity>()
-            {
-                new DataEntity("Learner")
-                {
-                    Attributes = new Dictionary<string, AttributeData>()
-                    {
-                        {"LearnRefNumber", new AttributeData("LearnRefNumber", "Learner1")}
-                    }
-                }
-            }
-        };
 
-        private readonly  AttributeData TestAttributeData = new AttributeData("UKPRN", 12345678);
+        private IDataEntity TestGlobalEntity()
+        {
+            var dataEntity = new DataEntity("global")
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    {"UKPRN", new AttributeData("UKPRN", 12345678)}
+                }
+            };
+            var childEntity = new DataEntity("Learner")
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    {"LearnRefNumber", new AttributeData("LearnRefNumber", "Learner1")}
+                }
+            };
         
-        private readonly IEnumerable<TemporalValueItem> TestChangePoints =
-            new List<TemporalValueItem>()
+            dataEntity.AddChild(childEntity);
+
+            return dataEntity;
+        }
+
+        private readonly IAttributeData TestAttributeData = new AttributeData("UKPRN", 12345678);
+        
+        private readonly IEnumerable<ITemporalValueItem> TestChangePoints =
+            new List<ITemporalValueItem>()
             {
                 new TemporalValueItem(DateTime.Parse("2017-08-01"), 100, "currency"),
                 new TemporalValueItem(DateTime.Parse("2017-09-01"), 100, "currency")
@@ -496,7 +500,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             Session session;
             using (Stream stream = assembly.GetManifestResourceStream(RulebaseZipPath))
             {
-                session = sessionBuilder.CreateOPASession(stream, testGlobalEntity);
+                session = sessionBuilder.CreateOPASession(stream, TestGlobalEntity());
             }
 
             return session;

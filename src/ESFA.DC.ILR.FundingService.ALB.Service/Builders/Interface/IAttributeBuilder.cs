@@ -1,4 +1,4 @@
-﻿using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
+﻿using ESFA.DC.OPA.Model.Interface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +9,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
 {
     public interface IAttributeBuilder<T>
     {
-        IDictionary<string, AttributeData> BuildGlobalAttributes(int ukprn, string larsVersion, string postcodeAreaCostVersion);
+        IDictionary<string, IAttributeData> BuildGlobalAttributes(int ukprn, string larsVersion, string postcodeAreaCostVersion);
 
-        IDictionary<string, AttributeData> BuildLearnerAttributes(string learnRefNumber);
+        IDictionary<string, IAttributeData> BuildLearnerAttributes(string learnRefNumber);
 
-        IDictionary<string, AttributeData> BuildLearningDeliveryAttributes(
+        IDictionary<string, IAttributeData> BuildLearningDeliveryAttributes(
             long? aimSeqNumber,
             long? compStatus,
             DateTime? learnActEndDate,
@@ -29,18 +29,18 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
             long? priorLearnFundAdj,
             long? regulatedCreditValue);
 
-        IDictionary<string, AttributeData> BuildLearningDeliveryFAMAttributes(
+        IDictionary<string, IAttributeData> BuildLearningDeliveryFAMAttributes(
             string learnDelFAMCode, 
             DateTime? learnDelFAMDateFrom, 
             DateTime? learnDelFAMDateTo, 
             string learnDelFAMType);
 
-        IDictionary<string, AttributeData> BuildLearningDeliverySfaAreaCostAttributes(
+        IDictionary<string, IAttributeData> BuildLearningDeliverySfaAreaCostAttributes(
             DateTime? areaCosEffectiveFrom, 
             DateTime? areaCosEffectiveTo, 
             Decimal areaCosFactor);
 
-        IDictionary<string, AttributeData> BuildLearningDeliveryLarsFundingAttributes(
+        IDictionary<string, IAttributeData> BuildLearningDeliveryLarsFundingAttributes(
             string larsFundCategory,
             DateTime larsFundEffectiveFrom,
             DateTime? larsFundEffectiveTo,

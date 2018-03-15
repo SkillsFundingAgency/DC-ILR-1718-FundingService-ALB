@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
+using ESFA.DC.OPA.Model.Interface;
 using Oracle.Determinations.Engine;
 using ESFA.DC.ILR.OPAService.Service.Builders.Interface;
 using Oracle.Determinations.Engine.Local.Temporal;
@@ -20,7 +19,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
             
         private readonly Engine _engine = Engine.INSTANCE;
 
-        public Session CreateOPASession(Stream rulebaseStream, DataEntity globalEntity)
+        public Session CreateOPASession(Stream rulebaseStream, IDataEntity globalEntity)
         {
             if (!RulebaseInitialised)
             {
@@ -39,7 +38,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
 
         #region MapEntityToOpaSession
 
-        protected internal void MapGlobalDataEntityToOpa(DataEntity dataEntity, Session session, EntityInstance parentEntityInstance)
+        protected internal void MapGlobalDataEntityToOpa(IDataEntity dataEntity, Session session, EntityInstance parentEntityInstance)
         {
             Entity globalEntity = parentEntityInstance.GetEntity();
             foreach (var attribute in dataEntity.Attributes)
@@ -57,7 +56,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
             }
         }
 
-        protected internal EntityInstance MapDataEntityToOpa(DataEntity dataEntity, Session session, EntityInstance parentEntityInstance)
+        protected internal EntityInstance MapDataEntityToOpa(IDataEntity dataEntity, Session session, EntityInstance parentEntityInstance)
         {
             Entity entity = null;
             EntityInstance targetInstance = null;
@@ -99,7 +98,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
             return targetInstance;
         }
 
-        protected internal void SetAttribute(Entity entity, EntityInstance targetInstance, AttributeData attributeData)
+        protected internal void SetAttribute(Entity entity, EntityInstance targetInstance, IAttributeData attributeData)
         {
             if (attributeData.Value == null && attributeData.Changepoints.Count == 0)
             {
@@ -145,7 +144,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
             }
         }
 
-        protected internal ArrayList MapTemporalValue(IList<TemporalValueItem> valueList)
+        protected internal ArrayList MapTemporalValue(IList<ITemporalValueItem> valueList)
         {
             ArrayList changepoints = new ArrayList();
             foreach (var temporalValueItem in valueList)

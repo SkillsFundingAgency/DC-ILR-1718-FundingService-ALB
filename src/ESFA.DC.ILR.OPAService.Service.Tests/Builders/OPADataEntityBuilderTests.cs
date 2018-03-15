@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
+using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.ILR.OPAService.Service.Builders.Implementation;
 using ESFA.DC.ILR.OPAService.Service.Builders.Interface;
+using ESFA.DC.OPA.Model;
 using Xunit;
 using FluentAssertions;
 using Oracle.Determinations.Engine;
@@ -448,24 +448,28 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
 
         #region Test Helpers
 
-        private readonly DataEntity testGlobalEntity = new DataEntity("global")
+        private IDataEntity TestGlobalEntity()
         {
-            Attributes = new Dictionary<string, AttributeData>()
+            var dataEntity = new DataEntity("global")
             {
-                {"UKPRN", new AttributeData("UKPRN", 12345678)},
-                {"LARSVersion", new AttributeData("LARSVersion", "Version_005")}
-            },
-            Children = new List<DataEntity>()
-            {
-                new DataEntity("Learner")
+                Attributes = new Dictionary<string, IAttributeData>()
                 {
-                    Attributes = new Dictionary<string, AttributeData>()
-                    {
-                        {"LearnRefNumber", new AttributeData("LearnRefNumber", "TestLearner")}
-                    }
+                    {"UKPRN", new AttributeData("UKPRN", 12345678)},
+                    {"LARSVersion", new AttributeData("LARSVersion", "Version_005")}
                 }
-            }
-        };
+            };
+            var childEntity = new DataEntity("Learner")
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    {"LearnRefNumber", new AttributeData("LearnRefNumber", "TestLearner")}
+                }
+            };
+
+            dataEntity.AddChild(childEntity);
+
+            return dataEntity;
+        }
 
         private const string RulebaseZipPath = @".Rulebase.Loans Bursary 17_18.zip";
 
@@ -478,7 +482,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
 
             using (Stream stream = assembly.GetManifestResourceStream(rulebaseLocation))
             {
-                session = sessionBuilder.CreateOPASession(stream, testGlobalEntity);
+                session = sessionBuilder.CreateOPASession(stream, TestGlobalEntity());
             }
             
             session.Think();
@@ -486,29 +490,29 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             return session.GetGlobalEntityInstance();
         }
 
-        private DataEntity GetOutputEntity()
+        private IDataEntity GetOutputEntity()
         {
             IOPADataEntityBuilder createDataEntity = new OPADataEntityBuilder();
             EntityInstance entityInstance = TestEntityInstance();
-            DataEntity dataEntity = null;
+            IDataEntity dataEntity = null;
 
             return createDataEntity.CreateOPADataEntity(entityInstance, dataEntity);
         }
 
-        private DataEntity SetupMapToOpDataEntity()
+        private IDataEntity SetupMapToOpDataEntity()
         {
             var mapToDataEntity = new OPADataEntityBuilder();
             EntityInstance entityInstance = TestEntityInstance();
-            DataEntity dataEntity = null;
+            IDataEntity dataEntity = null;
 
             return mapToDataEntity.MapOpaToEntity(entityInstance, dataEntity);
         }
 
-        private List<AttributeData> SetupMapOpaAttribute()
+        private List<IAttributeData> SetupMapOpaAttribute()
         {
             var db = new OPADataEntityBuilder();
             var instance = TestEntityInstance();
-            List<AttributeData> attributeList = new List<AttributeData>();
+            List<IAttributeData> attributeList = new List<IAttributeData>();
             var rbAttributes = instance.GetEntity().GetAttributes();
 
             foreach (RBAttr r in rbAttributes)
@@ -520,18 +524,18 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             return attributeList;
         }
 
-        private DataEntity SetupMapAttributes()
+        private IDataEntity SetupMapAttributes()
         {
             var mapAttributes = new OPADataEntityBuilder();
             EntityInstance entityInstance = TestEntityInstance();
-            DataEntity dataEntity = new DataEntity(entityInstance.GetEntity().GetName());
+            IDataEntity dataEntity = new DataEntity(entityInstance.GetEntity().GetName());
 
             mapAttributes.MapAttributes(entityInstance, dataEntity);
 
             return dataEntity;
         }
 
-        private DataEntity SetupMapEntities()
+        private IDataEntity SetupMapEntities()
         {
             var mapEntities = new OPADataEntityBuilder();
             var instance = TestEntityInstance();
@@ -543,7 +547,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             return dataEntity;
         }
 
-        private string GetAttributeValues(KeyValuePair<string, AttributeData>[] attributes, string attributeName)
+        private string GetAttributeValues(KeyValuePair<string, IAttributeData>[] attributes, string attributeName)
         {
             var attributeValue = attributes.Where(a => a.Key == attributeName)
                 .Select(v => v.Value.Value).FirstOrDefault().ToString();
@@ -551,7 +555,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests.Builders
             return attributeValue;
         }
 
-        private string GetAttributeValues(List<AttributeData> attributes, string attributeName)
+        private string GetAttributeValues(List<IAttributeData> attributes, string attributeName)
         {
             var attributeValue = attributes.Where(n => n.Name == attributeName)
                 .Select(v => v.Value).FirstOrDefault().ToString();

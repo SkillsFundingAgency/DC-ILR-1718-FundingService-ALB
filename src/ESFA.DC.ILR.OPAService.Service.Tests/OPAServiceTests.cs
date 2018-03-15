@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 using Xunit;
 using FluentAssertions;
 using ESFA.DC.ILR.OPAService.Service.Interface;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
 using ESFA.DC.ILR.OPAService.Service.Builders.Implementation;
+using ESFA.DC.OPA.Model.Interface;
 using Moq;
 using Oracle.Determinations.Engine;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
+using ESFA.DC.OPA.Model;
 
 namespace ESFA.DC.ILR.OPAService.Service.Tests
 {
@@ -30,7 +30,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.Should().NotBeNull();
@@ -46,7 +46,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.EntityName.Should().BeEquivalentTo("Global");
@@ -63,7 +63,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.Children.Single().EntityName.Should().BeEquivalentTo("Learner");
@@ -84,7 +84,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.Attributes.Should().NotBeNull();
@@ -100,7 +100,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.Attributes.Count.Should().Be(16);
@@ -116,7 +116,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.IsGlobal.Should().BeTrue();
@@ -132,7 +132,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.EntityName.Should().NotBeNullOrEmpty();
@@ -148,7 +148,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.EntityName.Should().Be("global");
@@ -164,7 +164,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.Children.Should().NotBeNull();
@@ -180,7 +180,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.Children.Count.Should().Be(1);
@@ -196,7 +196,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.Children.Select(e => e.EntityName).Should().BeEquivalentTo("Learner");
@@ -212,7 +212,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.Children.Select(a => a.Attributes).Should().NotBeNullOrEmpty();
@@ -228,7 +228,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.Children.Select(a => a.Attributes.Count).Should().BeEquivalentTo(7);
@@ -248,7 +248,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             AttributeValue(result, "UKPRN").Should().NotBeNull();
@@ -264,7 +264,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             AttributeValue(result, "UKPRN").Should().Be(12345678);
@@ -280,7 +280,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.Children.Select(l => l.LearnRefNumber).Should().NotBeNull();
@@ -296,7 +296,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             //Use Test Helpers
 
             //ACT
-            var result = MockOPAService(testDataEntity);
+            var result = MockOPAService(TestDataEntity());
 
             //ASSERT
             result.Children.Select(l => l.LearnRefNumber).Should().BeEquivalentTo("Learner1");
@@ -307,30 +307,33 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
         #region Test Helpers
 
         #region Test Data
-
-        private readonly DataEntity testDataEntity = 
-            new DataEntity("Global")
+        
+        private IDataEntity TestDataEntity()
+        {
+            var dataEntity = new DataEntity("global")
             {
-                Children = new List<DataEntity>()
-                {
-                    new DataEntity("Learner")
-                    {
-                        Attributes = new Dictionary<string, AttributeData>()
-                        {
-                            {"LearnRefNumber", new AttributeData("LearnRefNumber", "Learner1")}
-                        }
-                    }
-                },
-                Attributes = new Dictionary<string, AttributeData>()
+                Attributes = new Dictionary<string, IAttributeData>()
                 {
                     {"UKPRN", new AttributeData("UKPRN", 12345678)}
                 }
             };
+            var childEntity = new DataEntity("Learner")
+            {
+                Attributes = new Dictionary<string, IAttributeData>()
+                {
+                    {"LearnRefNumber", new AttributeData("LearnRefNumber", "Learner1")}
+                }
+            };
+
+            dataEntity.AddChild(childEntity);
+
+            return dataEntity;
+        }
 
         #endregion
 
         #region Create Test Service
-        
+
         private const string rulebaseZipPath = @".Rulebase.Loans Bursary 17_18.zip";
 
         private readonly Mock<IOPAService> opaServiceMock = new Mock<IOPAService>();
@@ -340,11 +343,11 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
             return new Implementation.OPAService(new SessionBuilder(), new OPADataEntityBuilder(), rulebaseZipPath);
         }
         
-        private DataEntity MockOPAService(DataEntity dataEntity)
+        private IDataEntity MockOPAService(IDataEntity dataEntity)
         {
             var serviceMock = opaServiceMock;
 
-            serviceMock.Setup(sm => sm.ExecuteSession(dataEntity)).Returns(testDataEntity);
+            serviceMock.Setup(sm => sm.ExecuteSession(dataEntity)).Returns(TestDataEntity());
             var mockData = MockTestObject();
 
             return mockData.ExecuteSession(dataEntity);
@@ -354,7 +357,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Tests
 
         #region Get Session Values
 
-        private object AttributeValue(DataEntity dataEntity, string attributeName)
+        private object AttributeValue(IDataEntity dataEntity, string attributeName)
         {
             return dataEntity.Attributes.Where(k => k.Key == attributeName).Select(v => v.Value.Value).Single();
         }

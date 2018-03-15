@@ -1,7 +1,7 @@
 ﻿using System;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
 using ESFA.DC.ILR.OPAService.Service.Builders.Interface;
+using ESFA.DC.OPA.Model;
+using ESFA.DC.OPA.Model.Interface;
 using Oracle.Determinations.Engine;
 using Oracle.Determinations.Engine.Local.Temporal;
 using Oracle.Determinations.Masquerade.Util;
@@ -10,7 +10,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
 {
     public class OPADataEntityBuilder : IOPADataEntityBuilder
     {
-        public DataEntity CreateOPADataEntity(EntityInstance entityInstance, DataEntity parentEntity)
+        public IDataEntity CreateOPADataEntity(EntityInstance entityInstance, IDataEntity parentEntity)
         {
             var globalEntity = MapOpaToEntity(entityInstance, parentEntity);
 
@@ -19,9 +19,9 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
 
         #region Map OPA Session to Data Entity
         
-        protected internal DataEntity MapOpaToEntity(EntityInstance instance, DataEntity parentEntity)
+        protected internal IDataEntity MapOpaToEntity(EntityInstance instance, IDataEntity parentEntity)
         {
-            DataEntity dataEntity = new DataEntity(instance.GetEntity().GetName())
+            IDataEntity dataEntity = new DataEntity(instance.GetEntity().GetName())
             {
                 Parent = parentEntity
             };
@@ -43,7 +43,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
             return parentEntity;
         }
 
-        protected internal void MapAttributes(EntityInstance instance, DataEntity dataEntity)
+        protected internal void MapAttributes(EntityInstance instance, IDataEntity dataEntity)
         {
             foreach (RBAttr attribute in instance.GetEntity().GetAttributes())
             {
@@ -56,12 +56,12 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
             }
         }
         
-        protected internal AttributeData MapOpaAttributeToDataEntity(EntityInstance entityInstance, RBAttr attr)
+        protected internal IAttributeData MapOpaAttributeToDataEntity(EntityInstance entityInstance, RBAttr attr)
         {
             object value = attr.GetValue(entityInstance);
             if (value is TemporalValue)
             {
-                var attributeData = new AttributeData(attr.GetName(), null);
+                IAttributeData attributeData = new AttributeData(attr.GetName(), null);
                 var temporalValue = value as TemporalValue;
                 var startDate = new DateTime(2017, 8, 1); //TODO: date and period values in config?
                 for (int period = 0; period < 12; period++) //TODO: date and period values in config?
@@ -77,7 +77,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Builders.Implementation
             return new AttributeData(attr.GetName(), value is String ? value.ToString().Trim() : value);
         }
 
-        protected internal void MapEntities(EntityInstance instance, List childEntities, DataEntity dataEntity)
+        protected internal void MapEntities(EntityInstance instance, List childEntities, IDataEntity dataEntity)
         {
             foreach (Entity childEntity in childEntities)
             {

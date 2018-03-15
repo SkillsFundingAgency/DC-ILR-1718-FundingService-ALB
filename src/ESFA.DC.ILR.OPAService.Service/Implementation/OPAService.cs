@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
 using ESFA.DC.ILR.OPAService.Service.Builders.Interface;
 using ESFA.DC.ILR.OPAService.Service.Interface;
+using ESFA.DC.OPA.Model.Interface;
 using Oracle.Determinations.Engine;
 using Oracle.Determinations.Masquerade.IO;
 
@@ -26,7 +24,7 @@ namespace ESFA.DC.ILR.OPAService.Service.Implementation
             _rulebaseZipPath = rulebaseZipPath;
         }
 
-        public DataEntity ExecuteSession(DataEntity globalEntity)
+        public IDataEntity ExecuteSession(IDataEntity globalEntity)
         {
             var assembly = Assembly.GetCallingAssembly();
 
