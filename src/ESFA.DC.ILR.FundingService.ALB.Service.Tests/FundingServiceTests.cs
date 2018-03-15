@@ -12,12 +12,13 @@ using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.OPA.Model.Interface;
-using ESFA.DC.ILR.OPAService.Service.Builders.Implementation;
-using ESFA.DC.ILR.OPAService.Service.Builders.Interface;
 using FluentAssertions;
 using Xunit;
 using Moq;
-using ESFA.DC.ILR.OPAService.Service.Interface;
+using ESFA.DC.OPA.Service;
+using ESFA.DC.OPA.Service.Builders;
+using ESFA.DC.OPA.Service.Interface;
+using ESFA.DC.OPA.Service.Interface.Builders;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 {
@@ -362,7 +363,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
        
 
         private readonly IOPAService opaService = 
-            new OPAService.Service.Implementation.OPAService(_sessionBuilder, _dataEntityBuilder, _rulebaseZipPath);
+            new OPAService(_sessionBuilder, _dataEntityBuilder, _rulebaseZipPath, new DateTime(2017, 8, 1));
 
         private IEnumerable<IDataEntity> RunFundingService(string filePath)
         {
