@@ -5,7 +5,7 @@ using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation;
 using Xunit;
 using FluentAssertions;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
+using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
 {
@@ -915,21 +915,21 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
 
         #region Test Helpers
 
-        private static IDictionary<string, AttributeData> SetupGlobalAttributes(int ukprn, string larsVersion, string postcodeAreaCostVersion)
+        private static IDictionary<string, IAttributeData> SetupGlobalAttributes(int ukprn, string larsVersion, string postcodeAreaCostVersion)
         {
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
 
             return attributeBuilder.BuildGlobalAttributes(ukprn, larsVersion, postcodeAreaCostVersion);
         }
 
-        private static IDictionary<string, AttributeData> SetupLearnerAttributes(string learnRefNumber)
+        private static IDictionary<string, IAttributeData> SetupLearnerAttributes(string learnRefNumber)
         {
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
 
             return attributeBuilder.BuildLearnerAttributes(learnRefNumber);
         }
 
-        private static IDictionary<string, AttributeData> SetupLearningDeliveryAttributes
+        private static IDictionary<string, IAttributeData> SetupLearningDeliveryAttributes
         (
          int aimSeqNumber,
          int compStatus,
@@ -947,7 +947,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
          int? regulatedCreditValue
         )
         {
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
 
             return attributeBuilder.BuildLearningDeliveryAttributes(
                 aimSeqNumber,
@@ -966,30 +966,30 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
                 regulatedCreditValue);
         }
 
-        private static IDictionary<string, AttributeData> SetupLearningDeliveryFAMAttributes(
+        private static IDictionary<string, IAttributeData> SetupLearningDeliveryFAMAttributes(
             string learnDelFAMCode, DateTime? learnDelFAMDateFrom, DateTime? learnDelFAMDateTo, string learnDelFAMType)
         {
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
 
             return attributeBuilder.BuildLearningDeliveryFAMAttributes(learnDelFAMCode,learnDelFAMDateFrom,learnDelFAMDateTo, learnDelFAMType);
         }
-        private static IDictionary<string, AttributeData> SetupLearningDeliverySfaAreaCostAttributes(
+        private static IDictionary<string, IAttributeData> SetupLearningDeliverySfaAreaCostAttributes(
             DateTime? areaCosEffectiveFrom, DateTime? areaCosEffectiveTo, decimal areaCosFactor)
         {
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
 
             return attributeBuilder.BuildLearningDeliverySfaAreaCostAttributes(areaCosEffectiveFrom, areaCosEffectiveTo, areaCosFactor);
         }
 
-        private static IDictionary<string, AttributeData> SetupLearningDeliveryLarsFundingAttributes(
+        private static IDictionary<string, IAttributeData> SetupLearningDeliveryLarsFundingAttributes(
             string larsFundCategory, DateTime larsFundEffectiveFrom, DateTime? larsFundEffectiveTo, decimal? larsFundWeightedRate, string larsFundWeightingFactor)
         {
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
 
             return attributeBuilder.BuildLearningDeliveryLarsFundingAttributes(larsFundCategory, larsFundEffectiveFrom, larsFundEffectiveTo, larsFundWeightedRate, larsFundWeightingFactor);
         }
 
-        private static object AttributeValue(IDictionary<string, AttributeData> dictionary, string attributeName)
+        private static object AttributeValue(IDictionary<string, IAttributeData> dictionary, string attributeName)
         {
             return dictionary.Where(k => k.Key == attributeName).Select(v => v.Value.Value).Single();
         }

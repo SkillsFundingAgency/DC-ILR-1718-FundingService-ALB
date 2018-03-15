@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
+using ESFA.DC.OPA.Model;
+using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 {
-    public class AttributeBuilder : IAttributeBuilder<AttributeData>
+    public class AttributeBuilder : IAttributeBuilder<IAttributeData>
     {
         #region Constants
 
@@ -56,9 +57,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 
         #endregion
 
-        public IDictionary<string, AttributeData> BuildGlobalAttributes(int ukprn, string larsVersion, string postcodeAreaCostVersion)
+        public IDictionary<string, IAttributeData> BuildGlobalAttributes(int ukprn, string larsVersion, string postcodeAreaCostVersion)
         {
-            return new Dictionary<string, AttributeData>
+            return new Dictionary<string, IAttributeData>
             {
                 { UKPRN,  new AttributeData(UKPRN, ukprn) },
                 { LARSVersion, new AttributeData(LARSVersion, larsVersion) },
@@ -66,17 +67,17 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             };
         }
 
-        public IDictionary<string, AttributeData> BuildLearnerAttributes(string learnRefNumber)
+        public IDictionary<string, IAttributeData> BuildLearnerAttributes(string learnRefNumber)
         {
-            return new Dictionary<string, AttributeData>
+            return new Dictionary<string, IAttributeData>
             {
                 { LearnRefNumber, new AttributeData(LearnRefNumber, learnRefNumber) }
             };
         }
 
-        public IDictionary<string, AttributeData> BuildLearningDeliveryAttributes(long? aimSeqNumber, long? compStatus, DateTime? learnActEndDate, string learnAimRefType, DateTime? learnPlanEndDate, DateTime? learnStartDate, string lrnDelFAM_ADL, string lrnDelFAM_RES, string notionalNVQLevelv2, DateTime? origLearnStartDate, long? otherFundAdj, long? outcome, long? priorLearnFundAdj, long? regulatedCreditValue)
+        public IDictionary<string, IAttributeData> BuildLearningDeliveryAttributes(long? aimSeqNumber, long? compStatus, DateTime? learnActEndDate, string learnAimRefType, DateTime? learnPlanEndDate, DateTime? learnStartDate, string lrnDelFAM_ADL, string lrnDelFAM_RES, string notionalNVQLevelv2, DateTime? origLearnStartDate, long? otherFundAdj, long? outcome, long? priorLearnFundAdj, long? regulatedCreditValue)
         {
-            return new Dictionary<string, AttributeData>
+            return new Dictionary<string, IAttributeData>
             {
                 { AimSeqNumber,new AttributeData(AimSeqNumber, aimSeqNumber) },
                 { CompStatus,new AttributeData(CompStatus, compStatus) },
@@ -95,9 +96,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             };
         }
 
-        public IDictionary<string, AttributeData> BuildLearningDeliveryFAMAttributes(string learnDelFAMCode, DateTime? learnDelFAMDateFrom, DateTime? learnDelFAMDateTo, string learnDelFAMType)
+        public IDictionary<string, IAttributeData> BuildLearningDeliveryFAMAttributes(string learnDelFAMCode, DateTime? learnDelFAMDateFrom, DateTime? learnDelFAMDateTo, string learnDelFAMType)
         {
-            return new Dictionary<string, AttributeData>
+            return new Dictionary<string, IAttributeData>
             {
                 { LearnDelFAMCode,new AttributeData(LearnDelFAMCode, learnDelFAMCode) },
                 { LearnDelFAMDateFrom,new AttributeData(LearnDelFAMDateFrom, learnDelFAMDateFrom) },
@@ -106,9 +107,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             };
         }
         
-        public IDictionary<string, AttributeData> BuildLearningDeliverySfaAreaCostAttributes(DateTime? areaCosEffectiveFrom, DateTime? areaCosEffectiveTo, decimal areaCosFactor)
+        public IDictionary<string, IAttributeData> BuildLearningDeliverySfaAreaCostAttributes(DateTime? areaCosEffectiveFrom, DateTime? areaCosEffectiveTo, decimal areaCosFactor)
         {
-            return new Dictionary<string, AttributeData>
+            return new Dictionary<string, IAttributeData>
             {
                 { AreaCosEffectiveFrom,new AttributeData(AreaCosEffectiveFrom, areaCosEffectiveFrom) },
                 { AreaCosEffectiveTo,new AttributeData(AreaCosEffectiveTo, areaCosEffectiveTo) },
@@ -116,9 +117,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             };
         }
 
-        public IDictionary<string, AttributeData> BuildLearningDeliveryLarsFundingAttributes(string larsFundCategory, DateTime larsFundEffectiveFrom, DateTime? larsFundEffectiveTo, decimal? larsFundWeightedRate, string larsFundWeightingFactor)
+        public IDictionary<string, IAttributeData> BuildLearningDeliveryLarsFundingAttributes(string larsFundCategory, DateTime larsFundEffectiveFrom, DateTime? larsFundEffectiveTo, decimal? larsFundWeightedRate, string larsFundWeightingFactor)
         {
-            return new Dictionary<string, AttributeData>
+            return new Dictionary<string, IAttributeData>
             {
                 { LARSFundCategory,new AttributeData(LARSFundCategory, larsFundCategory) },
                 { LARSFundEffectiveFrom,new AttributeData(LARSFundEffectiveFrom, larsFundEffectiveFrom) },

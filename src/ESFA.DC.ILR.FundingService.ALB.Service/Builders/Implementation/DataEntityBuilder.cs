@@ -4,19 +4,18 @@ using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
+using ESFA.DC.OPA.Model;
+using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 {
     public class DataEntityBuilder : IDataEntityBuilder
     {
         private readonly IReferenceDataCache _referenceDataCache;
-        private readonly IAttributeBuilder<AttributeData> _attributeBuilder;
+        private readonly IAttributeBuilder<IAttributeData> _attributeBuilder;
 
-        public DataEntityBuilder(IReferenceDataCache referenceDataCache, IAttributeBuilder<AttributeData> attributeBuilder)
+        public DataEntityBuilder(IReferenceDataCache referenceDataCache, IAttributeBuilder<IAttributeData> attributeBuilder)
         {
             _referenceDataCache = referenceDataCache;
             _attributeBuilder = attributeBuilder;
@@ -35,21 +34,21 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 
         #endregion
 
-        public IEnumerable<DataEntity> EntityBuilder(int ukprn, IEnumerable<ILearner> learners)
+        public IEnumerable<IDataEntity> EntityBuilder(int ukprn, IEnumerable<ILearner> learners)
         {
             var globalEntities = learners.Select(learner =>
             {
                 //Global Entity
-                DataEntity globalEntity = GlobalEntity(ukprn);
+                IDataEntity globalEntity = GlobalEntity(ukprn);
 
                 //Learner Entity
-                DataEntity learnerEntity = LearnerEntity(learner.LearnRefNumber);
+                IDataEntity learnerEntity = LearnerEntity(learner.LearnRefNumber);
 
                 //LearningDelivery Entities
                 foreach (var learningDelivery in learner.LearningDeliveries)
                 {
                     _referenceDataCache.LarsLearningDelivery.TryGetValue(learningDelivery.LearnAimRef, out LARSLearningDelivery larsLearningDelivery);
-                    DataEntity learningDeliveryEntity = LearningDeliveryEntity(learningDelivery, larsLearningDelivery);
+                    IDataEntity learningDeliveryEntity = LearningDeliveryEntity(learningDelivery, larsLearningDelivery);
 
                     learnerEntity.AddChild(learningDeliveryEntity);
 
@@ -58,7 +57,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                     {
                         foreach (var learningDeliveryFAM in learningDelivery.LearningDeliveryFAMs)
                         {
-                            DataEntity learningDeliveryFAMEntity = LearningDeliveryFAMEntity(learningDeliveryFAM);
+                            IDataEntity learningDeliveryFAMEntity = LearningDeliveryFAMEntity(learningDeliveryFAM);
                             
                             learningDeliveryEntity.AddChild(learningDeliveryFAMEntity);
                         }
@@ -93,9 +92,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 
         #region Entity Builders
 
-        protected internal DataEntity GlobalEntity(int ukprn)
+        protected internal IDataEntity GlobalEntity(int ukprn)
         {
-            DataEntity globalDataEntity = new DataEntity(Entityglobal)
+            IDataEntity globalDataEntity = new DataEntity(Entityglobal)
             {
                 Attributes =
                     _attributeBuilder.BuildGlobalAttributes(ukprn, _referenceDataCache.LARSCurrentVersion, _referenceDataCache.PostcodeFactorsCurrentVersion)
@@ -104,9 +103,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             return globalDataEntity;
         }
 
-        protected internal DataEntity LearnerEntity(string learnRefNumber)
+        protected internal IDataEntity LearnerEntity(string learnRefNumber)
         {
-            DataEntity learnerDataEntity = new DataEntity(EntityLearner)
+            IDataEntity learnerDataEntity = new DataEntity(EntityLearner)
             {
                 Attributes =
                     _attributeBuilder.BuildLearnerAttributes(learnRefNumber)
@@ -115,9 +114,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             return learnerDataEntity;
         }
 
-        protected internal DataEntity LearningDeliveryEntity(ILearningDelivery learningDelivery, LARSLearningDelivery larsLearningDelivery)
+        protected internal IDataEntity LearningDeliveryEntity(ILearningDelivery learningDelivery, LARSLearningDelivery larsLearningDelivery)
         {
-            DataEntity learningDeliveryDataEntity = new DataEntity(EntityLearningDelivery)
+            IDataEntity learningDeliveryDataEntity = new DataEntity(EntityLearningDelivery)
             {
                 Attributes =
                     _attributeBuilder.BuildLearningDeliveryAttributes(
@@ -140,9 +139,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             return learningDeliveryDataEntity;
         }
 
-        protected internal DataEntity LearningDeliveryFAMEntity(ILearningDeliveryFAM learningDeliveryFam)
+        protected internal IDataEntity LearningDeliveryFAMEntity(ILearningDeliveryFAM learningDeliveryFam)
         {
-            DataEntity learningDeliveryFAMDataEntity = new DataEntity(EntityLearningDeliveryFAM)
+            IDataEntity learningDeliveryFAMDataEntity = new DataEntity(EntityLearningDeliveryFAM)
             {
                 Attributes = 
                     _attributeBuilder.BuildLearningDeliveryFAMAttributes(
@@ -155,7 +154,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             return learningDeliveryFAMDataEntity;
         }
 
-        protected internal DataEntity SFAAreaCostEntity(SfaAreaCost sfaAreaCost)
+        protected internal IDataEntity SFAAreaCostEntity(SfaAreaCost sfaAreaCost)
         {
             var sfaAreaCostDataEntity = new DataEntity(EntityLearningDeliverySFA_PostcodeAreaCost)
             {
@@ -170,9 +169,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             return sfaAreaCostDataEntity;
         }
 
-        protected internal DataEntity LARSFundingEntity(LARSFunding larsFunding)
+        protected internal IDataEntity LARSFundingEntity(LARSFunding larsFunding)
         {
-            var larsFundingDataENtity = new DataEntity(EntityLearningDeliveryLARS_Funding)
+            var larsFundingDataEntity = new DataEntity(EntityLearningDeliveryLARS_Funding)
             {
                 Attributes = _attributeBuilder.BuildLearningDeliveryLarsFundingAttributes(
                     larsFunding.FundingCategory,
@@ -183,7 +182,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                 )
             };
 
-            return larsFundingDataENtity;
+            return larsFundingDataEntity;
         }
 
         #endregion

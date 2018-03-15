@@ -5,8 +5,8 @@ using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
-using ESFA.DC.ILR.OPAService.Service.Interface;
+using ESFA.DC.OPA.Model.Interface;
+using ESFA.DC.OPA.Service.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Implementation
 {
@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Implementation
             _opaService = opaService;
         }
 
-        public IEnumerable<DataEntity> ProcessFunding(IMessage message)
+        public IEnumerable<IDataEntity> ProcessFunding(IMessage message)
         {
             int ukprn = message.LearningProviderEntity.UKPRN;
 
@@ -31,11 +31,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Implementation
             var inputDataEntities = _dataEntityBuilder.EntityBuilder(ukprn, learners);
 
             //Execute OPA
-            var outputDataEntities = new ConcurrentBag<DataEntity>();
+            var outputDataEntities = new ConcurrentBag<IDataEntity>();
 
             foreach (var globalEntity in inputDataEntities)
             {
-                DataEntity sessionEntity = _opaService.ExecuteSession(globalEntity);
+                IDataEntity sessionEntity = _opaService.ExecuteSession(globalEntity);
 
                 outputDataEntities.Add(sessionEntity);
             }

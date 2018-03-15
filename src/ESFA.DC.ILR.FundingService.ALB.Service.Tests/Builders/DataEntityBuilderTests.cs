@@ -8,8 +8,8 @@ using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
+using ESFA.DC.OPA.Model;
+using ESFA.DC.OPA.Model.Interface;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -1691,21 +1691,21 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
 
         #region Test Helpers
         
-        private DataEntity Entity(DataEntity entity)
+        private IDataEntity Entity(IDataEntity entity)
         {
             return entity;
         }
 
-        private IEnumerable<DataEntity> Entities(IEnumerable<DataEntity> entities)
+        private IEnumerable<IDataEntity> Entities(IEnumerable<IDataEntity> entities)
         {
             return entities;
         }
 
         #region Expected Results
 
-        private IDictionary<string, AttributeData> ExpectedGlobalAttributes()
+        private IDictionary<string, IAttributeData> ExpectedGlobalAttributes()
         {
-           return new Dictionary<string, AttributeData>
+           return new Dictionary<string, IAttributeData>
            {
                 {"UKPRN", new AttributeData("UKPRN", 12345678)},
                 {"LARSVersion", new AttributeData("LARSVersion", "Version_005")},
@@ -1713,17 +1713,17 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             };
         }
 
-        private IDictionary<string, AttributeData> ExpectedLearnerAttributes()
+        private IDictionary<string, IAttributeData> ExpectedLearnerAttributes()
         {
-            return new Dictionary<string, AttributeData>
+            return new Dictionary<string, IAttributeData>
             {
                 {"LearnRefNumber", new AttributeData("LearnRefNumber", "Learner1")}
             };
         }
 
-        private IDictionary<string, AttributeData> ExpectedLearningDeliveryAttributes()
+        private IDictionary<string, IAttributeData> ExpectedLearningDeliveryAttributes()
         {
-            return new Dictionary<string, AttributeData>
+            return new Dictionary<string, IAttributeData>
             {
                 {"AimSeqNumber", new AttributeData("AimSeqNumber", 1)},
                 {"CompStatus", new AttributeData("CompStatus", 1)},
@@ -1742,9 +1742,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             };
         }
 
-        private IDictionary<string, AttributeData> ExpectedLearningDeliveryFAMAttributes()
+        private IDictionary<string, IAttributeData> ExpectedLearningDeliveryFAMAttributes()
         {
-            return new Dictionary<string, AttributeData>
+            return new Dictionary<string, IAttributeData>
             {
                 { "LearnDelFAMCode",new AttributeData("LearnDelFAMCode", "1") },
                 { "LearnDelFAMDateFrom",new AttributeData("LearnDelFAMDateFrom", DateTime.Parse("2017-08-30")) },
@@ -1753,9 +1753,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             };
         }
 
-        private IDictionary<string, AttributeData> ExpectedLearningDeliverySFAPostcodeAreaCostAttributes()
+        private IDictionary<string, IAttributeData> ExpectedLearningDeliverySFAPostcodeAreaCostAttributes()
         {
-            return new Dictionary<string, AttributeData>
+            return new Dictionary<string, IAttributeData>
             {
                 { "AreaCosEffectiveFrom",new AttributeData("AreaCosEffectiveFrom", DateTime.Parse("2000-08-30")) },
                 { "AreaCosEffectiveTo",new AttributeData("AreaCosEffectiveTo", null) },
@@ -1763,9 +1763,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             };
         }
 
-        private IDictionary<string, AttributeData> ExpectedLearningDeliveryLARSFundingAttributes()
+        private IDictionary<string, IAttributeData> ExpectedLearningDeliveryLARSFundingAttributes()
         {
-            return new Dictionary<string, AttributeData>
+            return new Dictionary<string, IAttributeData>
             {
                 { "LARSFundCategory",new AttributeData("LARSFundCategory", "Matrix") },
                 { "LARSFundEffectiveFrom",new AttributeData("LARSFundEffectiveFrom",  DateTime.Parse("2010-08-30")) },
@@ -1827,37 +1827,37 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
                 );
         }
 
-        private IEnumerable<DataEntity> SetupDataEntity()
+        private IEnumerable<IDataEntity> SetupDataEntity()
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var dataEntityBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
             return dataEntityBuilder.EntityBuilder(12345678, TestLearner);
         }
 
-        private DataEntity SetupGlobalEntity()
+        private IDataEntity SetupGlobalEntity()
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var globalBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
             return globalBuilder.GlobalEntity(12345678);
         }
 
-        private DataEntity SetupLearnerEntity()
+        private IDataEntity SetupLearnerEntity()
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var learnerBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
             return learnerBuilder.LearnerEntity("Learner1");
         }
 
-        private DataEntity SetupLearningDeliveryEntity()
+        private IDataEntity SetupLearningDeliveryEntity()
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var learningDeilveryBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
             LARSLearningDelivery larsLearningDelivery =
@@ -1866,19 +1866,19 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             return learningDeilveryBuilder.LearningDeliveryEntity(TestLearningDelivery, larsLearningDelivery);
         }
 
-        private DataEntity SetupLearningDeliveryFAMEntity()
+        private IDataEntity SetupLearningDeliveryFAMEntity()
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var learningDeilveryFAMBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
             
             return learningDeilveryFAMBuilder.LearningDeliveryFAMEntity(TestLearningDeliveryFAM);
         }
 
-        private DataEntity SetupLearningDeliverySFAPostcodeAreaCostEntity()
+        private IDataEntity SetupLearningDeliverySFAPostcodeAreaCostEntity()
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var learningDeilverySFAAreaCostBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
             IList<SfaAreaCost> SFAAreaCost = referenceDataCacheMock.SfaAreaCost.Select(s => s.Value).Single();
@@ -1886,10 +1886,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             return learningDeilverySFAAreaCostBuilder.SFAAreaCostEntity(SFAAreaCost[0]);
         }
 
-        private DataEntity SetupLearningDeliveryLARSFundingEntity()
+        private IDataEntity SetupLearningDeliveryLARSFundingEntity()
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var learningDeilveryLARSFundingBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
             IList<LARSFunding> LARSFunding = referenceDataCacheMock.LarsFunding.Select(l => l.Value).Single();

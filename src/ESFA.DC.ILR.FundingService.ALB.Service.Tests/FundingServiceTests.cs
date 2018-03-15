@@ -11,14 +11,14 @@ using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
 using ESFA.DC.ILR.Model;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity;
-using ESFA.DC.ILR.OPAService.Model.Models.DataEntity.Attribute;
-using ESFA.DC.ILR.OPAService.Service.Builders.Implementation;
-using ESFA.DC.ILR.OPAService.Service.Builders.Interface;
+using ESFA.DC.OPA.Model.Interface;
 using FluentAssertions;
 using Xunit;
 using Moq;
-using ESFA.DC.ILR.OPAService.Service.Interface;
+using ESFA.DC.OPA.Service;
+using ESFA.DC.OPA.Service.Builders;
+using ESFA.DC.OPA.Service.Interface;
+using ESFA.DC.OPA.Service.Interface.Builders;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 {
@@ -363,14 +363,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
        
 
         private readonly IOPAService opaService = 
-            new OPAService.Service.Implementation.OPAService(_sessionBuilder, _dataEntityBuilder, _rulebaseZipPath);
+            new OPAService(_sessionBuilder, _dataEntityBuilder, _rulebaseZipPath, new DateTime(2017, 8, 1));
 
-        private IEnumerable<DataEntity> RunFundingService(string filePath)
+        private IEnumerable<IDataEntity> RunFundingService(string filePath)
         {
             Message message = ILRFile(filePath);
 
             var referenceDataCacheMock = SetupReferenceDataMock();
-            IAttributeBuilder<AttributeData> attributeBuilder = new AttributeBuilder();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var dataEntityBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
             IFundingSevice fundingService = new Implementation.FundingService(dataEntityBuilder, opaService);
 
@@ -378,24 +378,24 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             return fundingService.ProcessFunding(message);
         }
 
-        private IList<DataEntity> LearningDeliveryChildren(IEnumerable<DataEntity> entity)
+        private IList<IDataEntity> LearningDeliveryChildren(IEnumerable<IDataEntity> entity)
         {
             return entity.SelectMany(g => g.Children
                 .SelectMany(l => l.Children.SelectMany(ld => ld.Children))).ToList();
         }
 
-        private IList<DataEntity> LearningDeliveries(IEnumerable<DataEntity> entity)
+        private IList<IDataEntity> LearningDeliveries(IEnumerable<IDataEntity> entity)
         {
             return entity.SelectMany(g => g.Children
                 .SelectMany(l => l.Children)).ToList();
         }
 
-        private object Attribute(DataEntity entity, string attributeName)
+        private object Attribute(IDataEntity entity, string attributeName)
         {
             return entity.Attributes.Where(k => k.Key == attributeName).Select(v => v.Value.Value).Single();
         }
 
-        private IList<string> ChangePoints(DataEntity entity, string attributeName)
+        private IList<string> ChangePoints(IDataEntity entity, string attributeName)
         {
             return entity.Attributes.Where(k => k.Key == attributeName)
                 .SelectMany(v => v.Value.Changepoints.Select(c => c.Value.ToString())).ToList();
