@@ -13,15 +13,15 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
     {
         #region Constants
 
-        //Global
+        // Global
         private const string LARSVersion = "LARSVersion";
         private const string UKPRN = "UKPRN";
         private const string PostcodeAreaCostVersion = "PostcodeAreaCostVersion";
 
-        //Learner
+        // Learner
         private const string LearnRefNumber = "LearnRefNumber";
 
-        //LearningDelivery
+        // LearningDelivery
         private const string AimSeqNumber = "AimSeqNumber";
         private const string CompStatus = "CompStatus";
         private const string LearnActEndDate = "LearnActEndDate";
@@ -37,18 +37,18 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
         private const string PriorLearnFundAdj = "PriorLearnFundAdj";
         private const string RegulatedCreditValue = "RegulatedCreditValue";
 
-        //LearningDeliveryFAM
+        // LearningDeliveryFAM
         private const string LearnDelFAMCode = "LearnDelFAMCode";
         private const string LearnDelFAMDateFrom = "LearnDelFAMDateFrom";
         private const string LearnDelFAMDateTo = "LearnDelFAMDateTo";
         private const string LearnDelFAMType = "LearnDelFAMType";
 
-        //SFAPostcodeAreaCost
+        // SFAPostcodeAreaCost
         private const string AreaCosEffectiveFrom = "AreaCosEffectiveFrom";
         private const string AreaCosEffectiveTo = "AreaCosEffectiveTo";
         private const string AreaCosFactor = "AreaCosFactor";
 
-        //LearningDeliveryLARSFunding
+        // LearningDeliveryLARSFunding
         private const string LARSFundCategory = "LARSFundCategory";
         private const string LARSFundEffectiveFrom = "LARSFundEffectiveFrom";
         private const string LARSFundEffectiveTo = "LARSFundEffectiveTo";
@@ -75,24 +75,38 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             };
         }
 
-        public IDictionary<string, IAttributeData> BuildLearningDeliveryAttributes(long? aimSeqNumber, long? compStatus, DateTime? learnActEndDate, string learnAimRefType, DateTime? learnPlanEndDate, DateTime? learnStartDate, string lrnDelFAM_ADL, string lrnDelFAM_RES, string notionalNVQLevelv2, DateTime? origLearnStartDate, long? otherFundAdj, long? outcome, long? priorLearnFundAdj, long? regulatedCreditValue)
+        public IDictionary<string, IAttributeData> BuildLearningDeliveryAttributes(
+            long? aimSeqNumber,
+            long? compStatus,
+            DateTime? learnActEndDate,
+            string learnAimRefType,
+            DateTime? learnPlanEndDate,
+            DateTime? learnStartDate,
+            string lrnDelFAM_ADL,
+            string lrnDelFAM_RES,
+            string notionalNVQLevelv2,
+            DateTime? origLearnStartDate,
+            long? otherFundAdj,
+            long? outcome,
+            long? priorLearnFundAdj,
+            long? regulatedCreditValue)
         {
             return new Dictionary<string, IAttributeData>
             {
-                { AimSeqNumber,new AttributeData(AimSeqNumber, aimSeqNumber) },
-                { CompStatus,new AttributeData(CompStatus, compStatus) },
-                { LearnActEndDate,new AttributeData(LearnActEndDate, learnActEndDate) },
-                { LearnAimRefType,new AttributeData(LearnAimRefType, learnAimRefType) },
-                { LearnPlanEndDate,new AttributeData(LearnPlanEndDate, learnPlanEndDate) },
-                { LearnStartDate,new AttributeData(LearnStartDate, learnStartDate) },
-                { LrnDelFAM_ADL,new AttributeData(LrnDelFAM_ADL, lrnDelFAM_ADL) },
-                { LrnDelFAM_RES,new AttributeData(LrnDelFAM_RES, lrnDelFAM_RES) },
-                { NotionalNVQLevelv2,new AttributeData(NotionalNVQLevelv2, notionalNVQLevelv2) },
-                { OrigLearnStartDate,new AttributeData(OrigLearnStartDate, origLearnStartDate) },
-                { OtherFundAdj,new AttributeData(OtherFundAdj, otherFundAdj) },
-                { Outcome,new AttributeData(Outcome, outcome) },
-                { PriorLearnFundAdj,new AttributeData(PriorLearnFundAdj, priorLearnFundAdj) },
-                { RegulatedCreditValue,new AttributeData(RegulatedCreditValue, regulatedCreditValue) }
+                { AimSeqNumber, new AttributeData(AimSeqNumber, aimSeqNumber) },
+                { CompStatus, new AttributeData(CompStatus, compStatus) },
+                { LearnActEndDate, new AttributeData(LearnActEndDate, learnActEndDate) },
+                { LearnAimRefType, new AttributeData(LearnAimRefType, learnAimRefType) },
+                { LearnPlanEndDate, new AttributeData(LearnPlanEndDate, learnPlanEndDate) },
+                { LearnStartDate, new AttributeData(LearnStartDate, learnStartDate) },
+                { LrnDelFAM_ADL, new AttributeData(LrnDelFAM_ADL, lrnDelFAM_ADL) },
+                { LrnDelFAM_RES, new AttributeData(LrnDelFAM_RES, lrnDelFAM_RES) },
+                { NotionalNVQLevelv2, new AttributeData(NotionalNVQLevelv2, notionalNVQLevelv2) },
+                { OrigLearnStartDate, new AttributeData(OrigLearnStartDate, origLearnStartDate) },
+                { OtherFundAdj, new AttributeData(OtherFundAdj, otherFundAdj) },
+                { Outcome, new AttributeData(Outcome, outcome) },
+                { PriorLearnFundAdj, new AttributeData(PriorLearnFundAdj, priorLearnFundAdj) },
+                { RegulatedCreditValue, new AttributeData(RegulatedCreditValue, regulatedCreditValue) }
             };
         }
 
@@ -100,32 +114,37 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
         {
             return new Dictionary<string, IAttributeData>
             {
-                { LearnDelFAMCode,new AttributeData(LearnDelFAMCode, learnDelFAMCode) },
-                { LearnDelFAMDateFrom,new AttributeData(LearnDelFAMDateFrom, learnDelFAMDateFrom) },
-                { LearnDelFAMDateTo,new AttributeData(LearnDelFAMDateTo, learnDelFAMDateTo) },
-                { LearnDelFAMType,new AttributeData(LearnDelFAMType, learnDelFAMType) }
+                { LearnDelFAMCode, new AttributeData(LearnDelFAMCode, learnDelFAMCode) },
+                { LearnDelFAMDateFrom, new AttributeData(LearnDelFAMDateFrom, learnDelFAMDateFrom) },
+                { LearnDelFAMDateTo, new AttributeData(LearnDelFAMDateTo, learnDelFAMDateTo) },
+                { LearnDelFAMType, new AttributeData(LearnDelFAMType, learnDelFAMType) }
             };
         }
-        
+
         public IDictionary<string, IAttributeData> BuildLearningDeliverySfaAreaCostAttributes(DateTime? areaCosEffectiveFrom, DateTime? areaCosEffectiveTo, decimal areaCosFactor)
         {
             return new Dictionary<string, IAttributeData>
             {
-                { AreaCosEffectiveFrom,new AttributeData(AreaCosEffectiveFrom, areaCosEffectiveFrom) },
-                { AreaCosEffectiveTo,new AttributeData(AreaCosEffectiveTo, areaCosEffectiveTo) },
-                { AreaCosFactor,new AttributeData(AreaCosFactor, areaCosFactor) }
+                { AreaCosEffectiveFrom, new AttributeData(AreaCosEffectiveFrom, areaCosEffectiveFrom) },
+                { AreaCosEffectiveTo, new AttributeData(AreaCosEffectiveTo, areaCosEffectiveTo) },
+                { AreaCosFactor, new AttributeData(AreaCosFactor, areaCosFactor) }
             };
         }
 
-        public IDictionary<string, IAttributeData> BuildLearningDeliveryLarsFundingAttributes(string larsFundCategory, DateTime larsFundEffectiveFrom, DateTime? larsFundEffectiveTo, decimal? larsFundWeightedRate, string larsFundWeightingFactor)
+        public IDictionary<string, IAttributeData> BuildLearningDeliveryLarsFundingAttributes(
+            string larsFundCategory,
+            DateTime larsFundEffectiveFrom,
+            DateTime? larsFundEffectiveTo,
+            decimal? larsFundWeightedRate,
+            string larsFundWeightingFactor)
         {
             return new Dictionary<string, IAttributeData>
             {
-                { LARSFundCategory,new AttributeData(LARSFundCategory, larsFundCategory) },
-                { LARSFundEffectiveFrom,new AttributeData(LARSFundEffectiveFrom, larsFundEffectiveFrom) },
-                { LARSFundEffectiveTo,new AttributeData(LARSFundEffectiveTo, larsFundEffectiveTo) },
-                { LARSFundWeightedRate,new AttributeData(LARSFundWeightedRate, larsFundWeightedRate) },
-                { LARSFundWeightingFactor,new AttributeData(LARSFundWeightingFactor, larsFundWeightingFactor) }
+                { LARSFundCategory, new AttributeData(LARSFundCategory, larsFundCategory) },
+                { LARSFundEffectiveFrom, new AttributeData(LARSFundEffectiveFrom, larsFundEffectiveFrom) },
+                { LARSFundEffectiveTo, new AttributeData(LARSFundEffectiveTo, larsFundEffectiveTo) },
+                { LARSFundWeightedRate, new AttributeData(LARSFundWeightedRate, larsFundWeightedRate) },
+                { LARSFundWeightingFactor, new AttributeData(LARSFundWeightingFactor, larsFundWeightingFactor) }
             };
         }
     }

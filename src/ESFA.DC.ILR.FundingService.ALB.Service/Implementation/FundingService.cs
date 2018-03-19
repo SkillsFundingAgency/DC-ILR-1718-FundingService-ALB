@@ -27,10 +27,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Implementation
 
             var learners = message.Learners.Where(ld => ld.LearningDeliveries.Any(fm => fm.FundModelNullable == 99));
 
-            //Generate Funding Inputs
+            // Generate Funding Inputs
             var inputDataEntities = _dataEntityBuilder.EntityBuilder(ukprn, learners);
 
-            //Execute OPA
+            // Execute OPA
             var outputDataEntities = new ConcurrentBag<IDataEntity>();
 
             foreach (var globalEntity in inputDataEntities)
