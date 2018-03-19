@@ -8,7 +8,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
     public class LARSReferenceDataService : ILARSReferenceDataService
     {
         private readonly IReferenceDataCache _referenceDataCache;
-        
+
         public LARSReferenceDataService(IReferenceDataCache referenceDataCache)
         {
             _referenceDataCache = referenceDataCache;
@@ -18,7 +18,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
 
         public Dictionary<string, LARSLearningDelivery> LarsLearningDelivery => _referenceDataCache.LarsLearningDelivery;
 
-        string ILARSReferenceDataService.LARSCurrentVersion =>  _referenceDataCache.LARSCurrentVersion;
-
+        string ILARSReferenceDataService.LARSCurrentVersion => _referenceDataCache.LARSCurrentVersion;
     }
 }
