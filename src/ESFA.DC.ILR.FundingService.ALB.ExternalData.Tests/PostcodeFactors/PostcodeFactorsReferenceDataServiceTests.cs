@@ -69,7 +69,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
         {
             //ARRANGE
             string sfaAreaCostExistsPostcode = postcodeTestValue;
-            List<SfaAreaCost> sfaAreaCostExistsList = new List<SfaAreaCost>()
+            IList<SfaAreaCost> sfaAreaCostExistsList = new List<SfaAreaCost>()
             {
                 sfaAreaCostTestValue
             };
@@ -89,7 +89,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
         {
             //ARRANGE
             string sfaAreaCostNotExistsPostcode = "NW1 1AB";
-            List<SfaAreaCost> sfaAreaCostNotExistsList = new List<SfaAreaCost>()
+            IList<SfaAreaCost> sfaAreaCostNotExistsList = new List<SfaAreaCost>()
             {
                 sfaAreaCostTestValue
             };
@@ -109,7 +109,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
         {
             //ARRANGE
             string sfaAreaCostCorrectSinglePostcode = postcodeTestValue;
-            List<SfaAreaCost> sfaAreaCostCorrectSingleList = new List<SfaAreaCost>()
+            IList<SfaAreaCost> sfaAreaCostCorrectSingleList = new List<SfaAreaCost>()
             {
                 sfaAreaCostTestValue
             };
@@ -129,7 +129,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
         {
             //ARRANGE
             string sfaAreaCostCorrectManyPostcode = postcodeTestValue;
-            List<SfaAreaCost> sfaAreaCostCorrectManyList = new List<SfaAreaCost>()
+            IList<SfaAreaCost> sfaAreaCostCorrectManyList = new List<SfaAreaCost>()
             {
                 sfaAreaCostTestValue,
                 sfaAreaCostTestValue
@@ -156,7 +156,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
         {
             //ARRANGE
             string sfaAreaCostNotCorrectManyPostcode = postcodeTestValue;
-            List<SfaAreaCost> sfaAreaCostNotCorrectManyList = new List<SfaAreaCost>()
+            IList<SfaAreaCost> sfaAreaCostNotCorrectManyList = new List<SfaAreaCost>()
             {
                 sfaAreaCostTestValue
             };
@@ -165,7 +165,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
             var sfaAreaCostNotExists = PostcodeFactorsSFAAreaCostTestRun(sfaAreaCostNotCorrectManyPostcode, sfaAreaCostNotCorrectManyList);
 
             //ASSERT
-            var expectedListNotCorrect = new List<SfaAreaCost>
+            IList<SfaAreaCost> expectedListNotCorrect = new List<SfaAreaCost>
             {
                 sfaAreaCostTestValue,
                 sfaAreaCostTestValue
@@ -186,10 +186,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.PostcodeFactors
             return mockData.PostcodeFactorsCurrentVersion;
         }
 
-        private List<SfaAreaCost> PostcodeFactorsSFAAreaCostTestRun(string postcode, List<SfaAreaCost> sfaAreaCostList)
+        private IList<SfaAreaCost> PostcodeFactorsSFAAreaCostTestRun(string postcode, IList<SfaAreaCost> sfaAreaCostList)
         {
             var sfaAreaCostMock = referenceDataCacheMock;
-            sfaAreaCostMock.SetupGet(rdc => rdc.SfaAreaCost).Returns(new Dictionary<string, List<SfaAreaCost>>()
+            sfaAreaCostMock.SetupGet(rdc => rdc.SfaAreaCost).Returns(new Dictionary<string, IList<SfaAreaCost>>()
             {
                 { postcodeTestValue, sfaAreaCostList }
             });

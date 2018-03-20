@@ -7,7 +7,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Interface
     {
         string LARSCurrentVersion { get;  }
 
-        Dictionary<string, List<LARSFunding>> LarsFunding { get; }
+        Dictionary<string, IList<LARSFunding>> LarsFunding { get; }
 
         Dictionary<string, LARSLearningDelivery> LarsLearningDelivery { get; }
     }

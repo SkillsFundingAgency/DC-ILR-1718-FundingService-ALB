@@ -16,6 +16,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors
 
         string IPostcodeFactorsReferenceDataService.PostcodeFactorsCurrentVersion => _referenceDataCache.PostcodeFactorsCurrentVersion;
 
-        Dictionary<string, List<SfaAreaCost>> IPostcodeFactorsReferenceDataService.SfaAreaCost => _referenceDataCache.SfaAreaCost;
+        Dictionary<string, IList<SfaAreaCost>> IPostcodeFactorsReferenceDataService.SfaAreaCost => _referenceDataCache.SfaAreaCost;
     }
 }

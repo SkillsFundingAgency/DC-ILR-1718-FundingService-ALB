@@ -248,10 +248,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.LARS
             return larsLearningDelivery;
         }
 
-        private List<LARSFunding> LARSFundingTestRun(string learnAimRef, List<LARSFunding> larsFundingList)
+        private IList<LARSFunding> LARSFundingTestRun(string learnAimRef, List<LARSFunding> larsFundingList)
         {
             var larsFundingMock = referenceDataCacheMock;
-            larsFundingMock.SetupGet(rdc => rdc.LarsFunding).Returns(new Dictionary<string, List<LARSFunding>>()
+            larsFundingMock.SetupGet(rdc => rdc.LarsFunding).Returns(new Dictionary<string, IList<LARSFunding>>()
             {
                 { learnAimRefTestValue, larsFundingList }
             });

@@ -309,7 +309,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                         }
                     }
                 }
-                && l.SfaAreaCost == new Dictionary<string, List<SfaAreaCost>>
+                && l.SfaAreaCost == new Dictionary<string, IList<SfaAreaCost>>
                 {
                     {
                         "CV1 2WT", new List<SfaAreaCost>
@@ -323,7 +323,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                         }
                     }
                 }
-                && l.LarsFunding == new Dictionary<string, List<LARSFunding>>
+                && l.LarsFunding == new Dictionary<string, IList<LARSFunding>>
                 {
                     {
                         "50094488", new List<LARSFunding>

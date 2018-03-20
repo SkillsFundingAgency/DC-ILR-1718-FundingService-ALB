@@ -14,7 +14,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
             _referenceDataCache = referenceDataCache;
         }
 
-        public Dictionary<string, List<LARSFunding>> LarsFunding => _referenceDataCache.LarsFunding;
+        public Dictionary<string, IList<LARSFunding>> LarsFunding => _referenceDataCache.LarsFunding;
 
         public Dictionary<string, LARSLearningDelivery> LarsLearningDelivery => _referenceDataCache.LarsLearningDelivery;
 
