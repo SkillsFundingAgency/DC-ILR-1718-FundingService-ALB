@@ -1784,7 +1784,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             return Mock.Of<IReferenceDataCache>(l => 
                 l.LARSCurrentVersion == "Version_005"
                 && l.PostcodeFactorsCurrentVersion == "Version_003"
-                && l.LarsLearningDelivery == new Dictionary<string, LARSLearningDelivery>
+                && l.LARSLearningDelivery == new Dictionary<string, LARSLearningDelivery>
                 {
                     { "123456", new LARSLearningDelivery
                         {
@@ -1808,7 +1808,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
                         }
                     }
                 }
-                && l.LarsFunding == new Dictionary<string, IList<LARSFunding>>
+                && l.LARSFunding == new Dictionary<string, IList<LARSFunding>>
                 {
                     {
                         "123456", new List<LARSFunding>
@@ -1861,7 +1861,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             var learningDeilveryBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
             LARSLearningDelivery larsLearningDelivery =
-                referenceDataCacheMock.LarsLearningDelivery.Select(lars => lars.Value).SingleOrDefault(); 
+                referenceDataCacheMock.LARSLearningDelivery.Select(lars => lars.Value).SingleOrDefault(); 
 
             return learningDeilveryBuilder.LearningDeliveryEntity(TestLearningDelivery, larsLearningDelivery);
         }
@@ -1892,7 +1892,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var learningDeilveryLARSFundingBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
-            IList<LARSFunding> LARSFunding = referenceDataCacheMock.LarsFunding.Select(l => l.Value).Single();
+            IList<LARSFunding> LARSFunding = referenceDataCacheMock.LARSFunding.Select(l => l.Value).Single();
 
             return learningDeilveryLARSFundingBuilder.LARSFundingEntity(LARSFunding[0]);
         }

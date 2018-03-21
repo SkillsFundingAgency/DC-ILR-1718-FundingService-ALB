@@ -47,7 +47,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                 // LearningDelivery Entities
                 foreach (var learningDelivery in learner.LearningDeliveries)
                 {
-                    _referenceDataCache.LarsLearningDelivery.TryGetValue(learningDelivery.LearnAimRef, out LARSLearningDelivery larsLearningDelivery);
+                    _referenceDataCache.LARSLearningDelivery.TryGetValue(learningDelivery.LearnAimRef, out LARSLearningDelivery larsLearningDelivery);
                     IDataEntity learningDeliveryEntity = LearningDeliveryEntity(learningDelivery, larsLearningDelivery);
 
                     learnerEntity.AddChild(learningDeliveryEntity);
@@ -72,10 +72,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                     }
 
                     // LARS Funding Entities
-                    if (_referenceDataCache.LarsFunding.ContainsKey(learningDelivery.LearnAimRef))
+                    if (_referenceDataCache.LARSFunding.ContainsKey(learningDelivery.LearnAimRef))
                     {
                         learningDeliveryEntity.AddChildren(
-                            _referenceDataCache.LarsFunding[learningDelivery.LearnAimRef]
+                            _referenceDataCache.LARSFunding[learningDelivery.LearnAimRef]
                                 .Select(larsFunding => LARSFundingEntity(larsFunding)));
                     }
                 }

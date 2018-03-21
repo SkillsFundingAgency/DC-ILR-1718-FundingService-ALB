@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
@@ -14,8 +15,21 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors
             _referenceDataCache = referenceDataCache;
         }
 
-        string IPostcodeFactorsReferenceDataService.PostcodeFactorsCurrentVersion => _referenceDataCache.PostcodeFactorsCurrentVersion;
+        public string PostcodeFactorsCurrentVersion()
+        {
+            return _referenceDataCache.PostcodeFactorsCurrentVersion;
+        }
 
-        Dictionary<string, IList<SfaAreaCost>> IPostcodeFactorsReferenceDataService.SfaAreaCost => _referenceDataCache.SfaAreaCost;
+        public IList<SfaAreaCost> SFAAreaCostsForPostcode(string postcode)
+        {
+            try
+            {
+                return _referenceDataCache.SfaAreaCost[postcode];
+            }
+            catch (Exception ex)
+            {
+                throw new KeyNotFoundException(string.Format("Cannot find Postcode: " + postcode + " in the Dictionary."));
+            }
+        }
     }
 }

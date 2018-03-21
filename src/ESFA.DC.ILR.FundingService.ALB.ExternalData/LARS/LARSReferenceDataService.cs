@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using ESFA.DC.Data.LARS.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
@@ -14,10 +16,33 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
             _referenceDataCache = referenceDataCache;
         }
 
-        public Dictionary<string, IList<LARSFunding>> LarsFunding => _referenceDataCache.LarsFunding;
+        public string LARSCurrentVersion()
+        {
+            return _referenceDataCache.LARSCurrentVersion;
+        }
 
-        public Dictionary<string, LARSLearningDelivery> LarsLearningDelivery => _referenceDataCache.LarsLearningDelivery;
+        public IList<LARSFunding> LARSFundingsForLearnAimRef(string learnAimRef)
+        {
+            try
+            {
+                return _referenceDataCache.LARSFunding[learnAimRef];
+            }
+            catch (Exception ex)
+            {
+                throw new KeyNotFoundException(string.Format("Cannot find LARS Funding data for LearnAimRef: " + learnAimRef + " in the Dictionary."));
+            }
+        }
 
-        string ILARSReferenceDataService.LARSCurrentVersion => _referenceDataCache.LARSCurrentVersion;
+        public LARSLearningDelivery LARSLearningDeliveriesForLearnAimRef(string learnAimRef)
+        {
+            try
+            {
+                return _referenceDataCache.LARSLearningDelivery[learnAimRef];
+            }
+            catch (Exception ex)
+            {
+                throw new KeyNotFoundException(string.Format("Cannot find LARS Learning Delivery data for LearnAimRef: " + learnAimRef + " in the Dictionary."));
+            }
+        }
     }
 }

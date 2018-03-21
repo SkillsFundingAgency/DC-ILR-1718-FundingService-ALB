@@ -5,10 +5,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Interface
 {
     public interface ILARSReferenceDataService
     {
-        string LARSCurrentVersion { get;  }
+        string LARSCurrentVersion();
 
-        Dictionary<string, IList<LARSFunding>> LarsFunding { get; }
+        IList<LARSFunding> LARSFundingsForLearnAimRef(string learnAimRef);
 
-        Dictionary<string, LARSLearningDelivery> LarsLearningDelivery { get; }
+        LARSLearningDelivery LARSLearningDeliveriesForLearnAimRef(string learnAimRef);
     }
 }

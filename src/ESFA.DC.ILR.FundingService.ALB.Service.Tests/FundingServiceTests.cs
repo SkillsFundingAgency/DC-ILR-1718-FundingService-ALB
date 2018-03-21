@@ -288,7 +288,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             return Mock.Of<IReferenceDataCache>(l =>
                 l.LARSCurrentVersion == "Version_005"
                 && l.PostcodeFactorsCurrentVersion == "Version_003"
-                && l.LarsLearningDelivery == new Dictionary<string, LARSLearningDelivery>
+                && l.LARSLearningDelivery == new Dictionary<string, LARSLearningDelivery>
                 {
                     {
                         "50094488", new LARSLearningDelivery
@@ -323,7 +323,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                         }
                     }
                 }
-                && l.LarsFunding == new Dictionary<string, IList<LARSFunding>>
+                && l.LARSFunding == new Dictionary<string, IList<LARSFunding>>
                 {
                     {
                         "50094488", new List<LARSFunding>

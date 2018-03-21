@@ -5,8 +5,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Interface
 {
     public interface IPostcodeFactorsReferenceDataService
     {
-        string PostcodeFactorsCurrentVersion { get; }
+        string PostcodeFactorsCurrentVersion();
 
-        Dictionary<string, IList<SfaAreaCost>> SfaAreaCost { get; }
+        IList<SfaAreaCost> SFAAreaCostsForPostcode(string postcode);
     }
 }
