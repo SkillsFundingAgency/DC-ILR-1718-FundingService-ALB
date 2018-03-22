@@ -323,7 +323,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                         }
                     }
                 }
-                && l.LARSFunding == new Dictionary<string, IList<LARSFunding>>
+                && l.LARSFunding == new Dictionary<string, IEnumerable<LARSFunding>>
                 {
                     {
                         "50094488", new List<LARSFunding>

@@ -6,7 +6,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface
 {
     public interface IReferenceDataCache
     {
-        IDictionary<string, IList<LARSFunding>> LARSFunding { get; }
+        IDictionary<string, IEnumerable<LARSFunding>> LARSFunding { get; }
 
         IDictionary<string, LARSLearningDelivery> LARSLearningDelivery { get; }
 

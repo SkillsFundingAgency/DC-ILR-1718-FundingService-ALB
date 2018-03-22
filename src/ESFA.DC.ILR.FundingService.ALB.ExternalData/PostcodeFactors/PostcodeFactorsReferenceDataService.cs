@@ -28,7 +28,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors
             }
             catch (Exception ex)
             {
-                throw new KeyNotFoundException(string.Format("Cannot find Postcode: " + postcode + " in the Dictionary."));
+                throw new KeyNotFoundException(string.Format("Cannot find Postcode: " + postcode + " in the Dictionary. Exception details: " + ex));
             }
         }
     }

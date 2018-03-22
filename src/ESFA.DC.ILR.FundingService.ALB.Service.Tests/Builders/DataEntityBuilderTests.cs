@@ -1808,7 +1808,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
                         }
                     }
                 }
-                && l.LARSFunding == new Dictionary<string, IList<LARSFunding>>
+                && l.LARSFunding == new Dictionary<string, IEnumerable<LARSFunding>>
                 {
                     {
                         "123456", new List<LARSFunding>
@@ -1892,9 +1892,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var learningDeilveryLARSFundingBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
-            IList<LARSFunding> LARSFunding = referenceDataCacheMock.LARSFunding.Select(l => l.Value).Single();
+            IEnumerable<LARSFunding> LARSFunding = referenceDataCacheMock.LARSFunding.Select(l => l.Value).Single();
 
-            return learningDeilveryLARSFundingBuilder.LARSFundingEntity(LARSFunding[0]);
+            return learningDeilveryLARSFundingBuilder.LARSFundingEntity(LARSFunding.Single());
         }
 
         #endregion

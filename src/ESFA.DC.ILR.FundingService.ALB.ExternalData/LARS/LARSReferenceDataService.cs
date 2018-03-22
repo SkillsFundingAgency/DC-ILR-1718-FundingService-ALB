@@ -21,7 +21,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
             return _referenceDataCache.LARSCurrentVersion;
         }
 
-        public IList<LARSFunding> LARSFundingsForLearnAimRef(string learnAimRef)
+        public IEnumerable<LARSFunding> LARSFundingsForLearnAimRef(string learnAimRef)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
             }
             catch (Exception ex)
             {
-                throw new KeyNotFoundException(string.Format("Cannot find LARS Funding data for LearnAimRef: " + learnAimRef + " in the Dictionary."));
+                throw new KeyNotFoundException(string.Format("Cannot find LARS Funding data for LearnAimRef: " + learnAimRef + " in the Dictionary. Exception details: " + ex));
             }
         }
 
@@ -41,7 +41,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS
             }
             catch (Exception ex)
             {
-                throw new KeyNotFoundException(string.Format("Cannot find LARS Learning Delivery data for LearnAimRef: " + learnAimRef + " in the Dictionary."));
+                throw new KeyNotFoundException(string.Format("Cannot find LARS Learning Delivery data for LearnAimRef: " + learnAimRef + " in the Dictionary. Exception details: " + ex));
             }
         }
     }

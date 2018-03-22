@@ -7,7 +7,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Interface
     {
         string LARSCurrentVersion();
 
-        IList<LARSFunding> LARSFundingsForLearnAimRef(string learnAimRef);
+        IEnumerable<LARSFunding> LARSFundingsForLearnAimRef(string learnAimRef);
 
         LARSLearningDelivery LARSLearningDeliveriesForLearnAimRef(string learnAimRef);
     }

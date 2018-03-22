@@ -18,30 +18,19 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData
             _LARSContext = LARSContext;
         }
 
-        public void Populate(IEnumerable<string> learnAimRefs, IEnumerable<string> postcodes)
+        public void Populate(IList<string> learnAimRefs, IEnumerable<string> postcodes)
         {
             var referenceDataCache = (ReferenceDataCache)_referenceDataCache;
 
-            IDictionary<string, IList<LARSFunding>> larsFundinfDictionary = new Dictionary<string, IList<LARSFunding>>();
-
-            foreach (var aim in learnAimRefs)
-            {
-                var data = LARSFundingData(aim);
-                List<LARSFunding> larsFundingList = new List<LARSFunding>();
-
-                larsFundingList.Add(data);
-                larsFundinfDictionary.Add(aim, larsFundingList);
-                larsFundingList.RemoveAll(a => a.LearnAimRef == aim);
-            }
-
-            referenceDataCache.LARSFunding = larsFundinfDictionary;
+            referenceDataCache.LARSFunding = LARSFundingData(learnAimRefs);
         }
 
-        public LARSFunding LARSFundingData(string learnAimRef)
+        private IDictionary<string, IEnumerable<LARSFunding>> LARSFundingData(IList<string> learnAimRefs)
         {
-            return _LARSContext.LARS_Funding
-                .Where(lf => learnAimRef == lf.LearnAimRef)
-                .Select(lf => new LARSFunding
+            return
+                _LARSContext.LARS_Funding
+                .Where(lf => learnAimRefs.Contains(lf.LearnAimRef)).GroupBy(a => a.LearnAimRef)
+                .ToDictionary(a => a.Key, a => a.Select(lf => new LARSFunding
                 {
                     LearnAimRef = lf.LearnAimRef,
                     FundingCategory = lf.FundingCategory,
@@ -49,7 +38,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData
                     EffectiveTo = lf.EffectiveTo,
                     RateWeighted = lf.RateWeighted,
                     WeightingFactor = lf.WeightingFactor
-                }).SingleOrDefault();
+                }).ToList() as IEnumerable<LARSFunding>);
         }
     }
 }

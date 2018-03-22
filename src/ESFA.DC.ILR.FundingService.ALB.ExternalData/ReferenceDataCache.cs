@@ -8,7 +8,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData
 {
     public class ReferenceDataCache : IReferenceDataCache
     {
-        public IDictionary<string, IList<LARSFunding>> LARSFunding { get; set; } = new Dictionary<string, IList<LARSFunding>>();
+        public IDictionary<string, IEnumerable<LARSFunding>> LARSFunding { get; set; } = new Dictionary<string, IEnumerable<LARSFunding>>();
 
         public IDictionary<string, LARSLearningDelivery> LARSLearningDelivery { get; set; } = new Dictionary<string, LARSLearningDelivery>();
 
