@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
 using FluentAssertions;
 using Xunit;
 
@@ -120,7 +120,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             var referenceDataCache = SetupReferenceDataCache();
 
             //ASSERT
-            referenceDataCache.PostcodeFactorsCurrentVersion.Should().NotBeNull();
+            referenceDataCache.PostcodeCurrentVersion.Should().NotBeNull();
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             var referenceDataCache = SetupReferenceDataCache();
 
             //ASSERT
-            referenceDataCache.PostcodeFactorsCurrentVersion.Should().BeEquivalentTo(PostcodesCurrentVersion);
+            referenceDataCache.PostcodeCurrentVersion.Should().BeEquivalentTo(PostcodesCurrentVersion);
         }
 
         /// <summary>
@@ -187,10 +187,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
                 {
                     { "123456", larsLearningDeliveryTestValue }
                 },
-                PostcodeFactorsCurrentVersion = PostcodesCurrentVersion,
-                SfaAreaCost = new Dictionary<string, IList<SfaAreaCost>>
+                PostcodeCurrentVersion = PostcodesCurrentVersion,
+                SfaAreaCost = new Dictionary<string, IEnumerable<SfaAreaCost>>
                 {
-                    { "CV1 2WT", sfaAreaCostList(sfaAreaCostTestValue) }
+                    { "CV1 2WT", SFAAreaCostList(sfaAreaCostTestValue) }
                 }
 
             };
@@ -230,7 +230,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
                  NotionalNVQLevelv2 = "2",
                  RegulatedCreditValue = 180
              };
-        private IList<SfaAreaCost> sfaAreaCostList(SfaAreaCost sfaAreaCostData)
+        private IList<SfaAreaCost> SFAAreaCostList(SfaAreaCost sfaAreaCostData)
         {
             return new List<SfaAreaCost>
             {

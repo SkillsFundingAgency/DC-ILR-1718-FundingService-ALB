@@ -2,7 +2,7 @@
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
@@ -95,7 +95,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             IDataEntity globalDataEntity = new DataEntity(Entityglobal)
             {
                 Attributes =
-                    _attributeBuilder.BuildGlobalAttributes(ukprn, _referenceDataCache.LARSCurrentVersion, _referenceDataCache.PostcodeFactorsCurrentVersion)
+                    _attributeBuilder.BuildGlobalAttributes(ukprn, _referenceDataCache.LARSCurrentVersion, _referenceDataCache.PostcodeCurrentVersion)
             };
 
             return globalDataEntity;

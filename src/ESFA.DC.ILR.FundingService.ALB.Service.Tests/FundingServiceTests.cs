@@ -6,7 +6,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
@@ -287,7 +287,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
         {
             return Mock.Of<IReferenceDataCache>(l =>
                 l.LARSCurrentVersion == "Version_005"
-                && l.PostcodeFactorsCurrentVersion == "Version_003"
+                && l.PostcodeCurrentVersion == "Version_003"
                 && l.LARSLearningDelivery == new Dictionary<string, LARSLearningDelivery>
                 {
                     {
@@ -309,7 +309,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
                         }
                     }
                 }
-                && l.SfaAreaCost == new Dictionary<string, IList<SfaAreaCost>>
+                && l.SfaAreaCost == new Dictionary<string, IEnumerable<SfaAreaCost>>
                 {
                     {
                         "CV1 2WT", new List<SfaAreaCost>

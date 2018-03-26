@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.Model;
@@ -1783,7 +1783,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
         {
             return Mock.Of<IReferenceDataCache>(l => 
                 l.LARSCurrentVersion == "Version_005"
-                && l.PostcodeFactorsCurrentVersion == "Version_003"
+                && l.PostcodeCurrentVersion == "Version_003"
                 && l.LARSLearningDelivery == new Dictionary<string, LARSLearningDelivery>
                 {
                     { "123456", new LARSLearningDelivery
@@ -1795,7 +1795,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
                         }
                     }
                 }
-                && l.SfaAreaCost == new Dictionary<string, IList<SfaAreaCost>>
+                && l.SfaAreaCost == new Dictionary<string, IEnumerable<SfaAreaCost>>
                 {
                     { "CV1 2WT", new List<SfaAreaCost>
                         {
@@ -1881,9 +1881,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var learningDeilverySFAAreaCostBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
-            IList<SfaAreaCost> SFAAreaCost = referenceDataCacheMock.SfaAreaCost.Select(s => s.Value).Single();
+            IEnumerable<SfaAreaCost> SFAAreaCost = referenceDataCacheMock.SfaAreaCost.Select(s => s.Value).Single();
 
-            return learningDeilverySFAAreaCostBuilder.SFAAreaCostEntity(SFAAreaCost[0]);
+            return learningDeilverySFAAreaCostBuilder.SFAAreaCostEntity(SFAAreaCost.FirstOrDefault());
         }
 
         private IDataEntity SetupLearningDeliveryLARSFundingEntity()

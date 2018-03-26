@@ -42,6 +42,9 @@
     <Reference Include="ESFA.DC.Data.LARS.Model, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.Data.LARS.Model.0.1.0\lib\net461\ESFA.DC.Data.LARS.Model.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.Data.Postcodes.Model, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Data.Postcodes.Model.0.1.1-beta0001\lib\net461\ESFA.DC.Data.Postcodes.Model.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -60,10 +63,20 @@
     <Compile Include="LARS\Model\LARSFunding.cs" />
     <Compile Include="LARS\Model\LARSLearningDelivery.cs" />
     <Compile Include="LARS\Model\LARSVersion.cs" />
-    <Compile Include="PostcodeFactors\Interface\IPostcodeFactorsReferenceDataService.cs" />
-    <Compile Include="PostcodeFactors\Model\PostcodeVersion.cs" />
-    <Compile Include="PostcodeFactors\Model\SfaAreaCost.cs" />
-    <Compile Include="PostcodeFactors\PostcodeFactorsReferenceDataService.cs" />
+    <Compile Include="Postcodes\Interface\IPostcodesReferenceDataService.cs" />
+    <Compile Include="Postcodes\Model\PostcodeVersion.cs" />
+    <Compile Include="Postcodes\Model\SfaAreaCost.cs" />
+    <Compile Include="Postcodes\PostcodesReferenceDataService.cs" />
+    <Compile Include="Postcodes.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Postcodes.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Postcodes.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Postcodes.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceDataCache.cs" />
     <Compile Include="ReferenceDataCachePopulationService.cs" />
@@ -79,6 +92,19 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.6.8.2.4717\analyzers\SonarAnalyzer.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Postcodes.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Postcodes.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Postcodes.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Postcodes.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

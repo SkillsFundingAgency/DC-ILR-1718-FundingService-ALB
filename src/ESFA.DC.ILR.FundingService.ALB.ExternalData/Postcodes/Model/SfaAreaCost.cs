@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model
+namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model
 {
     public class SfaAreaCost
     {

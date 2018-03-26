@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Interface;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Interface;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
 
-namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors
+namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes
 {
-    public class PostcodeFactorsReferenceDataService : IPostcodeFactorsReferenceDataService
+    public class PostcodesReferenceDataService : IPostcodesReferenceDataService
     {
         private readonly IReferenceDataCache _referenceDataCache;
 
-        public PostcodeFactorsReferenceDataService(IReferenceDataCache referenceDataCache)
+        public PostcodesReferenceDataService(IReferenceDataCache referenceDataCache)
         {
             _referenceDataCache = referenceDataCache;
         }
 
-        public string PostcodeFactorsCurrentVersion()
+        public string PostcodesCurrentVersion()
         {
-            return _referenceDataCache.PostcodeFactorsCurrentVersion;
+            return _referenceDataCache.PostcodeCurrentVersion;
         }
 
-        public IList<SfaAreaCost> SFAAreaCostsForPostcode(string postcode)
+        public IEnumerable<SfaAreaCost> SFAAreaCostsForPostcode(string postcode)
         {
             try
             {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
 
 namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface
 {
@@ -12,8 +12,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface
 
         string LARSCurrentVersion { get; }
 
-        IDictionary<string, IList<SfaAreaCost>> SfaAreaCost { get; }
+        IDictionary<string, IEnumerable<SfaAreaCost>> SfaAreaCost { get; }
 
-        string PostcodeFactorsCurrentVersion { get; }
+        string PostcodeCurrentVersion { get; }
     }
 }
