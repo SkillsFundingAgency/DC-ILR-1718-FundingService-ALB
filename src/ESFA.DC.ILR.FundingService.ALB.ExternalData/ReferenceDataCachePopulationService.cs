@@ -22,10 +22,31 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData
         {
             var referenceDataCache = (ReferenceDataCache)_referenceDataCache;
 
-            referenceDataCache.LARSFunding = LARSFundingData(learnAimRefs);
+            referenceDataCache.LARSCurrentVersion = LARSCurrentVersion();
+            referenceDataCache.LARSLearningDelivery = LARSLearningDelivery(learnAimRefs);
+            referenceDataCache.LARSFunding = LARSFunding(learnAimRefs);
         }
 
-        private IDictionary<string, IEnumerable<LARSFunding>> LARSFundingData(IList<string> learnAimRefs)
+        private string LARSCurrentVersion()
+        {
+            return _LARSContext.LARS_Version.Select(lv => lv.MainDataSchemaName).Max();
+        }
+
+        private IDictionary<string, LARSLearningDelivery> LARSLearningDelivery(IList<string> learnAimRefs)
+        {
+            return
+                _LARSContext.LARS_LearningDelivery
+                .Where(ld => learnAimRefs.Contains(ld.LearnAimRef))
+                .ToDictionary(a => a.LearnAimRef, ld => new LARSLearningDelivery
+                {
+                    LearnAimRef = ld.LearnAimRef,
+                    LearnAimRefType = ld.LearnAimRefType,
+                    NotionalNVQLevelv2 = ld.NotionalNVQLevelv2,
+                    RegulatedCreditValue = ld.RegulatedCreditValue
+                });
+        }
+
+        private IDictionary<string, IEnumerable<LARSFunding>> LARSFunding(IList<string> learnAimRefs)
         {
             return
                 _LARSContext.LARS_Funding
