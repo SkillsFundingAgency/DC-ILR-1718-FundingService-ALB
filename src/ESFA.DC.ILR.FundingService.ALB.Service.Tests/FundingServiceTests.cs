@@ -287,12 +287,12 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
         #endregion
 
         #region Populate Reference Data Tests
-
+              
         /// <summary>
         /// Populate reference data cache and check values
         /// </summary>
-        [Fact(DisplayName = "PopulateReferenceData - Data Exists"), Trait("Funding Service", "Unit")]
-        public void PopulateReferenceData_DataExists()
+        [Fact(DisplayName = "PopulateReferenceData - LARS Version Correct"), Trait("Funding Service", "Unit")]
+        public void PopulateReferenceData_LARSVersion_Correct()
         {
             //ARRANGE
             IMessage message = ILRFile(@"Files\ILR-10006341-1718-20180118-023456-02.xml");
@@ -303,10 +303,134 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             fundingService.PopulateReferenceData(message);
 
             //ASSERT
-            referenceDataCache.LARSCurrentVersion.Should().NotBeNull();
             referenceDataCache.LARSCurrentVersion.Should().Be("Version_005");
         }
+
+        /// <summary>
+        /// Populate reference data cache and check values
+        /// </summary>
+        [Fact(DisplayName = "PopulateReferenceData - LARS LearningDelivery Correct"), Trait("Funding Service", "Unit")]
+        public void PopulateReferenceData_LARSVLearningDelivery_Correct()
+        {
+            //ARRANGE
+            IMessage message = ILRFile(@"Files\ILR-10006341-1718-20180118-023456-02.xml");
+            IReferenceDataCache referenceDataCache = new ReferenceDataCache();
+            var fundingService = FundingServicePopulationReferenceDataMock(referenceDataCache);
+
+            //ACT
+            fundingService.PopulateReferenceData(message);
+
+            //ASSERT
+            var expectedOutput1 = new LARSLearningDelivery
+            {
+                LearnAimRef = "50094488",
+                LearnAimRefType = "0006",
+                NotionalNVQLevelv2 = "2",
+                RegulatedCreditValue = 180
+            };
+
+            var expectedOutput2 = new LARSLearningDelivery
+            {
+                LearnAimRef = "60005415",
+                LearnAimRefType = "0006",
+                NotionalNVQLevelv2 = "4",
+                RegulatedCreditValue = 42
+            };
+
+            var output1 = referenceDataCache.LARSLearningDelivery.Where(k => k.Key == "50094488").Select(o => o.Value);
+            var output2 = referenceDataCache.LARSLearningDelivery.Where(k => k.Key == "60005415").Select(o => o.Value);
+
+            output1.FirstOrDefault().Should().BeEquivalentTo(expectedOutput1);
+            output2.FirstOrDefault().Should().BeEquivalentTo(expectedOutput2);
+        }
         
+        /// <summary>
+        /// Populate reference data cache and check values
+        /// </summary>
+        [Fact(DisplayName = "PopulateReferenceData - LARS Funding Correct"), Trait("Funding Service", "Unit")]
+        public void PopulateReferenceData_LARSFunding_Correct()
+        {
+            //ARRANGE
+            IMessage message = ILRFile(@"Files\ILR-10006341-1718-20180118-023456-02.xml");
+            IReferenceDataCache referenceDataCache = new ReferenceDataCache();
+            var fundingService = FundingServicePopulationReferenceDataMock(referenceDataCache);
+
+            //ACT
+            fundingService.PopulateReferenceData(message);
+
+            //ASSERT
+            var expectedOutput1 = new LARSFunding
+            {
+                LearnAimRef = "50094488",
+                EffectiveFrom = DateTime.Parse("2000-01-01"),
+                EffectiveTo = null,
+                FundingCategory = "Matrix",
+                WeightingFactor = "G",
+                RateWeighted = 11356m
+            };
+
+            var expectedOutput2 = new LARSFunding
+            {
+                LearnAimRef = "60005415",
+                EffectiveFrom = DateTime.Parse("2000-01-01"),
+                EffectiveTo = null,
+                FundingCategory = "Matrix",
+                WeightingFactor = "C",
+                RateWeighted = 2583m
+            };
+
+            var output1 = referenceDataCache.LARSFunding.Where(k => k.Key == "50094488").Select(o => o.Value).SingleOrDefault();
+            var output2 = referenceDataCache.LARSFunding.Where(k => k.Key == "60005415").SelectMany(o => o.Value).SingleOrDefault();
+
+            output1.Should().BeEquivalentTo(expectedOutput1);
+            output2.Should().BeEquivalentTo(expectedOutput2);
+        }
+
+        /// <summary>
+        /// Populate reference data cache and check values
+        /// </summary>
+        [Fact(DisplayName = "PopulateReferenceData - Postcodes Version Correct"), Trait("Funding Service", "Unit")]
+        public void PopulateReferenceData_Postcodes_Correct()
+        {
+            //ARRANGE
+            IMessage message = ILRFile(@"Files\ILR-10006341-1718-20180118-023456-02.xml");
+            IReferenceDataCache referenceDataCache = new ReferenceDataCache();
+            var fundingService = FundingServicePopulationReferenceDataMock(referenceDataCache);
+
+            //ACT
+            fundingService.PopulateReferenceData(message);
+
+            //ASSERT
+            referenceDataCache.PostcodeCurrentVersion.Should().Be("Version_002");
+        }
+
+        /// <summary>
+        /// Populate reference data cache and check values
+        /// </summary>
+        [Fact(DisplayName = "PopulateReferenceData - Postcodes SFA AreaCost Correct"), Trait("Funding Service", "Unit")]
+        public void PopulateReferenceData_PostcodesSFAAreaCost_Correct()
+        {
+            //ARRANGE
+            IMessage message = ILRFile(@"Files\ILR-10006341-1718-20180118-023456-02.xml");
+            IReferenceDataCache referenceDataCache = new ReferenceDataCache();
+            var fundingService = FundingServicePopulationReferenceDataMock(referenceDataCache);
+
+            //ACT
+            fundingService.PopulateReferenceData(message);
+
+            //ASSERT
+            var expectedOutput1 = new SfaAreaCost
+            {
+                Postcode = "CV1 2WT",
+                AreaCostFactor = 1.2m,
+                EffectiveFrom = DateTime.Parse("2000-01-01"),
+                EffectiveTo = null,
+            };
+
+            var output = referenceDataCache.SfaAreaCost.Where(k => k.Key == "CV1 2WT").SelectMany(o => o.Value).FirstOrDefault();
+
+            output.Should().BeEquivalentTo(expectedOutput1);
+        }
 
         #endregion
 
@@ -453,8 +577,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             return new SFA_PostcodeAreaCost[]
             {
                 SFAAreaCostTestValue1,
-                //SFAAreaCostTestValue2,
-                //SFAAreaCostTestValue3
             };
         }
 
@@ -467,27 +589,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
               EffectiveFrom = DateTime.Parse("2000-01-01"),
               EffectiveTo = null,
           };
-
-        //readonly static SFA_PostcodeAreaCost SFAAreaCostTestValue2 =
-        // new SFA_PostcodeAreaCost()
-        // {
-        //     MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
-        //     Postcode = "CV1 2TT",
-        //     AreaCostFactor = 1.5m,
-        //     EffectiveFrom = DateTime.Parse("2000-01-01"),
-        //     EffectiveTo = DateTime.Parse("2015-12-31")
-        // };
-
-        //readonly static SFA_PostcodeAreaCost SFAAreaCostTestValue3 =
-        //new SFA_PostcodeAreaCost()
-        //{
-        //    MasterPostcode = new MasterPostcode { Postcode = "CV1 2TT" },
-        //    Postcode = "CV1 2TT",
-        //    AreaCostFactor = 2.1m,
-        //    EffectiveFrom = DateTime.Parse("2016-01-01"),
-        //    EffectiveTo = null,
-        //};
-            
+                         
         #endregion
 
         #region Mocks
