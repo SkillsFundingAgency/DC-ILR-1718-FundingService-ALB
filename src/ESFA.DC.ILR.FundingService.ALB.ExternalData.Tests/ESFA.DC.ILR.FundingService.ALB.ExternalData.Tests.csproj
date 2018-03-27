@@ -92,7 +92,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReferenceDataCachePopulationServiceTests.cs" />
     <Compile Include="ReferenceDataCacheTests.cs" />
-    <Compile Include="TestHelpers\MockDBSetHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -102,6 +101,10 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.ExternalData\ESFA.DC.ILR.FundingService.ALB.ExternalData.csproj">
       <Project>{91E3D0C6-1258-48E3-B1BC-695C46DD302D}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.ExternalData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.TestHelpers.Mock\ESFA.DC.TestHelpers.csproj">
+      <Project>{e756cbde-3973-45f1-8083-25fafbf14970}</Project>
+      <Name>ESFA.DC.TestHelpers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

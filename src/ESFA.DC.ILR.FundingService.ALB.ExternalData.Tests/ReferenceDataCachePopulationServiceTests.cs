@@ -9,7 +9,7 @@ using ESFA.DC.Data.Postcodes.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.TestHelpers;
+using ESFA.DC.TestHelpers.Mocks;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -498,6 +498,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests
             var sfaAreaCostMock = MockDBSetHelper.GetQueryableMockDbSet(MockSFAAreaCostArray());
 
             IReferenceDataCache referenceDataCache = new ReferenceDataCache();
+
             LARSMock.Setup(x => x.LARS_Version).Returns(larsVersionMock);
             LARSMock.Setup(x => x.LARS_LearningDelivery).Returns(larsLearningDeliveryMock);
             LARSMock.Setup(x => x.LARS_Funding).Returns(larsFundingMock);

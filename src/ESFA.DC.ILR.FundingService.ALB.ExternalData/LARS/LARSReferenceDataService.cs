@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using ESFA.DC.Data.LARS.Model.Interfaces;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;

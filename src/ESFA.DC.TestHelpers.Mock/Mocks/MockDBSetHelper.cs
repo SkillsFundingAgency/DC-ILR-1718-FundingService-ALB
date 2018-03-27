@@ -2,11 +2,11 @@
 using System.Data.Entity;
 using System.Linq;
 
-namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.Tests.TestHelpers
+namespace ESFA.DC.TestHelpers.Mocks
 {
-    internal class MockDBSetHelper
+    public class MockDBSetHelper
     {
-        internal static DbSet<T> GetQueryableMockDbSet<T>(params T[] sourceList) where T : class
+        public static DbSet<T> GetQueryableMockDbSet<T>(params T[] sourceList) where T : class
         {
             var mockData = sourceList.AsQueryable();
             var mockSet = new Mock<DbSet<T>>();

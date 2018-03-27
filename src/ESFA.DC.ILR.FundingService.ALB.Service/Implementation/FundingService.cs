@@ -1,9 +1,9 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Interface;
-using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model.Interface;
 using ESFA.DC.OPA.Service.Interface;
@@ -12,11 +12,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Implementation
 {
     public class FundingService : IFundingSevice
     {
+        private readonly IReferenceDataCachePopulationService _referenceDataCachePopulationService;
         private readonly IDataEntityBuilder _dataEntityBuilder;
         private readonly IOPAService _opaService;
 
-        public FundingService(IDataEntityBuilder dataEntityBuilder, IOPAService opaService)
+        public FundingService(IReferenceDataCachePopulationService referenceDataCachePopulationService, IDataEntityBuilder dataEntityBuilder, IOPAService opaService)
         {
+            _referenceDataCachePopulationService = referenceDataCachePopulationService;
             _dataEntityBuilder = dataEntityBuilder;
             _opaService = opaService;
         }
@@ -26,6 +28,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Implementation
             int ukprn = message.LearningProviderEntity.UKPRN;
 
             var learners = message.Learners.Where(ld => ld.LearningDeliveries.Any(fm => fm.FundModelNullable == 99));
+
+            PopulateReferenceData(message);
 
             // Generate Funding Inputs
             var inputDataEntities = _dataEntityBuilder.EntityBuilder(ukprn, learners);
@@ -41,6 +45,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Implementation
             }
 
             return outputDataEntities;
+        }
+
+        protected internal void PopulateReferenceData(IMessage message)
+        {
+            var learnAimRefs = message.Learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.LearnAimRef)).Distinct().ToList();
+            var postcodesList = message.Learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.DelLocPostCode)).Distinct().ToList();
+
+            _referenceDataCachePopulationService.Populate(learnAimRefs, postcodesList);
         }
     }
 }
