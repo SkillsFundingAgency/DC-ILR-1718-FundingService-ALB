@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace ESFA.DC.TestHelpers.Mocks
 {
-    public class MockDBSetHelper
+    public static class MockDBSetHelper
     {
         public static DbSet<T> GetQueryableMockDbSet<T>(params T[] sourceList) where T : class
         {

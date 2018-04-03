@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -31,7 +32,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
         private static Stream stream;
 
         public static void Main(string[] args)
-        {           
+        {
             var stopwatch = new Stopwatch();
 
             IMessage message;
@@ -39,6 +40,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
             try
             {
                 System.Console.WriteLine("Loading file..");
+
                 // stream = new FileStream(@"Files\ILR-10006341-1718-20180118-023456-01.xml", FileMode.Open);
                 stream = new FileStream(@"Files\ILR-10006341-1718-20180118-023456-02.xml", FileMode.Open);
             }

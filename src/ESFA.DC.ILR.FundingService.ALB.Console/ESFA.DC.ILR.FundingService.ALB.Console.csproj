@@ -90,6 +90,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataPersister.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Model\Attribute\LearningDeliveryPeriodAttribute.cs" />
     <Compile Include="Model\Attribute\LearningDeliveryAttribute.cs" />
     <Compile Include="Model\Attribute\LearnerPeriodAttribute.cs" />

@@ -70,6 +70,7 @@
     <Compile Include="Builders\Implementation\DataEntityBuilder.cs" />
     <Compile Include="Builders\Interface\IAttributeBuilder.cs" />
     <Compile Include="Builders\Interface\IDataEntityBuilder.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Implementation\FundingService.cs" />
     <Compile Include="Interface\IFundingSevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

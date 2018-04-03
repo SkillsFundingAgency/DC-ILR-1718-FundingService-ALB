@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -12,6 +13,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
 {
     public class DataPersister
     {
+        private static readonly CultureInfo Culture = CultureInfo.CreateSpecificCulture("en-GB");
+
         private static Dictionary<int, DateTime> Periods => new Dictionary<int, DateTime>
         {
            { 1, new DateTime(2017, 08, 01) },
@@ -95,7 +98,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
 
             GlobalOutput global = new GlobalOutput()
             {
-                UKPRN = int.Parse(globalStaged.Where(g => g.Name == "UKPRN").Select(d => d.Data.Substring(0, 8)).Single()),
+                UKPRN = int.Parse(globalStaged.Where(g => g.Name == "UKPRN").Select(d => d.Data.Substring(0, 8)).Single(), Culture),
                 LARSVersion = globalStaged.Where(g => g.Name == "LARSVersion").Select(d => d.Data).Single(),
                 PostcodeAreaCostVersion = globalStaged.Where(g => g.Name == "PostcodeAreaCostVersion").Select(d => d.Data).Single(),
                 RulebaseVersion = globalStaged.Where(g => g.Name == "RulebaseVersion").Select(d => d.Data).Single(),
@@ -120,7 +123,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
                 {
                     var ldToStage = new LearningDeliveryAttribute()
                     {
-                        Ukprn = ukprn.ToString(),
+                        Ukprn = ukprn.ToString(Culture),
                         LearnRefNumber = ld.Parent.LearnRefNumber,
                         AimSeqNumber = ld.Attributes[aim].Value.ToString(),
                         Name = lda,
@@ -136,24 +139,24 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
                 .Select(ld =>
                 new LearningDeliveryOutput()
                 {
-                    UKPRN = int.Parse(ld.Select(v => v.Ukprn).First().ToString()),
+                    UKPRN = int.Parse(ld.Select(v => v.Ukprn).First(), Culture),
                     LearnRefNumber = ld.Select(v => v.LearnRefNumber).First(),
-                    AimSeqNumber = DecimalStrToInt(ld.Select(v => v.AimSeqNumber).First().ToString()),
+                    AimSeqNumber = DecimalStrToInt(ld.Select(v => v.AimSeqNumber).First()),
                     Achieved = ConvertToBit(ld.Where(n => n.Name == "Achieved").Select(v => v.Data).First()),
                     ActualNumInstalm = DecimalStrToInt(ld.Where(n => n.Name == "ActualNumInstalm").Select(v => v.Data).First()),
                     AdvLoan = ConvertToBit(ld.Where(n => n.Name == "AdvLoan").Select(v => v.Data).First()),
-                    ApplicFactDate = DateTime.Parse(ld.Where(n => n.Name == "ApplicFactDate").Select(v => v.Data).First()),
+                    ApplicFactDate = DateTime.Parse(ld.Where(n => n.Name == "ApplicFactDate").Select(v => v.Data).First(), Culture),
                     ApplicProgWeightFact = ld.Where(n => n.Name == "ApplicProgWeightFact").Select(v => v.Data).First(),
-                    AreaCostFactAdj = decimal.Parse(ld.Where(n => n.Name == "AreaCostFactAdj").Select(v => v.Data).First()),
-                    AreaCostInstalment = decimal.Parse(ld.Where(n => n.Name == "AreaCostInstalment").Select(v => v.Data).First()),
+                    AreaCostFactAdj = decimal.Parse(ld.Where(n => n.Name == "AreaCostFactAdj").Select(v => v.Data).First(), Culture),
+                    AreaCostInstalment = decimal.Parse(ld.Where(n => n.Name == "AreaCostInstalment").Select(v => v.Data).First(), Culture),
                     FundLine = ld.Where(n => n.Name == "FundLine").Select(v => v.Data).First(),
                     FundStart = ConvertToBit(ld.Where(n => n.Name == "FundStart").Select(v => v.Data).First()),
-                    LiabilityDate = DateTime.Parse(ld.Where(n => n.Name == "LiabilityDate").Select(v => v.Data).First()),
+                    LiabilityDate = DateTime.Parse(ld.Where(n => n.Name == "LiabilityDate").Select(v => v.Data).First(), Culture),
                     LoanBursAreaUplift = ConvertToBit(ld.Where(n => n.Name == "LoanBursAreaUplift").Select(v => v.Data).First()),
                     LoanBursSupp = ConvertToBit(ld.Where(n => n.Name == "LoanBursSupp").Select(v => v.Data).First()),
                     OutstndNumOnProgInstalm = DecimalStrToInt(ld.Where(n => n.Name == "OutstndNumOnProgInstalm").Select(v => v.Data).First()),
                     PlannedNumOnProgInstalm = DecimalStrToInt(ld.Where(n => n.Name == "PlannedNumOnProgInstalm").Select(v => v.Data).First()),
-                    WeightedRate = decimal.Parse(ld.Where(n => n.Name == "WeightedRate").Select(v => v.Data).First())
+                    WeightedRate = decimal.Parse(ld.Where(n => n.Name == "WeightedRate").Select(v => v.Data).First(), Culture)
                 }).ToArray();
 
             return pivot;
@@ -181,7 +184,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
                         {
                             var ldToStage = new LearningDeliveryPeriodAttribute()
                             {
-                                Ukprn = ukprn.ToString(),
+                                Ukprn = ukprn.ToString(Culture),
                                 LearnRefNumber = ld.Parent.LearnRefNumber,
                                 AimSeqNumber = ld.Attributes[aim].Value.ToString(),
                                 Period = GetPeriodNumber(p.Value),
@@ -196,7 +199,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
                     {
                         var ldToStage = new LearningDeliveryPeriodAttribute()
                         {
-                            Ukprn = ukprn.ToString(),
+                            Ukprn = ukprn.ToString(Culture),
                             LearnRefNumber = ld.Parent.LearnRefNumber,
                             AimSeqNumber = ld.Attributes[aim].Value.ToString(),
                             Period = GetPeriodNumber(cp.ChangePoint),
@@ -220,14 +223,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
                 .Select(ld =>
                      new LearningDeliveryPeriodOutput()
                      {
-                         UKPRN = int.Parse(ld.Select(v => v.Ukprn).First().ToString()),
-                         LearnRefNumber = ld.Select(v => v.LearnRefNumber).First().ToString(),
-                         AimSeqNumber = DecimalStrToInt(ld.Select(v => v.AimSeqNumber).First().ToString()),
+                         UKPRN = int.Parse(ld.Select(v => v.Ukprn).First(), Culture),
+                         LearnRefNumber = ld.Select(v => v.LearnRefNumber).First(),
+                         AimSeqNumber = DecimalStrToInt(ld.Select(v => v.AimSeqNumber).First()),
                          Period = ld.Select(v => v.Period).First(),
-                         ALBCode = DecimalStrToInt(ld.Where(n => n.Name == "ALBCode").Select(v => v.Data).DefaultIfEmpty("0").First().ToString()),
-                         ALBSupportPayment = decimal.Parse(ld.Where(n => n.Name == "ALBSupportPayment").Select(v => v.Data).First()),
-                         AreaUpliftBalPayment = decimal.Parse(ld.Where(n => n.Name == "AreaUpliftBalPayment").Select(v => v.Data).First()),
-                         AreaUpliftOnProgPayment = decimal.Parse(ld.Where(n => n.Name == "AreaUpliftOnProgPayment").Select(v => v.Data).First())
+                         ALBCode = DecimalStrToInt(ld.Where(n => n.Name == "ALBCode").Select(v => v.Data).DefaultIfEmpty("0").First()),
+                         ALBSupportPayment = decimal.Parse(ld.Where(n => n.Name == "ALBSupportPayment").Select(v => v.Data).First(), Culture),
+                         AreaUpliftBalPayment = decimal.Parse(ld.Where(n => n.Name == "AreaUpliftBalPayment").Select(v => v.Data).First(), Culture),
+                         AreaUpliftOnProgPayment = decimal.Parse(ld.Where(n => n.Name == "AreaUpliftOnProgPayment").Select(v => v.Data).First(), Culture)
                      }).ToArray();
 
             return output;
@@ -240,22 +243,22 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
                 .Select(ld =>
                      new LearningDeliveryPeriodisedValuesOutput()
                      {
-                         UKPRN = int.Parse(ld.Select(v => v.Ukprn).First().ToString()),
-                         LearnRefNumber = ld.Select(v => v.LearnRefNumber).First().ToString(),
-                         AimSeqNumber = DecimalStrToInt(ld.Select(v => v.AimSeqNumber).First().ToString()),
+                         UKPRN = int.Parse(ld.Select(v => v.Ukprn).First(), Culture),
+                         LearnRefNumber = ld.Select(v => v.LearnRefNumber).First(),
+                         AimSeqNumber = DecimalStrToInt(ld.Select(v => v.AimSeqNumber).First()),
                          AttributeName = ld.Select(v => v.Name).First(),
-                         Period1 = decimal.Parse(ld.Where(p => p.Period == 1).Select(v => v.Data).First()),
-                         Period2 = decimal.Parse(ld.Where(p => p.Period == 2).Select(v => v.Data).First()),
-                         Period3 = decimal.Parse(ld.Where(p => p.Period == 3).Select(v => v.Data).First()),
-                         Period4 = decimal.Parse(ld.Where(p => p.Period == 4).Select(v => v.Data).First()),
-                         Period5 = decimal.Parse(ld.Where(p => p.Period == 5).Select(v => v.Data).First()),
-                         Period6 = decimal.Parse(ld.Where(p => p.Period == 6).Select(v => v.Data).First()),
-                         Period7 = decimal.Parse(ld.Where(p => p.Period == 7).Select(v => v.Data).First()),
-                         Period8 = decimal.Parse(ld.Where(p => p.Period == 8).Select(v => v.Data).First()),
-                         Period9 = decimal.Parse(ld.Where(p => p.Period == 9).Select(v => v.Data).First()),
-                         Period10 = decimal.Parse(ld.Where(p => p.Period == 10).Select(v => v.Data).First()),
-                         Period11 = decimal.Parse(ld.Where(p => p.Period == 11).Select(v => v.Data).First()),
-                         Period12 = decimal.Parse(ld.Where(p => p.Period == 12).Select(v => v.Data).First()),
+                         Period1 = decimal.Parse(ld.Where(p => p.Period == 1).Select(v => v.Data).First(), Culture),
+                         Period2 = decimal.Parse(ld.Where(p => p.Period == 2).Select(v => v.Data).First(), Culture),
+                         Period3 = decimal.Parse(ld.Where(p => p.Period == 3).Select(v => v.Data).First(), Culture),
+                         Period4 = decimal.Parse(ld.Where(p => p.Period == 4).Select(v => v.Data).First(), Culture),
+                         Period5 = decimal.Parse(ld.Where(p => p.Period == 5).Select(v => v.Data).First(), Culture),
+                         Period6 = decimal.Parse(ld.Where(p => p.Period == 6).Select(v => v.Data).First(), Culture),
+                         Period7 = decimal.Parse(ld.Where(p => p.Period == 7).Select(v => v.Data).First(), Culture),
+                         Period8 = decimal.Parse(ld.Where(p => p.Period == 8).Select(v => v.Data).First(), Culture),
+                         Period9 = decimal.Parse(ld.Where(p => p.Period == 9).Select(v => v.Data).First(), Culture),
+                         Period10 = decimal.Parse(ld.Where(p => p.Period == 10).Select(v => v.Data).First(), Culture),
+                         Period11 = decimal.Parse(ld.Where(p => p.Period == 11).Select(v => v.Data).First(), Culture),
+                         Period12 = decimal.Parse(ld.Where(p => p.Period == 12).Select(v => v.Data).First(), Culture),
                      }).ToArray();
 
             return output;
@@ -281,7 +284,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
                         {
                             var learnerToStage = new LearnerPeriodAttribute()
                             {
-                                Ukprn = ukprn.ToString(),
+                                Ukprn = ukprn.ToString(Culture),
                                 LearnRefNumber = l.LearnRefNumber,
                                 Period = GetPeriodNumber(p.Value),
                                 Name = la,
@@ -296,7 +299,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
                     {
                         var learnerToStage = new LearnerPeriodAttribute()
                         {
-                            Ukprn = ukprn.ToString(),
+                            Ukprn = ukprn.ToString(Culture),
                             LearnRefNumber = l.LearnRefNumber,
                             Period = GetPeriodNumber(cp.ChangePoint),
                             Name = la,
@@ -317,10 +320,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
                 .Select(lp =>
                      new LearnerPeriodOutput()
                      {
-                         UKPRN = int.Parse(lp.Select(v => v.Ukprn).First().ToString()),
-                         LearnRefNumber = lp.Select(v => v.LearnRefNumber).First().ToString(),
+                         UKPRN = int.Parse(lp.Select(v => v.Ukprn).First(), Culture),
+                         LearnRefNumber = lp.Select(v => v.LearnRefNumber).First(),
                          Period = lp.Select(v => v.Period).First(),
-                         ALBSeqNum = DecimalStrToInt(lp.Where(n => n.Name == "ALBSeqNum").Select(v => v.Data).DefaultIfEmpty("0").First().ToString()),
+                         ALBSeqNum = DecimalStrToInt(lp.Where(n => n.Name == "ALBSeqNum").Select(v => v.Data).DefaultIfEmpty("0").First()),
                      }).ToArray();
 
             return output;
@@ -333,21 +336,21 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
                 .Select(lp =>
                      new LearnerPeriodisedValuesOutput()
                      {
-                         UKPRN = int.Parse(lp.Select(v => v.Ukprn).First()),
-                         LearnRefNumber = lp.Select(v => v.LearnRefNumber).First().ToString(),
+                         UKPRN = int.Parse(lp.Select(v => v.Ukprn).First(), Culture),
+                         LearnRefNumber = lp.Select(v => v.LearnRefNumber).First(),
                          AttributeName = lp.Select(v => v.Name).First(),
-                         Period1 = decimal.Parse(lp.Where(p => p.Period == 1).Select(v => v.Data).First()),
-                         Period2 = decimal.Parse(lp.Where(p => p.Period == 2).Select(v => v.Data).First()),
-                         Period3 = decimal.Parse(lp.Where(p => p.Period == 3).Select(v => v.Data).First()),
-                         Period4 = decimal.Parse(lp.Where(p => p.Period == 4).Select(v => v.Data).First()),
-                         Period5 = decimal.Parse(lp.Where(p => p.Period == 5).Select(v => v.Data).First()),
-                         Period6 = decimal.Parse(lp.Where(p => p.Period == 6).Select(v => v.Data).First()),
-                         Period7 = decimal.Parse(lp.Where(p => p.Period == 7).Select(v => v.Data).First()),
-                         Period8 = decimal.Parse(lp.Where(p => p.Period == 8).Select(v => v.Data).First()),
-                         Period9 = decimal.Parse(lp.Where(p => p.Period == 9).Select(v => v.Data).First()),
-                         Period10 = decimal.Parse(lp.Where(p => p.Period == 10).Select(v => v.Data).First()),
-                         Period11 = decimal.Parse(lp.Where(p => p.Period == 11).Select(v => v.Data).First()),
-                         Period12 = decimal.Parse(lp.Where(p => p.Period == 12).Select(v => v.Data).First()),
+                         Period1 = decimal.Parse(lp.Where(p => p.Period == 1).Select(v => v.Data).First(), Culture),
+                         Period2 = decimal.Parse(lp.Where(p => p.Period == 2).Select(v => v.Data).First(), Culture),
+                         Period3 = decimal.Parse(lp.Where(p => p.Period == 3).Select(v => v.Data).First(), Culture),
+                         Period4 = decimal.Parse(lp.Where(p => p.Period == 4).Select(v => v.Data).First(), Culture),
+                         Period5 = decimal.Parse(lp.Where(p => p.Period == 5).Select(v => v.Data).First(), Culture),
+                         Period6 = decimal.Parse(lp.Where(p => p.Period == 6).Select(v => v.Data).First(), Culture),
+                         Period7 = decimal.Parse(lp.Where(p => p.Period == 7).Select(v => v.Data).First(), Culture),
+                         Period8 = decimal.Parse(lp.Where(p => p.Period == 8).Select(v => v.Data).First(), Culture),
+                         Period9 = decimal.Parse(lp.Where(p => p.Period == 9).Select(v => v.Data).First(), Culture),
+                         Period10 = decimal.Parse(lp.Where(p => p.Period == 10).Select(v => v.Data).First(), Culture),
+                         Period11 = decimal.Parse(lp.Where(p => p.Period == 11).Select(v => v.Data).First(), Culture),
+                         Period12 = decimal.Parse(lp.Where(p => p.Period == 12).Select(v => v.Data).First(), Culture),
                      }).ToArray();
 
             return output;
@@ -367,17 +370,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
         private static int DecimalStrToInt(string value)
         {
             var valueInt = value.Substring(0, value.IndexOf('.', 0));
-            return int.Parse(valueInt);
+            return int.Parse(valueInt, Culture);
         }
 
         private static bool ConvertToBit(string value)
         {
             bool newValue;
-            if (value == "true")
-            {
-                newValue = true;
-            }
-            else newValue = false;
+            newValue = value == "true" ? true : false;
+
             return newValue;
         }
 
