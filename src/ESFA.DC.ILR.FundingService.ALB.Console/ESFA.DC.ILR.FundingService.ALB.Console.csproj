@@ -35,14 +35,52 @@
     <CodeAnalysisRuleSet>ESFA.DC.ILR.FundingService.ALB.Console.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.6.2.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.6.2\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.Data.LARS.Model, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Data.LARS.Model.0.1.0\lib\net461\ESFA.DC.Data.LARS.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.Data.Postcodes.Model, Version=0.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.Data.Postcodes.Model.0.1.2-beta0001\lib\net461\ESFA.DC.Data.Postcodes.Model.dll</HintPath>
+    </Reference>
     <Reference Include="ESFA.DC.ILR.Model, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1718.Model.0.1.0\lib\net461\ESFA.DC.ILR.Model.dll</HintPath>
     </Reference>
     <Reference Include="ESFA.DC.ILR.Model.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ESFA.DC.ILR.1718.Model.Interface.0.1.0\lib\net461\ESFA.DC.ILR.Model.Interface.dll</HintPath>
     </Reference>
+    <Reference Include="ESFA.DC.OPA.Model, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.OPA.Model.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Model.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.OPA.Model.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.OPA.Model.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Model.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.OPA.Service, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.OPA.Service.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Service.dll</HintPath>
+    </Reference>
+    <Reference Include="ESFA.DC.OPA.Service.Interface, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.OPA.Service.Interface.0.1.0-beta0001\lib\netstandard2.0\ESFA.DC.OPA.Service.Interface.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.Determinations.Engine, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.Determinations.Masquerade, Version=10.4.0.0, Culture=neutral, PublicKeyToken=863065c849b9b316, processorArchitecture=MSIL">
+      <HintPath>..\packages\ESFA.DC.OPA.RunTime.DLLs.0.1.1-beta0001\lib\Oracle.Determinations.Masquerade.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,6 +89,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataPersister.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Model\Attribute\LearningDeliveryPeriodAttribute.cs" />
+    <Compile Include="Model\Attribute\LearningDeliveryAttribute.cs" />
+    <Compile Include="Model\Attribute\LearnerPeriodAttribute.cs" />
+    <Compile Include="Model\Attribute\GlobalAttribute.cs" />
+    <Compile Include="Model\Output\FundingOutput.cs" />
+    <Compile Include="Model\Output\GlobalOutput.cs" />
+    <Compile Include="Model\Output\LearnerPeriodisedValuesOutput.cs" />
+    <Compile Include="Model\Output\LearnerPeriodOutput.cs" />
+    <Compile Include="Model\Output\LearningDeliveryPeriodOutput.cs" />
+    <Compile Include="Model\Output\LearningDeliveryPeriodisedValuesOutput.cs" />
+    <Compile Include="Model\Output\LearningDeliveryOutput.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -63,6 +114,27 @@
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.0.0.4787\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.0.0.4787\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.0.0.4787\analyzers\SonarAnalyzer.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\packages\StyleCop.Analyzers.1.0.2\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.ExternalData\ESFA.DC.ILR.FundingService.ALB.ExternalData.csproj">
+      <Project>{91e3d0c6-1258-48e3-b1bc-695c46dd302d}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ALB.ExternalData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.Service\ESFA.DC.ILR.FundingService.ALB.Service.csproj">
+      <Project>{05FCEB04-1F18-4B30-892C-213FB0753D45}</Project>
+      <Name>ESFA.DC.ILR.FundingService.ALB.Service</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Files\ILR-10006341-1718-20180118-023456-01.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\ILR-10006341-1718-20180118-023456-02.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

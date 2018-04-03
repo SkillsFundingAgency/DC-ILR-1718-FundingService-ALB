@@ -1,9 +1,6 @@
-﻿using ESFA.DC.OPA.Model.Interface;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ESFA.DC.OPA.Model.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
 {
@@ -30,22 +27,21 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
             long? regulatedCreditValue);
 
         IDictionary<string, IAttributeData> BuildLearningDeliveryFAMAttributes(
-            string learnDelFAMCode, 
-            DateTime? learnDelFAMDateFrom, 
-            DateTime? learnDelFAMDateTo, 
+            string learnDelFAMCode,
+            DateTime? learnDelFAMDateFrom,
+            DateTime? learnDelFAMDateTo,
             string learnDelFAMType);
 
         IDictionary<string, IAttributeData> BuildLearningDeliverySfaAreaCostAttributes(
-            DateTime? areaCosEffectiveFrom, 
-            DateTime? areaCosEffectiveTo, 
-            Decimal areaCosFactor);
+            DateTime? areaCosEffectiveFrom,
+            DateTime? areaCosEffectiveTo,
+            decimal areaCosFactor);
 
         IDictionary<string, IAttributeData> BuildLearningDeliveryLarsFundingAttributes(
             string larsFundCategory,
             DateTime larsFundEffectiveFrom,
             DateTime? larsFundEffectiveTo,
-            Decimal? larsFundWeightedRate,
+            decimal? larsFundWeightedRate,
             string larsFundWeightingFactor);
-
     }
 }

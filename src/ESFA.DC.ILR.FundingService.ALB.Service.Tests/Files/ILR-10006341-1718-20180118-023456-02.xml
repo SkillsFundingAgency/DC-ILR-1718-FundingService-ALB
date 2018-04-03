@@ -325,4 +325,58 @@ xmlns="SFA/ILR/2017-18">
       </LearningDeliveryWorkPlacement>
     </LearningDelivery>
   </Learner>
+<Learner>
+    <LearnRefNumber>OR1924TR99</LearnRefNumber>
+    <ULN>1000000000</ULN>
+    <FamilyName>familyname</FamilyName>
+    <GivenNames>givennames</GivenNames>
+    <DateOfBirth>1995-02-10</DateOfBirth>
+    <Ethnicity>31</Ethnicity>
+    <Sex>F</Sex>
+    <LLDDHealthProb>2</LLDDHealthProb>
+    <NINumber>AB123456C</NINumber>
+    <PriorAttain>99</PriorAttain>
+    <PlanLearnHours>20</PlanLearnHours>
+    <PostcodePrior>AL10 0AA</PostcodePrior>
+    <Postcode>BR1 2JS</Postcode>
+    <AddLine1>addline1</AddLine1>
+    <TelNo>01234567890</TelNo>
+    <Email>email@email.com</Email>
+    <LearnerEmploymentStatus>
+      <EmpStat>10</EmpStat>
+      <DateEmpStatApp>2016-07-27</DateEmpStatApp>
+      <EmploymentStatusMonitoring>
+        <ESMType>EII</ESMType>
+        <ESMCode>3</ESMCode>
+      </EmploymentStatusMonitoring>
+      <EmploymentStatusMonitoring>
+        <ESMType>LOE</ESMType>
+        <ESMCode>1</ESMCode>
+      </EmploymentStatusMonitoring>
+    </LearnerEmploymentStatus>
+    <LearnerEmploymentStatus>
+      <EmpStat>10</EmpStat>
+      <DateEmpStatApp>2016-07-28</DateEmpStatApp>
+      <EmploymentStatusMonitoring>
+        <ESMType>EII</ESMType>
+        <ESMCode>2</ESMCode>
+      </EmploymentStatusMonitoring>
+      <EmploymentStatusMonitoring>
+        <ESMType>LOE</ESMType>
+        <ESMCode>1</ESMCode>
+      </EmploymentStatusMonitoring>
+    </LearnerEmploymentStatus>
+    <LearningDelivery>
+      <LearnAimRef>ZPROG001</LearnAimRef>
+      <AimType>1</AimType>
+      <AimSeqNumber>1</AimSeqNumber>
+      <LearnStartDate>2018-02-28</LearnStartDate>
+      <LearnPlanEndDate>2018-08-20</LearnPlanEndDate>
+      <FundModel>35</FundModel>
+      <ProgType>24</ProgType>
+      <DelLocPostCode>SW3 5DN</DelLocPostCode>
+      <CompStatus>1</CompStatus>
+      <SWSupAimId>5213915805f08a49939d233591bdb516</SWSupAimId>
+    </LearningDelivery>
+  </Learner>
 </Message>

@@ -2,7 +2,7 @@
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
@@ -12,15 +12,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 {
     public class DataEntityBuilder : IDataEntityBuilder
     {
-        private readonly IReferenceDataCache _referenceDataCache;
-        private readonly IAttributeBuilder<IAttributeData> _attributeBuilder;
-
-        public DataEntityBuilder(IReferenceDataCache referenceDataCache, IAttributeBuilder<IAttributeData> attributeBuilder)
-        {
-            _referenceDataCache = referenceDataCache;
-            _attributeBuilder = attributeBuilder;
-        }
-        
         #region Constants
 
         private const string Entityglobal = "global";
@@ -34,36 +25,45 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 
         #endregion
 
+        private readonly IReferenceDataCache _referenceDataCache;
+        private readonly IAttributeBuilder<IAttributeData> _attributeBuilder;
+
+        public DataEntityBuilder(IReferenceDataCache referenceDataCache, IAttributeBuilder<IAttributeData> attributeBuilder)
+        {
+            _referenceDataCache = referenceDataCache;
+            _attributeBuilder = attributeBuilder;
+        }
+
         public IEnumerable<IDataEntity> EntityBuilder(int ukprn, IEnumerable<ILearner> learners)
         {
             var globalEntities = learners.Select(learner =>
             {
-                //Global Entity
+                // Global Entity
                 IDataEntity globalEntity = GlobalEntity(ukprn);
 
-                //Learner Entity
+                // Learner Entity
                 IDataEntity learnerEntity = LearnerEntity(learner.LearnRefNumber);
 
-                //LearningDelivery Entities
+                // LearningDelivery Entities
                 foreach (var learningDelivery in learner.LearningDeliveries)
                 {
-                    _referenceDataCache.LarsLearningDelivery.TryGetValue(learningDelivery.LearnAimRef, out LARSLearningDelivery larsLearningDelivery);
+                    _referenceDataCache.LARSLearningDelivery.TryGetValue(learningDelivery.LearnAimRef, out LARSLearningDelivery larsLearningDelivery);
                     IDataEntity learningDeliveryEntity = LearningDeliveryEntity(learningDelivery, larsLearningDelivery);
 
                     learnerEntity.AddChild(learningDeliveryEntity);
 
-                    //LearningDeliveryFAM Entities
+                    // LearningDeliveryFAM Entities
                     if (learningDelivery.LearningDeliveryFAMs != null)
                     {
                         foreach (var learningDeliveryFAM in learningDelivery.LearningDeliveryFAMs)
                         {
                             IDataEntity learningDeliveryFAMEntity = LearningDeliveryFAMEntity(learningDeliveryFAM);
-                            
+
                             learningDeliveryEntity.AddChild(learningDeliveryFAMEntity);
                         }
                     }
 
-                    //SFA Postcode Area Cost Entities
+                    // SFA Postcode Area Cost Entities
                     if (_referenceDataCache.SfaAreaCost.ContainsKey(learningDelivery.DelLocPostCode))
                     {
                         learningDeliveryEntity.AddChildren(
@@ -71,20 +71,18 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                                 .Select(sfaAreaCost => SFAAreaCostEntity(sfaAreaCost)));
                     }
 
-                    //LARS Funding Entities
-                    if (_referenceDataCache.LarsFunding.ContainsKey(learningDelivery.LearnAimRef))
+                    // LARS Funding Entities
+                    if (_referenceDataCache.LARSFunding.ContainsKey(learningDelivery.LearnAimRef))
                     {
                         learningDeliveryEntity.AddChildren(
-                            _referenceDataCache.LarsFunding[learningDelivery.LearnAimRef]
+                            _referenceDataCache.LARSFunding[learningDelivery.LearnAimRef]
                                 .Select(larsFunding => LARSFundingEntity(larsFunding)));
-                                    
                     }
                 }
 
                 globalEntity.AddChild(learnerEntity);
 
                 return globalEntity;
-
             }).AsParallel();
 
             return globalEntities;
@@ -97,7 +95,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             IDataEntity globalDataEntity = new DataEntity(Entityglobal)
             {
                 Attributes =
-                    _attributeBuilder.BuildGlobalAttributes(ukprn, _referenceDataCache.LARSCurrentVersion, _referenceDataCache.PostcodeFactorsCurrentVersion)
+                    _attributeBuilder.BuildGlobalAttributes(ukprn, _referenceDataCache.LARSCurrentVersion, _referenceDataCache.PostcodeCurrentVersion)
             };
 
             return globalDataEntity;
@@ -133,8 +131,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                         learningDelivery.OtherFundAdjNullable,
                         learningDelivery.OutcomeNullable,
                         learningDelivery.PriorLearnFundAdjNullable,
-                        larsLearningDelivery?.RegulatedCreditValue
-            )};
+                        larsLearningDelivery?.RegulatedCreditValue)
+            };
 
             return learningDeliveryDataEntity;
         }
@@ -143,13 +141,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
         {
             IDataEntity learningDeliveryFAMDataEntity = new DataEntity(EntityLearningDeliveryFAM)
             {
-                Attributes = 
+                Attributes =
                     _attributeBuilder.BuildLearningDeliveryFAMAttributes(
                         learningDeliveryFam.LearnDelFAMCode,
                         learningDeliveryFam.LearnDelFAMDateFromNullable,
                         learningDeliveryFam.LearnDelFAMDateToNullable,
-                        learningDeliveryFam.LearnDelFAMType
-            )};
+                        learningDeliveryFam.LearnDelFAMType)
+            };
 
             return learningDeliveryFAMDataEntity;
         }
@@ -162,8 +160,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                     _attributeBuilder.BuildLearningDeliverySfaAreaCostAttributes(
                         sfaAreaCost?.EffectiveFrom,
                         sfaAreaCost?.EffectiveTo,
-                        sfaAreaCost.AreaCostFactor
-                    )
+                        sfaAreaCost.AreaCostFactor)
             };
 
             return sfaAreaCostDataEntity;
@@ -178,8 +175,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
                     larsFunding.EffectiveFrom,
                     larsFunding?.EffectiveTo,
                     larsFunding.RateWeighted,
-                    larsFunding.WeightingFactor
-                )
+                    larsFunding.WeightingFactor)
             };
 
             return larsFundingDataEntity;
@@ -189,21 +185,14 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 
         #region Helpers
 
-        public string GetLDFAM(ILearningDelivery learningDelivery, string famType)
+        private static string GetLDFAM(ILearningDelivery learningDelivery, string famType)
         {
-            string famCodeValue;
-
-            if (learningDelivery.LearningDeliveryFAMs != null)
-            {
-                famCodeValue = learningDelivery.LearningDeliveryFAMs
-                    .Where(w => w.LearnDelFAMType.Contains(famType))
+            string famCodeValue = learningDelivery.LearningDeliveryFAMs?.Where(w => w.LearnDelFAMType.Contains(famType))
                     .Select(ldf => ldf.LearnDelFAMCode).SingleOrDefault();
-            }
-            else famCodeValue = null;
 
             return famCodeValue;
         }
-        
+
         #endregion
 
     }

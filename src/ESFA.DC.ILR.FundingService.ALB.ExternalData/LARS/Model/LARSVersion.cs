@@ -11,4 +11,3 @@ namespace ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model
         public string LARSCurrentVersion { get; set; }
     }
 }
-

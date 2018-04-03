@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
-using ESFA.DC.ILR.FundingService.ALB.ExternalData.PostcodeFactors.Model;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.Model;
@@ -1783,8 +1783,8 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
         {
             return Mock.Of<IReferenceDataCache>(l => 
                 l.LARSCurrentVersion == "Version_005"
-                && l.PostcodeFactorsCurrentVersion == "Version_003"
-                && l.LarsLearningDelivery == new Dictionary<string, LARSLearningDelivery>
+                && l.PostcodeCurrentVersion == "Version_003"
+                && l.LARSLearningDelivery == new Dictionary<string, LARSLearningDelivery>
                 {
                     { "123456", new LARSLearningDelivery
                         {
@@ -1795,7 +1795,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
                         }
                     }
                 }
-                && l.SfaAreaCost == new Dictionary<string, List<SfaAreaCost>>
+                && l.SfaAreaCost == new Dictionary<string, IEnumerable<SfaAreaCost>>
                 {
                     { "CV1 2WT", new List<SfaAreaCost>
                         {
@@ -1808,7 +1808,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
                         }
                     }
                 }
-                && l.LarsFunding == new Dictionary<string, List<LARSFunding>>
+                && l.LARSFunding == new Dictionary<string, IEnumerable<LARSFunding>>
                 {
                     {
                         "123456", new List<LARSFunding>
@@ -1861,7 +1861,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             var learningDeilveryBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
             LARSLearningDelivery larsLearningDelivery =
-                referenceDataCacheMock.LarsLearningDelivery.Select(lars => lars.Value).SingleOrDefault(); 
+                referenceDataCacheMock.LARSLearningDelivery.Select(lars => lars.Value).SingleOrDefault(); 
 
             return learningDeilveryBuilder.LearningDeliveryEntity(TestLearningDelivery, larsLearningDelivery);
         }
@@ -1881,9 +1881,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var learningDeilverySFAAreaCostBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
-            IList<SfaAreaCost> SFAAreaCost = referenceDataCacheMock.SfaAreaCost.Select(s => s.Value).Single();
+            IEnumerable<SfaAreaCost> SFAAreaCost = referenceDataCacheMock.SfaAreaCost.Select(s => s.Value).Single();
 
-            return learningDeilverySFAAreaCostBuilder.SFAAreaCostEntity(SFAAreaCost[0]);
+            return learningDeilverySFAAreaCostBuilder.SFAAreaCostEntity(SFAAreaCost.FirstOrDefault());
         }
 
         private IDataEntity SetupLearningDeliveryLARSFundingEntity()
@@ -1892,9 +1892,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             var learningDeilveryLARSFundingBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
 
-            IList<LARSFunding> LARSFunding = referenceDataCacheMock.LarsFunding.Select(l => l.Value).Single();
+            IEnumerable<LARSFunding> LARSFunding = referenceDataCacheMock.LARSFunding.Select(l => l.Value).Single();
 
-            return learningDeilveryLARSFundingBuilder.LARSFundingEntity(LARSFunding[0]);
+            return learningDeilveryLARSFundingBuilder.LARSFundingEntity(LARSFunding.Single());
         }
 
         #endregion
