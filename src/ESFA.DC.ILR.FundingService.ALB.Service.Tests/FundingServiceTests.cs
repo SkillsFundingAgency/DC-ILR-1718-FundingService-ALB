@@ -26,8 +26,6 @@ using ESFA.DC.TestHelpers.Mocks;
 using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.Postcodes.Model;
 using ESFA.DC.ILR.Model.Interface;
-using ESFA.DC.OPA.Service.Interface.Rulebase;
-using ESFA.DC.OPA.Service.Rulebase;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 {
@@ -591,14 +589,11 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
               EffectiveFrom = DateTime.Parse("2000-01-01"),
               EffectiveTo = null,
           };
-
+                         
         #endregion
 
         #region Mocks
 
-        private static readonly Mock<ILARS> larsContextMock = new Mock<ILARS>();
-        private static readonly Mock<IPostcodes> postcodesContextMock = new Mock<IPostcodes>();
-     
         private Implementation.FundingService FundingServicePopulationReferenceDataMock(IReferenceDataCache referenceDataCache)
         {
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
@@ -646,27 +641,16 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             return fundingService.ProcessFunding(message);
         }
 
-        private static IRulebaseProvider RulebaseProviderMock()
-        {
-            return new RulebaseProvider(@"ESFA.DC.ILR.FundingService.ALB.Service.Rulebase.Loans Bursary 17_18.zip");
-        }
-
-        private static IRulebaseProviderFactory MockRulebaseProviderFactory()
-        {
-            var mock = new Mock<IRulebaseProviderFactory>();
-
-            mock.Setup(m => m.Build()).Returns(RulebaseProviderMock());
-
-            return mock.Object;
-        }
-        
         #endregion
 
         private static readonly ISessionBuilder _sessionBuilder = new SessionBuilder();
-        private static readonly IOPADataEntityBuilder _dataEntityBuilder = new OPADataEntityBuilder(new DateTime(2017, 8, 1));
-               
+        private static readonly IOPADataEntityBuilder _dataEntityBuilder = new OPADataEntityBuilder();
+        private static readonly string _rulebaseZipPath = @".Rulebase.Loans Bursary 17_18.zip";
+        private static readonly Mock<ILARS> larsContextMock = new Mock<ILARS>();
+        private static readonly Mock<IPostcodes> postcodesContextMock = new Mock<IPostcodes>();
+
         private readonly IOPAService opaService = 
-            new OPAService(_sessionBuilder, _dataEntityBuilder, MockRulebaseProviderFactory());
+            new OPAService(_sessionBuilder, _dataEntityBuilder, _rulebaseZipPath, new DateTime(2017, 8, 1));
                
         private IList<IDataEntity> LearningDeliveryChildren(IEnumerable<IDataEntity> entity)
         {

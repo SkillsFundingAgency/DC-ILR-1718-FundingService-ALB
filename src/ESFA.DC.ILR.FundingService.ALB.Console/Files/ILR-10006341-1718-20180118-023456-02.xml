@@ -124,12 +124,12 @@ xmlns="SFA/ILR/2017-18">
       <LearnAimRef>60005415</LearnAimRef>
       <AimType>4</AimType>
       <AimSeqNumber>1</AimSeqNumber>
-      <LearnStartDate>2017-09-30</LearnStartDate>
+      <LearnStartDate>2017-04-30</LearnStartDate>
       <LearnPlanEndDate>2018-04-01</LearnPlanEndDate>
       <FundModel>99</FundModel>
       <DelLocPostCode>CV1 2WT</DelLocPostCode>
       <CompStatus>2</CompStatus>
-      <LearnActEndDate>2018-01-17</LearnActEndDate>
+      <LearnActEndDate>2019-01-17</LearnActEndDate>
       <Outcome>8</Outcome>
       <SWSupAimId>0F53A4A8-1629-404E-A5DC-DF3D7AD5EC67</SWSupAimId>
       <LearningDeliveryFAM>
