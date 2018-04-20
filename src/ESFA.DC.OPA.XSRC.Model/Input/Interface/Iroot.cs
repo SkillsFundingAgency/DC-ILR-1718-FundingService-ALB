@@ -2,7 +2,7 @@
 {
     public interface Iroot
     {
-        IrootEntity[] entities { get; }
+        IrootEntity[] entitiesArray { get; }
 
         object rules { get; }
 
@@ -14,6 +14,6 @@
 
         byte schemaversion { get; }
 
-        string productversion { get; set; }
+        string productversion { get; }
     }
 }

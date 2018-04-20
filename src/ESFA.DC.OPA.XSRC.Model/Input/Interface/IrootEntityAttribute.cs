@@ -2,9 +2,9 @@
 {
     public interface IrootEntityAttribute
     {
-        IrootEntityAttributeText text { get; }
+        IrootEntityAttributeText texts { get; }
 
-        IrootEntityAttributeProp[] props { get; }
+        IrootEntityAttributeProp[] propss { get; }
 
         string name { get; }
        

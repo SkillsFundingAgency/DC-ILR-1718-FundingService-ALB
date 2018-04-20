@@ -2,7 +2,7 @@
 {
     public interface IrootEntity
     {
-        IrootEntityAttribute[] attribute { get; }
+        IrootEntityAttribute[] attributes { get; }
 
         string @ref { get; }
 

@@ -9,18 +9,18 @@ namespace ESFA.DC.OPA.XSRC.Model.Input.Models
     [DesignerCategory("code")]
     [XmlType(AnonymousType = true)]
     [XmlRoot(Namespace = "", IsNullable = false)]
-    public class root : Iroot
+    public class root 
     {
         [XmlArrayItem("entity", IsNullable = false)]
-        public IrootEntity[] entities { get; set; }
+        public rootEntity[] entities { get; set; }
 
         public object rules { get; set; }
 
         [XmlElement("interactive-items")]
-        public IrootInteractiveitems interactiveitems { get; set; }
+        public rootInteractiveitems interactiveitem { get; set; }
 
         [XmlArrayItem("relationship", IsNullable = false)]
-        public IrootRelationship[] relationships { get; set; }
+        public rootRelationship[] relationships { get; set; }
 
         [XmlElement("rule-folders")]
         public object rulefolders { get; set; }

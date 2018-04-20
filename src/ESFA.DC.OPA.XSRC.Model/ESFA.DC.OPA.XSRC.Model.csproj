@@ -40,9 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Input\Interface\Iroot.cs" />
-    <Compile Include="Input\Interface\IrootEntity.cs" />
-    <Compile Include="Input\Interface\IrootEntityAttribute.cs" />
     <Compile Include="Input\Interface\IrootEntityAttributeProp.cs" />
     <Compile Include="Input\Interface\IrootEntityAttributeText.cs" />
     <Compile Include="Input\Interface\IrootInteractiveitems.cs" />
