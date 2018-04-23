@@ -1,6 +1,11 @@
 ﻿using System.IO;
 using System.Linq;
+using System.Xml;
+using System.Xml.Serialization;
 using ESFA.DC.OPA.XSRC.Model.Input.Models;
+using ESFA.DC.OPA.XSRC.Model.XSRCEntity.Models;
+using ESFA.DC.OPA.XSRC.Service.Implementation;
+using ESFA.DC.OPA.XSRC.Service.Interface;
 using FluentAssertions;
 using Xunit;
 
@@ -8,6 +13,80 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
 {
     public class XsrcEntityBuilderTests
     {
+        #region Serializer Tests
+
+        /// <summary>
+        /// Return Xsrc Input Model from XSRC file
+        /// </summary>
+        [Fact(DisplayName = "XSRC Serializer - Model Exists"), Trait("XSRC Model Entity", "Unit")]
+        public void Serializer_Exists()
+        {
+            //ARRANGE
+            var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+            //var builder = new XsrcEntityBuilder(SetupStream());
+
+            //ACT            
+            var xsrcInput = builder.Deserialize();
+
+            //ASSERT
+            xsrcInput.Should().NotBeNull();
+        }
+
+        /// <summary>
+        /// Return Xsrc Input Model from XSRC file
+        /// </summary>
+        [Fact(DisplayName = "XSRC Serializer - Model Correct"), Trait("XSRC Model Entity", "Unit")]
+        public void Serializer_Correct()
+        {
+            //ARRANGE
+            var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+            //var builder = new XsrcEntityBuilder(SetupStream());
+
+            //ACT            
+            var xsrcInput = builder.Deserialize();
+
+            //ASSERT
+            xsrcInput.entities.Where(g => g.@ref == "global").Select(n => n.@ref).Should().BeEquivalentTo("global");
+            xsrcInput.entities.Select(n => n.id).Should().BeEquivalentTo(entityIDs);
+        }
+
+        #endregion
+
+        #region XSRC Entity Builder Tests
+
+        /// <summary>
+        /// Return Xsrc Entity Model from XSRC Input
+        /// </summary>
+        [Fact(DisplayName = "XSRC EntityBuilder - BuildXsrc Exists"), Trait("XSRC Model Entity", "Unit")]
+        public void XSRCEntityBuilder_BuildXsrc_Exists()
+        {
+            //ARRANGE
+            IXsrcEntityBuilder builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+
+            //ACT            
+            var global = builder.BuildXsrc();
+
+            //ASSERT
+            global.Should().NotBeNull();
+        }
+
+        /// <summary>
+        /// Return Xsrc Entity Model from XSRC Input
+        /// </summary>
+        [Fact(DisplayName = "XSRC EntityBuilder - BuildXsrc Correct"), Trait("XSRC Model Entity", "Unit")]
+        public void XSRCEntityBuilder_BuildXsrc_Correct()
+        {
+            //ARRANGE
+            IXsrcEntityBuilder builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+
+            //ACT            
+            var global = builder.BuildXsrc();
+
+            //ASSERT
+            global.GlobalEntity.Select(p => p.PublicName).Should().BeEquivalentTo("global");
+            global.GlobalEntity.Select(c => c.Children.Count()).Should().BeEquivalentTo(1);
+        }
+
         /// <summary>
         /// Return Xsrc Entity Model from XSRC Input
         /// </summary>
@@ -15,10 +94,10 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
         public void XSRCEntityBuilder_Global_Exists()
         {
             //ARRANGE
-            var builder = Build();
+            var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
 
-            //ACT
-            var global = builder.GlobalEntity();
+            //ACT            
+            var global = builder.GlobalEntity(RootEntities());
 
             //ASSERT
             global.Should().NotBeNull();
@@ -31,10 +110,10 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
         public void XSRCEntityBuilder_Global_Correct()
         {
             //ARRANGE
-            var builder = Build();
+            var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
 
-            //ACT
-            var global = builder.GlobalEntity();
+            //ACT            
+            var global = builder.GlobalEntity(RootEntities());
 
             //ASSERT
             global.GlobalEntity.Select(p => p.PublicName).Should().BeEquivalentTo("global");
@@ -48,10 +127,10 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
         public void XSRCEntityBuilder_Child_Exists()
         {
             //ARRANGE
-            var builder = Build();
+            var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
 
             //ACT
-            var child = builder.GetChildren("global");
+            var child = builder.GetChildren("global", RootEntities());
 
             //ASSERT
             child.Should().NotBeNull();
@@ -64,37 +143,48 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
         public void XSRCEntityBuilder_Child_Correct()
         {
             //ARRANGE
-            var builder = Build();
+            var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
 
             //ACT
-            var child = builder.GetChildren("global");
+            var child = builder.GetChildren("global", RootEntities());
 
             //ASSERT
             child.Select(p => p.PublicName).Should().BeEquivalentTo("Learner");
             child.Select(c => c.Children.Count()).Should().BeEquivalentTo(1);
         }
 
+        #endregion
 
         #region Test Helpers
 
-        private XsrcEntityBuilder Build()
-        {
-            var root = Deserialize();
 
-            return new XsrcEntityBuilder(root);
-        }
-        
-
-        private root Deserialize()
+        private root RootEntities()
         {
             Stream stream = new FileStream(@"Rulebase\ALBInputs.xsrc", FileMode.Open);
 
-            var serializer = new Serializer(stream);
+            root model;
 
-            return serializer.Deserialize();
+            using (var reader = XmlReader.Create(stream))
+            {
+                var serializer = new XmlSerializer(typeof(root));
+                model = serializer.Deserialize(reader) as root;
+            }
+
+            stream.Close();
+
+            return model;
         }
 
-
+        private string[] entityIDs => new string[]
+        {
+            null,
+            "learner",
+            "learningdelivery",
+            "learningdeliveryfam",
+            "learningdeliverypostcodeareacostreferencedata",
+            "learningdeliverylarsfunding"
+        };
+        
         #endregion
     }
 }

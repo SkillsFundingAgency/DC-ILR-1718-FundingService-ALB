@@ -1,29 +1,57 @@
 ﻿using ESFA.DC.OPA.XSRC.Model.Input.Models;
 using ESFA.DC.OPA.XSRC.Model.XSRCEntity.Models;
+using ESFA.DC.OPA.XSRC.Service.Interface;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Xml;
+using System.Xml.Serialization;
 
 // Setting internals visiible for unit test purposes
 [assembly: InternalsVisibleTo("ESFA.DC.OPA.XSRC.Service.Tests")]
 
-namespace ESFA.DC.OPA.XSRC.Service
+namespace ESFA.DC.OPA.XSRC.Service.Implementation
 {
-    public class XsrcEntityBuilder
+    public class XsrcEntityBuilder : IXsrcEntityBuilder
     {
-        private readonly root _rootEntities;
+        private string _xsrcInput;
 
-        public XsrcEntityBuilder(root rootEntities)
+        root model;
+
+        public XsrcEntityBuilder(string xsrcInput)
         {
-            _rootEntities = rootEntities;
+            _xsrcInput = xsrcInput;
         }
 
-        public XsrcGlobal GlobalEntity()
+        public XsrcGlobal BuildXsrc()
+        {
+            var rootEntities = Deserialize();
+
+            return GlobalEntity(rootEntities);
+        }
+
+        internal protected root Deserialize()
+        {
+            Stream stream = new FileStream(_xsrcInput, FileMode.Open);
+
+            using (var reader = XmlReader.Create(stream))
+            {
+                var serializer = new XmlSerializer(typeof(root));
+                model = serializer.Deserialize(reader) as root;
+            }
+
+            stream.Close();
+
+            return model;
+        }
+
+        internal protected XsrcGlobal GlobalEntity(root rootEntities)
         {
             return new XsrcGlobal
             {
                 GlobalEntity =
-              _rootEntities.entities.Where(r => r.@ref == "global")
+                rootEntities.entities.Where(r => r.@ref == "global")
                 .Select(g => new XsrcEntity
                 {
                     PublicName = g.@ref,
@@ -39,15 +67,15 @@ namespace ESFA.DC.OPA.XSRC.Service
                             Value = gp.Value
                         })
                     }),
-                    Children = GetChildren(g.@ref)
+                    Children = GetChildren(g.@ref, rootEntities)
                 })
             };
         }
 
-        internal protected IEnumerable<XsrcEntity> GetChildren(string parentName)
+        internal protected IEnumerable<XsrcEntity> GetChildren(string parentName, root rootEntities)
         {
             return
-            _rootEntities.entities.Where(r => r.containmentparentid == parentName)
+               rootEntities.entities.Where(r => r.containmentparentid == parentName)
                .Select(c => new XsrcEntity
                {
                    PublicName = c.publicid,
@@ -64,7 +92,7 @@ namespace ESFA.DC.OPA.XSRC.Service
                            Value = cp.Value
                        })
                    }),
-                   Children = GetChildren(c.id)
+                   Children = GetChildren(c.id, rootEntities)
                });
         }
     }
