@@ -68,7 +68,7 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
                         })
                     }),
                     Children = GetChildren(g.@ref, rootEntities)
-                })
+                }).Single()
             };
         }
 

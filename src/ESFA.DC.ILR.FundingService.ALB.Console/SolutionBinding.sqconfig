@@ -1,0 +1,14 @@
+{
+  "ServerUri": "https://sonarcloud.io",
+  "Organization": {
+    "Key": "esfauk",
+    "Name": "Education and Skills Funding Agency"
+  },
+  "ProjectKey": "DC-ILR-1718-FundingService-ALB",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AWBHC48ToETz9fUAFPI9",
+      "ProfileTimestamp": "2018-03-12T11:56:15+00:00"
+    }
+  }
+}

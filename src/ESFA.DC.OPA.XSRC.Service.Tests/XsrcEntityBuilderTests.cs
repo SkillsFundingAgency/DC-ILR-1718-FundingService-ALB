@@ -83,8 +83,8 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
             var global = builder.BuildXsrc();
 
             //ASSERT
-            global.GlobalEntity.Select(p => p.PublicName).Should().BeEquivalentTo("global");
-            global.GlobalEntity.Select(c => c.Children.Count()).Should().BeEquivalentTo(1);
+            global.GlobalEntity.PublicName.Should().BeEquivalentTo("global");
+            global.GlobalEntity.Children.Count().Should().Be(1);
         }
 
         /// <summary>
@@ -116,8 +116,8 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
             var global = builder.GlobalEntity(RootEntities());
 
             //ASSERT
-            global.GlobalEntity.Select(p => p.PublicName).Should().BeEquivalentTo("global");
-            global.GlobalEntity.Select(c => c.Children.Count()).Should().BeEquivalentTo(1);
+            global.GlobalEntity.PublicName.Should().BeEquivalentTo("global");
+            global.GlobalEntity.Children.Count().Should().Be(1);
         }
 
         /// <summary>

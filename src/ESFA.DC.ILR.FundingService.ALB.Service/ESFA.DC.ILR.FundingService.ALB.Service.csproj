@@ -66,9 +66,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeLibrary\Implementation\Learner\LearnRefNumber.cs" />
+    <Compile Include="AttributeLibrary\Implementation\LearningDelivery\LearnAimRef.cs" />
+    <Compile Include="AttributeLibrary\Interface\IPostcodeAreaCostVersion.cs" />
+    <Compile Include="AttributeLibrary\Interface\ILARSVersion.cs" />
     <Compile Include="Builders\Implementation\AttributeBuilder.cs" />
     <Compile Include="Builders\Implementation\DataEntityBuilder.cs" />
+    <Compile Include="Builders\Implementation\AttributeBuilderXsrc.cs" />
+    <Compile Include="AttributeLibrary\Implementation\Global\LARSVersion.cs" />
+    <Compile Include="AttributeLibrary\Implementation\Global\PostcodeAreaCostVersion.cs" />
     <Compile Include="Builders\Interface\IAttributeBuilder.cs" />
+    <Compile Include="Builders\Interface\IAttributeBuilderXsrc.cs" />
     <Compile Include="Builders\Interface\IDataEntityBuilder.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Implementation\FundingService.cs" />
@@ -98,6 +106,15 @@
       <Project>{91E3D0C6-1258-48E3-B1BC-695C46DD302D}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.ExternalData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.OPA.XSRC.Model\ESFA.DC.OPA.XSRC.Model.csproj">
+      <Project>{6742386B-9B04-4093-A267-D08CD9117B98}</Project>
+      <Name>ESFA.DC.OPA.XSRC.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.OPA.XSRC.Service\ESFA.DC.OPA.XSRC.Service.csproj">
+      <Project>{2D878B54-D241-4871-B15E-8EFE47B71D1B}</Project>
+      <Name>ESFA.DC.OPA.XSRC.Service</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

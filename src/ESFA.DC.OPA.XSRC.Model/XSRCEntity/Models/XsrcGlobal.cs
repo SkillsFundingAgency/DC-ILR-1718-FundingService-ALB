@@ -5,6 +5,6 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRCEntity.Models
 {
     public class XsrcGlobal : IXsrcGlobal
     {
-        public IEnumerable<IXsrcEntity> GlobalEntity { get; set; }
+        public IXsrcEntity GlobalEntity { get; set; }
     }
 }

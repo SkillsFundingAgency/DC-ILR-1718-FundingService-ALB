@@ -124,6 +124,12 @@
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <Content Include="Rulebase\ALBInputs.xsrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Rulebase\ALBInputsGlobalIncorrect.xsrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.ExternalData\ESFA.DC.ILR.FundingService.ALB.ExternalData.csproj">
@@ -133,6 +139,14 @@
     <ProjectReference Include="..\ESFA.DC.ILR.FundingService.ALB.Service\ESFA.DC.ILR.FundingService.ALB.Service.csproj">
       <Project>{05FCEB04-1F18-4B30-892C-213FB0753D45}</Project>
       <Name>ESFA.DC.ILR.FundingService.ALB.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.OPA.XSRC.Model\ESFA.DC.OPA.XSRC.Model.csproj">
+      <Project>{6742386B-9B04-4093-A267-D08CD9117B98}</Project>
+      <Name>ESFA.DC.OPA.XSRC.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ESFA.DC.OPA.XSRC.Service\ESFA.DC.OPA.XSRC.Service.csproj">
+      <Project>{2D878B54-D241-4871-B15E-8EFE47B71D1B}</Project>
+      <Name>ESFA.DC.OPA.XSRC.Service</Name>
     </ProjectReference>
     <ProjectReference Include="..\ESFA.DC.TestHelpers.Mock\ESFA.DC.TestHelpers.csproj">
       <Project>{e756cbde-3973-45f1-8083-25fafbf14970}</Project>

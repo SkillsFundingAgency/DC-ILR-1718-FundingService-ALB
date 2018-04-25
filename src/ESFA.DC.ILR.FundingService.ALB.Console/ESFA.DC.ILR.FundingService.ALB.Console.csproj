@@ -109,6 +109,7 @@
     <None Include="App.config" />
     <None Include="ESFA.DC.ILR.FundingService.ALB.Console.ruleset" />
     <None Include="packages.config" />
+    <None Include="SolutionBinding.sqconfig" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.0.0.4787\analyzers\Google.Protobuf.dll" />

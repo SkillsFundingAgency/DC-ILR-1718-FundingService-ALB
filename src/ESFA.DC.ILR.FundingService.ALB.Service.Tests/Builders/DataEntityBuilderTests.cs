@@ -10,6 +10,8 @@ using ESFA.DC.ILR.Model;
 using ESFA.DC.ILR.Model.Interface;
 using ESFA.DC.OPA.Model;
 using ESFA.DC.OPA.Model.Interface;
+using ESFA.DC.OPA.XSRC.Service.Implementation;
+using ESFA.DC.OPA.XSRC.Service.Interface;
 using FluentAssertions;
 using Moq;
 using Xunit;
@@ -1689,8 +1691,87 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
 
         #endregion
 
+        #region XSRC Entity
+
+        /// <summary>
+        /// Return Global Entity from XSRC DataEntityBuilder and check values
+        /// </summary>
+        [Fact(DisplayName = "XSRC Entity Builder - Entity Exists"), Trait("Funding Service XSRC DataEntity Builders", "Unit")]
+        public void DataEntityBuilderXSRC_Builder_Exists()
+        {
+            //ARRANGE
+            var referenceDataCacheMock = SetupReferenceDataMock();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
+            IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase/ALBInputs.xsrc");
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+            var globalBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
+
+            var xsrc = xsrcEntityBuilder.BuildXsrc();
+
+            //ACT
+            var xsrcGlobalEntity = globalBuilder.EntityBuilderXsrc(12345678, TestLearner);
+
+            //ASSERT
+            xsrcGlobalEntity.Select(c => c.Children).Count().Should().Be(1);
+        }
+
+
+        /// <summary>
+        /// Return Global Entity from XSRC DataEntityBuilder and check values
+        /// </summary>
+        [Fact(DisplayName = "XSRC Global - Entity Exists"), Trait("Funding Service XSRC DataEntity Builders", "Unit")]
+        public void DataEntityBuilderXSRC_Global_Exists()
+        {
+            //ARRANGE
+            // Use Test Helpers
+
+            //ACT
+            var xsrcGlobalEntity = SetupXSRCGlobalEntity(@"Rulebase/ALBInputs.xsrc");
+
+            //ASSERT
+            xsrcGlobalEntity.Should().NotBeNull();
+        }
+
+        /// <summary>
+        /// Return Global Entity from XSRC DataEntityBuilder and check values
+        /// </summary>
+        [Fact(DisplayName = "XSRC Global - Entity Matches"), Trait("Funding Service XSRC DataEntity Builders", "Unit")]
+        public void DataEntityBuilderXSRC_Global_Matches()
+        {
+            //ARRANGE
+            // Use Test Helpers
+
+            //ACT
+            var globalEntity = SetupGlobalEntity();
+            var xsrcGlobalEntity = SetupXSRCGlobalEntity(@"Rulebase/ALBInputs.xsrc");
+
+            //ASSERT
+            globalEntity.Should().NotBeNull();
+            xsrcGlobalEntity.Should().NotBeNull();
+
+            globalEntity.Should().BeEquivalentTo(xsrcGlobalEntity);
+        }
+
+        /// <summary>
+        /// Return Global Entity from XSRC DataEntityBuilder and check values
+        /// </summary>
+        [Fact(DisplayName = "XSRC Global - Entity Not Correct(AttributeMappingMissing)"), Trait("Funding Service XSRC DataEntity Builders", "Unit")]
+        public void DataEntityBuilderXSRC_Global_NotCorrect()
+        {
+            //ARRANGE
+            // Use Test Helpers
+
+            //ACT
+            Action xsrcGlobalEntity = () => SetupXSRCGlobalEntity(@"Rulebase/ALBInputsGlobalIncorrect.xsrc");
+            
+            //ASSERT
+            xsrcGlobalEntity.Should().Throw<ArgumentNullException>();
+        }
+
+        #endregion
+
         #region Test Helpers
-        
+
         private IDataEntity Entity(IDataEntity entity)
         {
             return entity;
@@ -1831,7 +1912,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
-            var dataEntityBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
+            IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+            var dataEntityBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             return dataEntityBuilder.EntityBuilder(12345678, TestLearner);
         }
@@ -1840,16 +1923,33 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
-            var globalBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
+            IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+            var globalBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             return globalBuilder.GlobalEntity(12345678);
+        }
+
+        private IDataEntity SetupXSRCGlobalEntity(string xsrcLocation)
+        {
+            var referenceDataCacheMock = SetupReferenceDataMock();
+            IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
+            IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(xsrcLocation);
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+            var globalBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
+            
+            var xsrc = xsrcEntityBuilder.BuildXsrc();
+
+            return globalBuilder.GetGlobalXsrc(xsrc.GlobalEntity, 12345678);
         }
 
         private IDataEntity SetupLearnerEntity()
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
-            var learnerBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
+            IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+            var learnerBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             return learnerBuilder.LearnerEntity("Learner1");
         }
@@ -1858,7 +1958,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
-            var learningDeilveryBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
+            IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+            var learningDeilveryBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             LARSLearningDelivery larsLearningDelivery =
                 referenceDataCacheMock.LARSLearningDelivery.Select(lars => lars.Value).SingleOrDefault(); 
@@ -1870,8 +1972,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
-            var learningDeilveryFAMBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
-            
+            IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+            var learningDeilveryFAMBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
+
             return learningDeilveryFAMBuilder.LearningDeliveryFAMEntity(TestLearningDeliveryFAM);
         }
 
@@ -1879,7 +1983,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
-            var learningDeilverySFAAreaCostBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
+            IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+            var learningDeilverySFAAreaCostBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             IEnumerable<SfaAreaCost> SFAAreaCost = referenceDataCacheMock.SfaAreaCost.Select(s => s.Value).Single();
 
@@ -1890,7 +1996,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
         {
             var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
-            var learningDeilveryLARSFundingBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder);
+            IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+            var learningDeilveryLARSFundingBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             IEnumerable<LARSFunding> LARSFunding = referenceDataCacheMock.LARSFunding.Select(l => l.Value).Single();
 
@@ -1961,6 +2069,17 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             LearnDelFAMDateTo = DateTime.Parse("2017-10-31")
         };
 
+        private readonly IEnumerable<ILearner> TestLearners = new[]
+        {
+            new MessageLearner
+            {
+                LearnRefNumber = "Learner1"
+            },
+            new MessageLearner
+            {
+                LearnRefNumber = "Learner2"
+            }
+        };
 
         private readonly IEnumerable<ILearner> TestLearner = new[] 
         {

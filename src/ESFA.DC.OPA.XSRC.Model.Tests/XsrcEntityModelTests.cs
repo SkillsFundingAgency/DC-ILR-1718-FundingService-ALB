@@ -39,17 +39,14 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
 
             //ASSERT
             xsrc.Should().BeEquivalentTo(TestGlobal);
-            xsrc.GlobalEntity.Select(n => n.Name).Should().BeEquivalentTo("entity");
+            xsrc.GlobalEntity.Name.Should().BeEquivalentTo("entity");
         }
 
         #region Test Helpers
 
        private XsrcGlobal TestGlobal => new XsrcGlobal
        {
-           GlobalEntity = new List<XsrcEntity>
-            {
-                TestXsrcEntity
-            }
+           GlobalEntity = TestXsrcEntity
         };
 
         private IEnumerable<XsrcEntity> TestEntities => new List<XsrcEntity>
