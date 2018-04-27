@@ -17,7 +17,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 {
     public class DataEntityBuilder : IDataEntityBuilder
     {
-        public ILearner learner;
+        public ILearningProvider _learningProvider;
 
         #region Constants
 
@@ -101,38 +101,48 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
 
         #region Entity Builders XSRC
 
-        public IEnumerable<IDataEntity> EntityBuilderXsrc(int ukprn, IEnumerable<ILearner> learners)
+        public IEnumerable<IDataEntity> EntityBuilderXsrc(IMessage message)
         {
-            var xsrc = _xsrcEntityBuilder.BuildXsrc();
+            _learningProvider = message.LearningProviderEntity;
 
-            var globalEntities = learners.Select(learner =>
+            var xsrc = _xsrcEntityBuilder.BuildXsrc().GlobalEntity;
+
+            // what is learners, learners is resolved from obj using learner mapper
+
+            var globalEntities = message.Learners.Select(learner =>
             {
-                IDataEntity globalEntity = GetGlobalXsrc(xsrc.GlobalEntity, ukprn);
-
-                foreach (var childEntity in xsrc.GlobalEntity.Children)
-                {
-                    this.learner = learner;
-
-                    var name = childEntity.PublicName.ToLower();
-
-                    var learnerType = learner.GetType();
-
-                    var entityValue = GetType().GetField(name).GetValue(this);
-
-                    IDataEntity child = GetChildXsrc(childEntity, entityValue);
-
-                    globalEntity.AddChild(child);
-                }
+                // root
+                IDataEntity globalEntity = GetEntity(xsrc, learner);
 
                 return globalEntity;
-            }).AsParallel();
+            });
 
             return globalEntities;
         }
 
         #endregion
 
-        protected internal IDataEntity GetChildXsrc(IXsrcEntity entity, object obj)
+        protected internal IDataEntity GetEntity(IXsrcEntity entity, ILearner learner)
+        {
+            var obj = entity.PublicName == "global" ? (object)_learningProvider : (object)learner;
+
+            var parentEntity = new DataEntity(entity.PublicName)
+            {
+                Attributes = BuildEntityAttributes(entity, obj)
+            };
+
+            foreach (var childEntity in entity.Children)
+            {
+                IDataEntity child = GetEntity(childEntity, learner);
+
+                parentEntity.AddChild(child);
+            }
+
+            return parentEntity;
+        }
+
+        // only used in a test but to be removed.
+        protected internal IDataEntity GetGlobalEntity(IXsrcEntity entity, object obj)
         {
             return new DataEntity(entity.PublicName)
             {
@@ -154,59 +164,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation
             foreach (var attribute in attributes)
             {
                 dictionary.Add(attribute, new AttributeData(attribute, _attributeBuilderXsrc.GetEntityAttribute(attribute, obj)));
-            }
-
-            return dictionary;
-        }
-
-        //protected internal object GetVariable(string name)
-        //{
-        //    var test = GetType();
-        //    var test2 = GetType().GetField(name);
-        //    var test3 = GetType().GetProperty(name);
-        //   // var test4 = GetType().GetProperty(name).SetValue(name.Value, null);
-
-        //   var result = GetType().GetField(name).GetValue(this);
-
-        //    return result;
-        //}
-
-        //protected internal static string GetVariableName<T>(Expression<Func<T>> expr)
-        //{
-        //    var body = (MemberExpression)expr.Body;
-
-        //    return body.Member.Name;
-        //}
-
-        protected internal IDataEntity GetGlobalXsrc(IXsrcEntity xsrc, int ukprn)
-        {
-            return new DataEntity(xsrc.PublicName)
-            {
-                Attributes = BuildGlobalAttributes(xsrc, ukprn)
-            };
-        }
-
-        protected internal IDictionary<string, IAttributeData> BuildGlobalAttributes(IXsrcEntity entity, int ukprn)
-        {
-            var attributes = entity.Attributes.Select(n => n.PublicName).ToList();
-
-            return GetGlobalAttributes(attributes, ukprn);
-        }
-
-        protected internal IDictionary<string, IAttributeData> GetGlobalAttributes(IEnumerable<string> attributes, int ukprn)
-        {
-            IDictionary<string, IAttributeData> dictionary = new Dictionary<string, IAttributeData>();
-
-            foreach (var attribute in attributes)
-            {
-                if (attribute == "UKPRN")
-                {
-                    dictionary.Add(attribute, new AttributeData(attribute, ukprn));
-                }
-                else
-                {
-                    dictionary.Add(attribute, new AttributeData(attribute, _attributeBuilderXsrc.GetGlobalAttribute(attribute)));
-                }
             }
 
             return dictionary;

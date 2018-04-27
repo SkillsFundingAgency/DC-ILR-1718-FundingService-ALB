@@ -30,6 +30,9 @@ using ESFA.DC.OPA.Service.Interface.Rulebase;
 using ESFA.DC.OPA.Service.Rulebase;
 using ESFA.DC.OPA.XSRC.Service.Interface;
 using ESFA.DC.OPA.XSRC.Service.Implementation;
+using ESFA.DC.ILR.FundingService.ALB.Service.AttributeLibrary.Interface;
+using ESFA.DC.ILR.FundingService.ALB.Service.AttributeLibrary.Implementation;
+using ESFA.DC.ILR.FundingService.ALB.Service.AttributeLibrary.Implementation.LearningDelivery;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
 {
@@ -604,8 +607,13 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
         private Implementation.FundingService FundingServicePopulationReferenceDataMock(IReferenceDataCache referenceDataCache)
         {
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
-            IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBinput.xsrc");
-            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCache);
+            IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
+            var modelMappers = new List<IModelMapper>()
+            {
+                new DefaultModelMapper(),
+                new LearnDelFamADLModelMapper(),
+            };
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCache, modelMappers); ;
             var dataEntityBuilder = new DataEntityBuilder(referenceDataCache, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
             
             var referenceDataCachePopulationService = new ReferenceDataCachePopulationService(referenceDataCache, LARSMock().Object, PostcodesMock().Object);
@@ -645,7 +653,12 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             IReferenceDataCachePopulationService referenceDataCachePopulationService = new ReferenceDataCachePopulationService(referenceDataCache, LARSMock().Object, PostcodesMock().Object);
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBinput.xsrc");
-            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCache);
+            var modelMappers = new List<IModelMapper>()
+            {
+                new DefaultModelMapper(),
+                new LearnDelFamADLModelMapper(),
+            };
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCache, modelMappers);
             var dataEntityBuilder = new DataEntityBuilder(referenceDataCache, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             IFundingSevice fundingService = new Implementation.FundingService(referenceDataCachePopulationService, dataEntityBuilder, opaService);

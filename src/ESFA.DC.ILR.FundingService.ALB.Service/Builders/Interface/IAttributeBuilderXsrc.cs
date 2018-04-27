@@ -8,8 +8,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
 {
     public interface IAttributeBuilderXsrc
     {
-        object GetGlobalAttribute(string attributeName);
-
         object GetEntityAttribute(string attributeName, object obj);
     }
 }

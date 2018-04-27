@@ -1,17 +1,23 @@
 ﻿using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.AttributeLibrary.Interface;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Service.AttributeLibrary.Global.Implementation
 {
-    public class LARSVersion : ILARSVersion
+    public class LARSVersion : IModelMapper
     {
-        private readonly IReferenceDataCache _referenceDataCache;
+        private readonly ILARSReferenceDataService _larsReferenceDataService;
 
-        public LARSVersion(IReferenceDataCache referenceDataCache)
+        public LARSVersion(ILARSReferenceDataService larsReferenceDataService)
         {
-            _referenceDataCache = referenceDataCache;
+            _larsReferenceDataService = larsReferenceDataService;
         }
 
-        public object Get() => _referenceDataCache.LARSCurrentVersion;
+        public string AttributeName { get { return "LARSVersion"; } }
+
+        public object Get(object obj, string attributeName)
+        {
+            return _larsReferenceDataService.LARSCurrentVersion();
+        }
     }
 }

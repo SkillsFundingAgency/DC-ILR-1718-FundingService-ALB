@@ -8,6 +8,6 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRCEntity.Interface
 
         string Type { get; }
 
-        IEnumerable<IXsrcAttributeProperty> Properties { get; }
+        //IEnumerable<IXsrcAttributeProperty> Properties { get; }
     }
 }

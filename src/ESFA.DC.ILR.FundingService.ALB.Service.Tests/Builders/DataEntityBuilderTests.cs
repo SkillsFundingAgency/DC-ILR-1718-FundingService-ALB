@@ -1,9 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Interface;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.LARS.Model;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes;
+using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Interface;
 using ESFA.DC.ILR.FundingService.ALB.ExternalData.Postcodes.Model;
+using ESFA.DC.ILR.FundingService.ALB.Service.AttributeLibrary.Implementation;
+using ESFA.DC.ILR.FundingService.ALB.Service.AttributeLibrary.Implementation.LearningDelivery;
+using ESFA.DC.ILR.FundingService.ALB.Service.AttributeLibrary.Interface;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Implementation;
 using ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface;
 using ESFA.DC.ILR.Model;
@@ -1703,16 +1711,17 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase/ALBInputs.xsrc");
-            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+                        
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock, modelMappers);
             var globalBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             var xsrc = xsrcEntityBuilder.BuildXsrc();
 
             //ACT
-            var xsrcGlobalEntity = globalBuilder.EntityBuilderXsrc(12345678, TestLearner);
+            var xsrcGlobalEntity = globalBuilder.EntityBuilderXsrc(TestMessage);
 
             //ASSERT
-            xsrcGlobalEntity.Select(c => c.Children).Count().Should().Be(1);
+            xsrcGlobalEntity.Select(c => c.Children).Count().Should().Be(2);
         }
 
 
@@ -1762,10 +1771,36 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
             // Use Test Helpers
 
             //ACT
-            Action xsrcGlobalEntity = () => SetupXSRCGlobalEntity(@"Rulebase/ALBInputsGlobalIncorrect.xsrc");
-            
+            var xsrcGlobalEntity = SetupXSRCGlobalEntity(@"Rulebase/ALBInputsGlobalIncorrect.xsrc");
+            // Action xsrcGlobalEntity = () => SetupXSRCGlobalEntity(@"Rulebase/ALBInputsGlobalIncorrect.xsrc");
+
             //ASSERT
-            xsrcGlobalEntity.Should().Throw<ArgumentNullException>();
+            var attribute = xsrcGlobalEntity.Attributes.Where(l => l.Key.Contains("LARS")).Select(a => a.Value).First();
+
+            attribute.Value.Should().Be("NotFound");
+
+            // xsrcGlobalEntity.Should().Throw<ArgumentNullException>();
+        }
+
+        /// <summary>
+        /// Return Global Entity from XSRC DataEntityBuilder and check values
+        /// </summary>
+        [Fact(DisplayName = "XSRC Global - Count of Entity Not Correct(AttributeMappingMissing)"), Trait("Funding Service XSRC DataEntity Builders", "Unit")]
+        public void DataEntityBuilderXSRC_Global_CountNotCorrect()
+        {
+            //ARRANGE
+            // Use Test Helpers
+
+            //ACT
+            var xsrcGlobalEntity = SetupXSRCGlobalEntity(@"Rulebase/ALBInputsGlobalIncorrect.xsrc");
+
+            //ASSERT
+            var attributeCount = xsrcGlobalEntity.Attributes.Where(l => l.Value.Value == "NotFound").Select(a => a.Key).Count();
+            
+            // would be checking for zero in real scenario to make test fail
+            attributeCount.Should().Be(1);            
+
+            // attributeCount.Should().Be(0);
         }
 
         #endregion
@@ -1910,10 +1945,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
 
         private IEnumerable<IDataEntity> SetupDataEntity()
         {
-            var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
-            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+          
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock, modelMappers);
             var dataEntityBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             return dataEntityBuilder.EntityBuilder(12345678, TestLearner);
@@ -1921,10 +1956,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
 
         private IDataEntity SetupGlobalEntity()
         {
-            var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
-            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+        
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock, modelMappers);
             var globalBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             return globalBuilder.GlobalEntity(12345678);
@@ -1932,23 +1967,23 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
 
         private IDataEntity SetupXSRCGlobalEntity(string xsrcLocation)
         {
-            var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(xsrcLocation);
-            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+           
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock, modelMappers);
             var globalBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
             
             var xsrc = xsrcEntityBuilder.BuildXsrc();
 
-            return globalBuilder.GetGlobalXsrc(xsrc.GlobalEntity, 12345678);
+            return globalBuilder.GetGlobalEntity(xsrc.GlobalEntity, TestMessage.LearningProviderEntity);
         }
 
         private IDataEntity SetupLearnerEntity()
         {
-            var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
-            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+            
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock, modelMappers);
             var learnerBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             return learnerBuilder.LearnerEntity("Learner1");
@@ -1956,10 +1991,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
 
         private IDataEntity SetupLearningDeliveryEntity()
         {
-            var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
-            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+           
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock, modelMappers);
             var learningDeilveryBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             LARSLearningDelivery larsLearningDelivery =
@@ -1970,10 +2005,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
 
         private IDataEntity SetupLearningDeliveryFAMEntity()
         {
-            var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
-            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+           
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock, modelMappers);
             var learningDeilveryFAMBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             return learningDeilveryFAMBuilder.LearningDeliveryFAMEntity(TestLearningDeliveryFAM);
@@ -1981,10 +2016,10 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
 
         private IDataEntity SetupLearningDeliverySFAPostcodeAreaCostEntity()
         {
-            var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
-            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+           
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock, modelMappers);
             var learningDeilverySFAAreaCostBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             IEnumerable<SfaAreaCost> SFAAreaCost = referenceDataCacheMock.SfaAreaCost.Select(s => s.Value).Single();
@@ -1994,16 +2029,29 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
 
         private IDataEntity SetupLearningDeliveryLARSFundingEntity()
         {
-            var referenceDataCacheMock = SetupReferenceDataMock();
             IAttributeBuilder<IAttributeData> attributeBuilder = new AttributeBuilder();
             IXsrcEntityBuilder xsrcEntityBuilder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
-            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock);
+           
+            IAttributeBuilderXsrc attributeBuilderXsrc = new AttributeBuilderXsrc(referenceDataCacheMock, modelMappers);
             var learningDeilveryLARSFundingBuilder = new DataEntityBuilder(referenceDataCacheMock, attributeBuilder, xsrcEntityBuilder, attributeBuilderXsrc);
 
             IEnumerable<LARSFunding> LARSFunding = referenceDataCacheMock.LARSFunding.Select(l => l.Value).Single();
 
             return learningDeilveryLARSFundingBuilder.LARSFundingEntity(LARSFunding.Single());
         }
+
+        private List<IModelMapper> modelMappers => new List<IModelMapper>()
+        {
+            new DefaultModelMapper(),
+            new LearnDelFamADLModelMapper(),
+            new AttributeLibrary.Global.Implementation.LARSVersion(larsReferenceDataService),
+            new AttributeLibrary.Global.Implementation.PostcodeAreaCostVersion(postcodesReferenceDataService)
+        };
+
+        private ILARSReferenceDataService larsReferenceDataService => new LARSReferenceDataService(referenceDataCacheMock);
+        private IPostcodesReferenceDataService postcodesReferenceDataService => new PostcodesReferenceDataService(referenceDataCacheMock);
+
+        private IReferenceDataCache referenceDataCacheMock => SetupReferenceDataMock();
 
         #endregion
 
@@ -2141,7 +2189,132 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests.Builders
                 }
             }
         };
-        
+
+        private readonly IMessage TestMessage = new Message
+        {
+            LearningProvider = new MessageLearningProvider
+            {
+                UKPRN = 12345678,
+            },
+            Learner = new MessageLearner[]
+            {
+                new MessageLearner
+                {
+                    LearnRefNumber = "Learner1",
+                    LearningDelivery = new[]
+                    {
+                        new MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = "123456",
+                            AimSeqNumberSpecified = true,
+                            AimSeqNumber = 1,
+                            CompStatusSpecified = true,
+                            CompStatus = 1,
+                            DelLocPostCode = "CV1 2WT",
+                            LearnActEndDateSpecified = true,
+                            LearnActEndDate = DateTime.Parse("2018-06-30"),
+                            LearnStartDateSpecified = true,
+                            LearnStartDate = DateTime.Parse("2017-08-30"),
+                            LearnPlanEndDateSpecified = true,
+                            LearnPlanEndDate = DateTime.Parse("2018-07-30"),
+                            OrigLearnStartDateSpecified = true,
+                            OrigLearnStartDate = DateTime.Parse("2017-08-30"),
+                            OtherFundAdjSpecified = false,
+                            OutcomeSpecified = false,
+                            PriorLearnFundAdjSpecified = false,
+                            LearningDeliveryFAM = new[]
+                            {
+                                new MessageLearnerLearningDeliveryLearningDeliveryFAM
+                                {
+                                    LearnDelFAMCode = "1",
+                                    LearnDelFAMType = "ADL",
+                                    LearnDelFAMDateFromSpecified = true,
+                                    LearnDelFAMDateFrom = DateTime.Parse("2017-08-30"),
+                                    LearnDelFAMDateToSpecified = true,
+                                    LearnDelFAMDateTo =  DateTime.Parse("2017-10-31")
+
+                                },
+                                new MessageLearnerLearningDeliveryLearningDeliveryFAM
+                                {
+                                    LearnDelFAMCode = "100",
+                                    LearnDelFAMType = "SOF",
+                                    LearnDelFAMDateFromSpecified = true,
+                                    LearnDelFAMDateFrom = DateTime.Parse("2017-10-31"),
+                                    LearnDelFAMDateToSpecified = true,
+                                    LearnDelFAMDateTo =  DateTime.Parse("2017-11-30")
+                                },
+                                new MessageLearnerLearningDeliveryLearningDeliveryFAM
+                                {
+                                    LearnDelFAMCode = "1",
+                                    LearnDelFAMType = "RES",
+                                    LearnDelFAMDateFromSpecified = true,
+                                    LearnDelFAMDateFrom = DateTime.Parse("2017-12-01"),
+                                    LearnDelFAMDateToSpecified = false
+                                }
+                            }
+                        }
+                    }
+                },
+                new MessageLearner
+                {
+                    LearnRefNumber = "Learner2",
+                    LearningDelivery = new[]
+                    {
+                        new MessageLearnerLearningDelivery
+                        {
+                            LearnAimRef = "123456",
+                            AimSeqNumberSpecified = true,
+                            AimSeqNumber = 1,
+                            CompStatusSpecified = true,
+                            CompStatus = 1,
+                            DelLocPostCode = "CV1 2WT",
+                            LearnActEndDateSpecified = true,
+                            LearnActEndDate = DateTime.Parse("2018-06-30"),
+                            LearnStartDateSpecified = true,
+                            LearnStartDate = DateTime.Parse("2017-08-30"),
+                            LearnPlanEndDateSpecified = true,
+                            LearnPlanEndDate = DateTime.Parse("2018-07-30"),
+                            OrigLearnStartDateSpecified = true,
+                            OrigLearnStartDate = DateTime.Parse("2017-08-30"),
+                            OtherFundAdjSpecified = false,
+                            OutcomeSpecified = false,
+                            PriorLearnFundAdjSpecified = false,
+                            LearningDeliveryFAM = new[]
+                            {
+                                new MessageLearnerLearningDeliveryLearningDeliveryFAM
+                                {
+                                    LearnDelFAMCode = "1",
+                                    LearnDelFAMType = "ADL",
+                                    LearnDelFAMDateFromSpecified = true,
+                                    LearnDelFAMDateFrom = DateTime.Parse("2017-08-30"),
+                                    LearnDelFAMDateToSpecified = true,
+                                    LearnDelFAMDateTo =  DateTime.Parse("2017-10-31")
+
+                                },
+                                new MessageLearnerLearningDeliveryLearningDeliveryFAM
+                                {
+                                    LearnDelFAMCode = "100",
+                                    LearnDelFAMType = "SOF",
+                                    LearnDelFAMDateFromSpecified = true,
+                                    LearnDelFAMDateFrom = DateTime.Parse("2017-10-31"),
+                                    LearnDelFAMDateToSpecified = true,
+                                    LearnDelFAMDateTo =  DateTime.Parse("2017-11-30")
+                                },
+                                new MessageLearnerLearningDeliveryLearningDeliveryFAM
+                                {
+                                    LearnDelFAMCode = "1",
+                                    LearnDelFAMType = "RES",
+                                    LearnDelFAMDateFromSpecified = true,
+                                    LearnDelFAMDateFrom = DateTime.Parse("2017-12-01"),
+                                    LearnDelFAMDateToSpecified = false
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
         #endregion
        
         #endregion

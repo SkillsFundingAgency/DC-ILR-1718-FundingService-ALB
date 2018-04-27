@@ -9,7 +9,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRCEntity.Models
 
         public string Type { get; set; }
 
-        public IEnumerable<IXsrcAttributeProperty> Properties { get; set; }
+        //public IEnumerable<IXsrcAttributeProperty> Properties { get; set; }
 
     }
 }

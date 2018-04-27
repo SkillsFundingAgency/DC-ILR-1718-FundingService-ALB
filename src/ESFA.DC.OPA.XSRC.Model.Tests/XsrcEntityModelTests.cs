@@ -77,7 +77,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             {
                  PublicName = "Attribute",
                  Type = "text",
-                 Properties = TestAttributeProperties
+                 //Properties = TestAttributeProperties
             }
         };
 

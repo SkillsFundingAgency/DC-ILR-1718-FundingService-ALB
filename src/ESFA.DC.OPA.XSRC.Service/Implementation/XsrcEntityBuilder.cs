@@ -61,11 +61,11 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
                     {
                         PublicName = ga.publicname,
                         Type = ga.type,
-                        Properties = ga.props.Select(gp => new XsrcAttributeProperty
-                        {
-                            Name = gp.name,
-                            Value = gp.Value
-                        })
+                        //Properties = ga.props.Select(gp => new XsrcAttributeProperty
+                        //{
+                        //    Name = gp.name,
+                        //    Value = gp.Value
+                        //})
                     }),
                     Children = GetChildren(g.@ref, rootEntities)
                 }).Single()
@@ -86,11 +86,11 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
                    {
                        PublicName = ca.publicname,
                        Type = ca.type,
-                       Properties = ca.props.Select(cp => new XsrcAttributeProperty
-                       {
-                           Name = cp.name,
-                           Value = cp.Value
-                       })
+                       //Properties = ca.props.Select(cp => new XsrcAttributeProperty
+                       //{
+                       //    Name = cp.name,
+                       //    Value = cp.Value
+                       //})
                    }),
                    Children = GetChildren(c.id, rootEntities)
                });

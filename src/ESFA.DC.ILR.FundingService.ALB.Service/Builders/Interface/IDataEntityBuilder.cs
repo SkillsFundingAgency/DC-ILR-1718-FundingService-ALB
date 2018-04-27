@@ -8,6 +8,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Builders.Interface
     {
         IEnumerable<IDataEntity> EntityBuilder(int ukprn, IEnumerable<ILearner> learners);
 
-        IEnumerable<IDataEntity> EntityBuilderXsrc(int ukprn, IEnumerable<ILearner> learners);
+        IEnumerable<IDataEntity> EntityBuilderXsrc(IMessage message);
     }
 }

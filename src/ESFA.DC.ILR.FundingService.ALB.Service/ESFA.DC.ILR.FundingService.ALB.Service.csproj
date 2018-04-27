@@ -66,10 +66,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeLibrary\Implementation\DefaultModelMapper.cs" />
     <Compile Include="AttributeLibrary\Implementation\Learner\LearnRefNumber.cs" />
     <Compile Include="AttributeLibrary\Implementation\LearningDelivery\LearnAimRef.cs" />
-    <Compile Include="AttributeLibrary\Interface\IPostcodeAreaCostVersion.cs" />
-    <Compile Include="AttributeLibrary\Interface\ILARSVersion.cs" />
+    <Compile Include="AttributeLibrary\Implementation\LearningDelivery\LearnDelFamADLModelMapper.cs" />
+    <Compile Include="AttributeLibrary\Interface\IModelMapper.cs" />
     <Compile Include="Builders\Implementation\AttributeBuilder.cs" />
     <Compile Include="Builders\Implementation\DataEntityBuilder.cs" />
     <Compile Include="Builders\Implementation\AttributeBuilderXsrc.cs" />
