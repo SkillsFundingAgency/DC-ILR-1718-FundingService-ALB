@@ -1,27 +1,98 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Xml.Serialization;
-using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    [Serializable()]
-    [DesignerCategory("code")]
-    [XmlType(AnonymousType = true)]
-    public class rootEntityAttribute 
+
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public class rootEntityAttribute
     {
-        public rootEntityAttributeText text { get; set; }
 
-        [XmlArrayItem("prop", IsNullable = false)]
-        public rootEntityAttributeProp[] props { get; set; }
+        private rootEntityAttributeText textField;
 
-        [XmlAttribute()]
-        public string name { get; set; }
+        private rootEntityAttributeProp[] propsField;
 
-        [XmlAttribute()]
-        public string type { get; set; }
+        private string nameField;
 
-        [XmlAttribute("public-name")]
-        public string publicname { get; set; }
+        private string typeField;
+
+        private string publicnameField;
+
+        /// <remarks/>
+        public rootEntityAttributeText text
+        {
+            get
+            {
+                return this.textField;
+            }
+            set
+            {
+                this.textField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("prop", IsNullable = false)]
+        public rootEntityAttributeProp[] props
+        {
+            get
+            {
+                return this.propsField;
+            }
+            set
+            {
+                this.propsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string name
+        {
+            get
+            {
+                return this.nameField;
+            }
+            set
+            {
+                this.nameField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string type
+        {
+            get
+            {
+                return this.typeField;
+            }
+            set
+            {
+                this.typeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("public-name")]
+        public string publicname
+        {
+            get
+            {
+                return this.publicnameField;
+            }
+            set
+            {
+                this.publicnameField = value;
+            }
+        }
     }
 }

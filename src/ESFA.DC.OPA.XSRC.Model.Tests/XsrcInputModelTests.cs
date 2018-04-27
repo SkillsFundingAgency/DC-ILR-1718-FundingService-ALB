@@ -1,5 +1,4 @@
-﻿using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
-using ESFA.DC.OPA.XSRC.Model.XSRC.Models;
+﻿using ESFA.DC.OPA.XSRC.Model.XSRC.Models;
 using FluentAssertions;
 using Xunit;
 
@@ -49,7 +48,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
         {
             entities = TestRootEntities,
             rules = "rules",
-            interactiveitem = new rootInteractiveitems(),
+            interactiveitems = new rootInteractiveitems(),
             relationships = TestRootRelationships,
             rulefolders = "folders",
             schemaversion = 1,

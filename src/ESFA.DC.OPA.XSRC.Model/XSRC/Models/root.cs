@@ -1,34 +1,140 @@
-﻿using System;
-using System.ComponentModel;
-using System.Xml.Serialization;
-using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
-
-namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
+﻿namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    [Serializable()]
-    [DesignerCategory("code")]
-    [XmlType(AnonymousType = true)]
-    [XmlRoot(Namespace = "", IsNullable = false)]
-    public class root 
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
+    public class root
     {
-        [XmlArrayItem("entity", IsNullable = false)]
-        public rootEntity[] entities { get; set; }
 
-        public object rules { get; set; }
+        private rootEntity[] entitiesField;
 
-        [XmlElement("interactive-items")]
-        public rootInteractiveitems interactiveitem { get; set; }
+        private string rulesField;
 
-        [XmlArrayItem("relationship", IsNullable = false)]
-        public rootRelationship[] relationships { get; set; }
+        private rootInteractiveitems interactiveitemsField;
 
-        [XmlElement("rule-folders")]
-        public object rulefolders { get; set; }
+        private rootRelationship[] relationshipsField;
 
-        [XmlAttribute("schema-version")]
-        public byte schemaversion { get; set; }
+        private string rulefoldersField;
 
-        [XmlAttribute("product-version")]
-        public string productversion { get; set; }
+        private sbyte schemaversionField;
+
+        private bool schemaversionFieldSpecified;
+
+        private string productversionField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("entity", IsNullable = false)]
+        public rootEntity[] entities
+        {
+            get
+            {
+                return this.entitiesField;
+            }
+            set
+            {
+                this.entitiesField = value;
+            }
+        }
+
+        /// <remarks/>
+        public string rules
+        {
+            get
+            {
+                return this.rulesField;
+            }
+            set
+            {
+                this.rulesField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("interactive-items")]
+        public rootInteractiveitems interactiveitems
+        {
+            get
+            {
+                return this.interactiveitemsField;
+            }
+            set
+            {
+                this.interactiveitemsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlArrayItemAttribute("relationship", IsNullable = false)]
+        public rootRelationship[] relationships
+        {
+            get
+            {
+                return this.relationshipsField;
+            }
+            set
+            {
+                this.relationshipsField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute("rule-folders")]
+        public string rulefolders
+        {
+            get
+            {
+                return this.rulefoldersField;
+            }
+            set
+            {
+                this.rulefoldersField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("schema-version")]
+        public sbyte schemaversion
+        {
+            get
+            {
+                return this.schemaversionField;
+            }
+            set
+            {
+                this.schemaversionField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool schemaversionSpecified
+        {
+            get
+            {
+                return this.schemaversionFieldSpecified;
+            }
+            set
+            {
+                this.schemaversionFieldSpecified = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("product-version")]
+        public string productversion
+        {
+            get
+            {
+                return this.productversionField;
+            }
+            set
+            {
+                this.productversionField = value;
+            }
+        }
     }
 }

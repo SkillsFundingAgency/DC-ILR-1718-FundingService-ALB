@@ -1,46 +1,209 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Xml.Serialization;
-using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    [Serializable()]
-    [DesignerCategory("code")]
-    [XmlType(AnonymousType = true)]
-    public partial class rootRelationship : IrootRelationship
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    public class rootRelationship
     {
-        [XmlAttribute()]
-        public string source { get; set; }
 
-        [XmlAttribute()]
-        public string target { get; set; }
+        private string sourceField;
 
-        [XmlAttribute()]
-        public string text { get; set; }
+        private string targetField;
 
-        [XmlAttribute("relationship-id")]
-        public string relationshipid { get; set; }
+        private string textField;
 
-        [XmlAttribute("reverse-text")]
-        public string reversetext { get; set; }
+        private string relationshipidField;
 
-        [XmlAttribute("reverse-relationship-id")]
-        public string reverserelationshipid { get; set; }
+        private string reversetextField;
 
-        [XmlAttribute()]
-        public string type { get; set; }
+        private string reverserelationshipidField;
 
-        [XmlAttribute("is-computed")]
-        public bool iscomputed { get; set; }
+        private string typeField;
 
-        [XmlAttribute("is-containment")]
-        public bool iscontainment { get; set; }
+        private string iscomputedField;
 
-        [XmlAttribute("public-id")]
-        public string publicid { get; set; }
+        private string iscontainmentField;
 
-        [XmlAttribute("reverse-public-id")]
-        public string reversepublicid { get; set; }
+        private string publicidField;
+
+        private string reversepublicidField;
+
+        private string valueField;
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string source
+        {
+            get
+            {
+                return this.sourceField;
+            }
+            set
+            {
+                this.sourceField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string target
+        {
+            get
+            {
+                return this.targetField;
+            }
+            set
+            {
+                this.targetField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string text
+        {
+            get
+            {
+                return this.textField;
+            }
+            set
+            {
+                this.textField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("relationship-id")]
+        public string relationshipid
+        {
+            get
+            {
+                return this.relationshipidField;
+            }
+            set
+            {
+                this.relationshipidField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("reverse-text")]
+        public string reversetext
+        {
+            get
+            {
+                return this.reversetextField;
+            }
+            set
+            {
+                this.reversetextField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("reverse-relationship-id")]
+        public string reverserelationshipid
+        {
+            get
+            {
+                return this.reverserelationshipidField;
+            }
+            set
+            {
+                this.reverserelationshipidField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string type
+        {
+            get
+            {
+                return this.typeField;
+            }
+            set
+            {
+                this.typeField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("is-computed")]
+        public string iscomputed
+        {
+            get
+            {
+                return this.iscomputedField;
+            }
+            set
+            {
+                this.iscomputedField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("is-containment")]
+        public string iscontainment
+        {
+            get
+            {
+                return this.iscontainmentField;
+            }
+            set
+            {
+                this.iscontainmentField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("public-id")]
+        public string publicid
+        {
+            get
+            {
+                return this.publicidField;
+            }
+            set
+            {
+                this.publicidField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute("reverse-public-id")]
+        public string reversepublicid
+        {
+            get
+            {
+                return this.reversepublicidField;
+            }
+            set
+            {
+                this.reversepublicidField = value;
+            }
+        }
+
+        /// <remarks/>
+        [System.Xml.Serialization.XmlTextAttribute()]
+        public string Value
+        {
+            get
+            {
+                return this.valueField;
+            }
+            set
+            {
+                this.valueField = value;
+            }
+        }
     }
 }

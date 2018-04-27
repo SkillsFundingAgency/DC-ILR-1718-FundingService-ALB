@@ -7,5 +7,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRCEntity.Interface
         string PublicName { get; }
 
         string Type { get; }
+
+        //IEnumerable<IXsrcAttributeProperty> Properties { get; }
     }
 }

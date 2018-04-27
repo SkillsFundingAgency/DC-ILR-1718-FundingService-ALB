@@ -40,18 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="XSRC\Interface\IrootEntityAttributeProp.cs" />
-    <Compile Include="XSRC\Interface\IrootEntityAttributeText.cs" />
-    <Compile Include="XSRC\Interface\IrootInteractiveitems.cs" />
-    <Compile Include="XSRC\Interface\IrootRelationship.cs" />
-    <Compile Include="XSRC\Models\root.cs" />
-    <Compile Include="XSRC\Models\rootEntity.cs" />
-    <Compile Include="XSRC\Models\rootEntityAttribute.cs" />
-    <Compile Include="XSRC\Models\rootEntityAttributeProp.cs" />
-    <Compile Include="XSRC\Models\rootEntityAttributeText.cs" />
-    <Compile Include="XSRC\Models\rootInteractiveitems.cs" />
-    <Compile Include="XSRC\Models\rootRelationship.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="XSRCEntity\Interface\IXsrcAttribute.cs" />
     <Compile Include="XSRCEntity\Interface\IXsrcAttributeProperty.cs" />
     <Compile Include="XSRCEntity\Interface\IXsrcEntity.cs" />
@@ -60,6 +48,17 @@
     <Compile Include="XSRCEntity\Models\XsrcAttributeProperty.cs" />
     <Compile Include="XSRCEntity\Models\XsrcEntity.cs" />
     <Compile Include="XSRCEntity\Models\XsrcGlobal.cs" />
+    <Compile Include="XSRC\Models\root.cs" />
+    <Compile Include="XSRC\Models\rootEntity.cs" />
+    <Compile Include="XSRC\Models\rootEntityAttribute.cs" />
+    <Compile Include="XSRC\Models\rootEntityAttributeProp.cs" />
+    <Compile Include="XSRC\Models\rootEntityAttributeText.cs" />
+    <Compile Include="XSRC\Models\rootInteractiveitems.cs" />
+    <Compile Include="XSRC\Models\rootRelationship.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="XSRC\Interface\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
