@@ -29,7 +29,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Implementation
 
             var learners = message.Learners.Where(ld => ld.LearningDeliveries.Any(fm => fm.FundModelNullable == 99));
 
-            PopulateReferenceData(message);
+            PopulateReferenceData(learners);
 
             // Generate Funding Inputs
             var inputDataEntities = _dataEntityBuilder.EntityBuilder(ukprn, learners);
@@ -47,10 +47,15 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Implementation
             return outputDataEntities;
         }
 
-        protected internal void PopulateReferenceData(IMessage message)
+        protected internal void PopulateReferenceData(IEnumerable<ILearner> learners)
         {
-            var learnAimRefs = message.Learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.LearnAimRef)).Distinct().ToList();
-            var postcodesList = message.Learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.DelLocPostCode)).Distinct().ToList();
+            //var learnAimRefsOLD = message.Learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.LearnAimRef)).Distinct().ToList();
+
+            //var postcodesListOLD = message.Learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.DelLocPostCode)).Distinct().ToList();
+
+            var postcodesList = learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.DelLocPostCode)).Distinct().ToList();
+
+            var learnAimRefs = learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.LearnAimRef)).Distinct().ToList();
 
             _referenceDataCachePopulationService.Populate(learnAimRefs, postcodesList);
         }

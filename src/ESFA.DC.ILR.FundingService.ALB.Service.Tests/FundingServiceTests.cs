@@ -302,7 +302,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             var fundingService = FundingServicePopulationReferenceDataMock(referenceDataCache);
 
             //ACT
-            fundingService.PopulateReferenceData(message);
+            fundingService.PopulateReferenceData(message.Learners);
 
             //ASSERT
             referenceDataCache.LARSCurrentVersion.Should().Be("Version_005");
@@ -320,7 +320,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             var fundingService = FundingServicePopulationReferenceDataMock(referenceDataCache);
 
             //ACT
-            fundingService.PopulateReferenceData(message);
+            fundingService.PopulateReferenceData(message.Learners);
 
             //ASSERT
             var expectedOutput1 = new LARSLearningDelivery
@@ -358,7 +358,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             var fundingService = FundingServicePopulationReferenceDataMock(referenceDataCache);
 
             //ACT
-            fundingService.PopulateReferenceData(message);
+            fundingService.PopulateReferenceData(message.Learners);
 
             //ASSERT
             var expectedOutput1 = new LARSFunding
@@ -400,7 +400,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             var fundingService = FundingServicePopulationReferenceDataMock(referenceDataCache);
 
             //ACT
-            fundingService.PopulateReferenceData(message);
+            fundingService.PopulateReferenceData(message.Learners);
 
             //ASSERT
             referenceDataCache.PostcodeCurrentVersion.Should().Be("Version_002");
@@ -418,7 +418,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Tests
             var fundingService = FundingServicePopulationReferenceDataMock(referenceDataCache);
 
             //ACT
-            fundingService.PopulateReferenceData(message);
+            fundingService.PopulateReferenceData(message.Learners);
 
             //ASSERT
             var expectedOutput1 = new SfaAreaCost
