@@ -115,15 +115,27 @@
     <Compile Include="Builders\DataEntityBuilderTests.cs" />
     <Compile Include="FundingServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rulebase\RulebaseInterfaceTests.cs" />
     <Compile Include="Rulebase\RulebaseProviderFactoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="RulebaseMasterFiles\ReadMe.txt" />
     <EmbeddedResource Include="..\ESFA.DC.ILR.FundingService.ALB.Service\Rulebase\Loans Bursary 17_18.zip">
       <Link>Rulebase\Loans Bursary 17_18.zip</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <Content Include="..\ESFA.DC.ILR.FundingService.ALB.Service\Rulebase\ALBInputs.xsrc">
+      <Link>Rulebase\ALBInputs.xsrc</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <Content Include="RulebaseMasterFiles\ALBInputsBase.xsrc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="RulebaseMasterFiles\Loans Bursary 17_18.zip">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\xunit.analyzers.0.7.0\analyzers\dotnet\cs\xunit.analyzers.dll" />
@@ -150,6 +162,7 @@
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
