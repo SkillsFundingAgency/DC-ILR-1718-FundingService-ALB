@@ -1,9 +1,4 @@
-﻿using System.IO;
-using System.Linq;
-using System.Xml;
-using System.Xml.Serialization;
-using ESFA.DC.OPA.XSRC.Model.XSRC.Models;
-using ESFA.DC.OPA.XSRC.Model.XSRCEntity.Models;
+﻿using System.Linq;
 using ESFA.DC.OPA.XSRC.Service.Implementation;
 using ESFA.DC.OPA.XSRC.Service.Interface;
 using FluentAssertions;
@@ -23,8 +18,7 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
         {
             //ARRANGE
             var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
-            //var builder = new XsrcEntityBuilder(SetupStream());
-
+          
             //ACT            
             var xsrcInput = builder.Deserialize();
 
@@ -40,8 +34,7 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
         {
             //ARRANGE
             var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
-            //var builder = new XsrcEntityBuilder(SetupStream());
-
+           
             //ACT            
             var xsrcInput = builder.Deserialize();
 
@@ -97,7 +90,8 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
             var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
 
             //ACT            
-            var global = builder.GlobalEntity(RootEntities());
+            var model = builder.Deserialize();
+            var global = builder.GlobalEntity(model);
 
             //ASSERT
             global.Should().NotBeNull();
@@ -112,8 +106,9 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
             //ARRANGE
             var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
 
-            //ACT            
-            var global = builder.GlobalEntity(RootEntities());
+            //ACT   
+            var model = builder.Deserialize();
+            var global = builder.GlobalEntity(model);
 
             //ASSERT
             global.GlobalEntity.PublicName.Should().BeEquivalentTo("global");
@@ -130,7 +125,8 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
             var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
 
             //ACT
-            var child = builder.GetChildren("global", RootEntities());
+            var model = builder.Deserialize();
+            var child = builder.GetChildren("global", model);
 
             //ASSERT
             child.Should().NotBeNull();
@@ -146,7 +142,8 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
             var builder = new XsrcEntityBuilder(@"Rulebase\ALBInputs.xsrc");
 
             //ACT
-            var child = builder.GetChildren("global", RootEntities());
+            var model = builder.Deserialize();
+            var child = builder.GetChildren("global", model);
 
             //ASSERT
             child.Select(p => p.PublicName).Should().BeEquivalentTo("Learner");
@@ -158,22 +155,18 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
         #region Test Helpers
 
 
-        private Root RootEntities()
-        {
-            Stream stream = new FileStream(@"Rulebase\ALBInputs.xsrc", FileMode.Open);
+        //private Root RootEntities()
+        //{
+        //    Stream stream = new FileStream(@"Rulebase\ALBInputs.xsrc", FileMode.Open);
 
-            Root model;
+        //    ISerializationService serializationService = new XmlSerializationService();
+                       
+        //    var e = serializationService.Deserialize<Root>(stream);
 
-            using (var reader = XmlReader.Create(stream))
-            {
-                var serializer = new XmlSerializer(typeof(Root));
-                model = serializer.Deserialize(reader) as Root;
-            }
+        //    stream.Close();
 
-            stream.Close();
-
-            return model;
-        }
+        //    return e;
+        //}
 
         private string[] entityIDs => new string[]
         {

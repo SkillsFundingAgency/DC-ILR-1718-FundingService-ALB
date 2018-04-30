@@ -1,13 +1,13 @@
-﻿using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
-using ESFA.DC.OPA.XSRC.Model.XSRC.Models;
-using ESFA.DC.OPA.XSRC.Model.XSRCEntity.Models;
-using ESFA.DC.OPA.XSRC.Service.Interface;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Xml;
-using System.Xml.Serialization;
+using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
+using ESFA.DC.OPA.XSRC.Model.XSRC.Models;
+using ESFA.DC.OPA.XSRC.Model.XSRCEntity.Models;
+using ESFA.DC.OPA.XSRC.Service.Interface;
+using ESFA.DC.Serialization.Interfaces;
+using ESFA.DC.Serialization.Xml;
 
 // Setting internals visiible for unit test purposes
 [assembly: InternalsVisibleTo("ESFA.DC.OPA.XSRC.Service.Tests")]
@@ -28,7 +28,7 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
         public XsrcGlobal BuildXsrc()
         {
             var rootEntities = Deserialize();
-
+                       
             return GlobalEntity(rootEntities);
         }
 
@@ -36,15 +36,13 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
         {
             Stream stream = new FileStream(_xsrcInput, FileMode.Open);
 
-            using (var reader = XmlReader.Create(stream))
-            {
-                var serializer = new XmlSerializer(typeof(Root));
-                model = serializer.Deserialize(reader) as Root;
-            }
+            ISerializationService serializationService = new XmlSerializationService();
+
+            IRoot rootEntities = serializationService.Deserialize<Root>(stream);
 
             stream.Close();
 
-            return model;
+            return rootEntities;
         }
 
         internal protected XsrcGlobal GlobalEntity(IRoot rootEntities)

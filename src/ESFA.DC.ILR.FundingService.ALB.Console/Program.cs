@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Xml;
-using System.Xml.Serialization;
 using Autofac;
 using ESFA.DC.Data.LARS.Model;
 using ESFA.DC.Data.LARS.Model.Interfaces;
@@ -22,6 +20,8 @@ using ESFA.DC.OPA.Service.Builders;
 using ESFA.DC.OPA.Service.Interface;
 using ESFA.DC.OPA.Service.Interface.Builders;
 using ESFA.DC.OPA.Service.Interface.Rulebase;
+using ESFA.DC.Serialization.Interfaces;
+using ESFA.DC.Serialization.Xml;
 
 namespace ESFA.DC.ILR.FundingService.ALB.Console
 {
@@ -32,8 +32,6 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
         public static void Main(string[] args)
         {
             var stopwatch = new Stopwatch();
-
-            IMessage message;
 
             try
             {
@@ -47,11 +45,9 @@ namespace ESFA.DC.ILR.FundingService.ALB.Console
                 System.Console.WriteLine("File Load Error: Problem loading file... {0}", ex);
             }
 
-            using (var reader = XmlReader.Create(stream))
-            {
-                var serializer = new XmlSerializer(typeof(Message));
-                message = serializer.Deserialize(reader) as Message;
-            }
+            ISerializationService serializationService = new XmlSerializationService();
+
+            IMessage message = serializationService.Deserialize<Message>(stream);
 
             stream.Close();
 

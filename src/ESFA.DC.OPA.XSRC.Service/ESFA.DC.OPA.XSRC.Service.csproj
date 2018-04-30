@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="ESFA.DC.Serialization.Interfaces" Version="0.1.1-beta0001" />
+    <PackageReference Include="ESFA.DC.Serialization.Xml" Version="0.1.1-beta0001" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ESFA.DC.OPA.XSRC.Model\ESFA.DC.OPA.XSRC.Model.csproj" />
   </ItemGroup>
 
