@@ -46,8 +46,8 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
             var xsrcInput = builder.Deserialize();
 
             //ASSERT
-            xsrcInput.entities.Where(g => g.@ref == "global").Select(n => n.@ref).Should().BeEquivalentTo("global");
-            xsrcInput.entities.Select(n => n.id).Should().BeEquivalentTo(entityIDs);
+            xsrcInput.RootEntities.Where(g => g.@Ref == "global").Select(n => n.@Ref).Should().BeEquivalentTo("global");
+            xsrcInput.RootEntities.Select(n => n.Id).Should().BeEquivalentTo(entityIDs);
         }
 
         #endregion

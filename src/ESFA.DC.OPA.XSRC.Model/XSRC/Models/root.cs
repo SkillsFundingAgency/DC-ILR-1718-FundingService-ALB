@@ -1,140 +1,33 @@
-﻿namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
+﻿using System.Collections.Generic;
+using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
+
+namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-    public class root
+    public partial class root : Iroot
     {
+        public rootEntity[] Entities => entitiesField;
 
-        private rootEntity[] entitiesField;
+        public string Rules => rulesField;
 
-        private string rulesField;
+        public rootInteractiveitems InteractiveItems => interactiveitemsField;
 
-        private rootInteractiveitems interactiveitemsField;
+        public rootRelationship[] Relationship => relationshipsField;
 
-        private rootRelationship[] relationshipsField;
+        public string RuleFolders => rulefoldersField;
 
-        private string rulefoldersField;
+        public sbyte SchemaVersion => schemaversionField;
 
-        private sbyte schemaversionField;
+        public bool SchemaVersionSpecified => schemaversionFieldSpecified;
+       
+        public sbyte? SchemaVersionNullable => schemaversionFieldSpecified ? (sbyte?)schemaversionField : null;
 
-        private bool schemaversionFieldSpecified;
+        public string ProductVersion => productversionField;
 
-        private string productversionField;
+        public IEnumerable<IrootEntity> RootEntities => Entities;
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("entity", IsNullable = false)]
-        public rootEntity[] entities
-        {
-            get
-            {
-                return this.entitiesField;
-            }
-            set
-            {
-                this.entitiesField = value;
-            }
-        }
+        public IrootInteractiveitems RootInteractiveItems => InteractiveItems;
 
-        /// <remarks/>
-        public string rules
-        {
-            get
-            {
-                return this.rulesField;
-            }
-            set
-            {
-                this.rulesField = value;
-            }
-        }
+        public IEnumerable<IrootRelationship> RootRelationship => Relationship;
 
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("interactive-items")]
-        public rootInteractiveitems interactiveitems
-        {
-            get
-            {
-                return this.interactiveitemsField;
-            }
-            set
-            {
-                this.interactiveitemsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlArrayItemAttribute("relationship", IsNullable = false)]
-        public rootRelationship[] relationships
-        {
-            get
-            {
-                return this.relationshipsField;
-            }
-            set
-            {
-                this.relationshipsField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("rule-folders")]
-        public string rulefolders
-        {
-            get
-            {
-                return this.rulefoldersField;
-            }
-            set
-            {
-                this.rulefoldersField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute("schema-version")]
-        public sbyte schemaversion
-        {
-            get
-            {
-                return this.schemaversionField;
-            }
-            set
-            {
-                this.schemaversionField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool schemaversionSpecified
-        {
-            get
-            {
-                return this.schemaversionFieldSpecified;
-            }
-            set
-            {
-                this.schemaversionFieldSpecified = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute("product-version")]
-        public string productversion
-        {
-            get
-            {
-                return this.productversionField;
-            }
-            set
-            {
-                this.productversionField = value;
-            }
-        }
     }
 }

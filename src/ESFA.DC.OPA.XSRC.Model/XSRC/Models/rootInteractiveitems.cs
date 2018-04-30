@@ -1,62 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public class rootInteractiveitems
+    public partial class rootInteractiveitems : IrootInteractiveitems
     {
+        public string Folders => foldersField;
 
-        private string foldersField;
+        public string Screens => screensField;
 
-        private string screensField;
-
-        private string documentsField;
-
-        /// <remarks/>
-        public string folders
-        {
-            get
-            {
-                return this.foldersField;
-            }
-            set
-            {
-                this.foldersField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string screens
-        {
-            get
-            {
-                return this.screensField;
-            }
-            set
-            {
-                this.screensField = value;
-            }
-        }
-
-        /// <remarks/>
-        public string documents
-        {
-            get
-            {
-                return this.documentsField;
-            }
-            set
-            {
-                this.documentsField = value;
-            }
-        }
-    }
+        public string Documents => documentsField;
+   }
 }

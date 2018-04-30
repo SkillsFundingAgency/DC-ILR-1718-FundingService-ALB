@@ -1,4 +1,5 @@
-﻿using ESFA.DC.OPA.XSRC.Model.XSRC.Models;
+﻿using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
+using ESFA.DC.OPA.XSRC.Model.XSRC.Models;
 using FluentAssertions;
 using Xunit;
 

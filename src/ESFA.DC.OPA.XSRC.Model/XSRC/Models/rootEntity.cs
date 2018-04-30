@@ -1,129 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.6.1055.0")]
-    [System.SerializableAttribute()]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public class rootEntity
+    public partial class rootEntity : IrootEntity
     {
+        public rootEntityAttribute[] Attribute => attributeField;
 
-        private rootEntityAttribute[] attributeField;
+        public string @Ref => refField;
 
-        private string refField;
+        public string Id=> idField;
 
-        private string idField;
+        public string Name => nameField;
 
-        private string nameField;
+        public string ContinmentRelationshipId => containmentrelationshipidField;
 
-        private string containmentrelationshipidField;
+        public string ContainmentParentId => containmentparentidField;
 
-        private string containmentparentidField;
+        public string PublicId => publicidField;
 
-        private string publicidField;
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute("attribute")]
-        public rootEntityAttribute[] attribute
-        {
-            get
-            {
-                return this.attributeField;
-            }
-            set
-            {
-                this.attributeField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string @ref
-        {
-            get
-            {
-                return this.refField;
-            }
-            set
-            {
-                this.refField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string id
-        {
-            get
-            {
-                return this.idField;
-            }
-            set
-            {
-                this.idField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public string name
-        {
-            get
-            {
-                return this.nameField;
-            }
-            set
-            {
-                this.nameField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute("containment-relationship-id")]
-        public string containmentrelationshipid
-        {
-            get
-            {
-                return this.containmentrelationshipidField;
-            }
-            set
-            {
-                this.containmentrelationshipidField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute("containment-parent-id")]
-        public string containmentparentid
-        {
-            get
-            {
-                return this.containmentparentidField;
-            }
-            set
-            {
-                this.containmentparentidField = value;
-            }
-        }
-
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute("public-id")]
-        public string publicid
-        {
-            get
-            {
-                return this.publicidField;
-            }
-            set
-            {
-                this.publicidField = value;
-            }
-        }
+        public IEnumerable<IrootEntityAttribute> EntityAttributes => Attribute;
     }
 }

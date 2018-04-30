@@ -1,4 +1,5 @@
-﻿using ESFA.DC.OPA.XSRC.Model.XSRC.Models;
+﻿using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
+using ESFA.DC.OPA.XSRC.Model.XSRC.Models;
 using ESFA.DC.OPA.XSRC.Model.XSRCEntity.Models;
 using ESFA.DC.OPA.XSRC.Service.Interface;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
     {
         private string _xsrcInput;
 
-        root model;
+        Iroot model;
 
         public XsrcEntityBuilder(string xsrcInput)
         {
@@ -31,7 +32,7 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
             return GlobalEntity(rootEntities);
         }
 
-        internal protected root Deserialize()
+        internal protected Iroot Deserialize()
         {
             Stream stream = new FileStream(_xsrcInput, FileMode.Open);
 
@@ -46,53 +47,53 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
             return model;
         }
 
-        internal protected XsrcGlobal GlobalEntity(root rootEntities)
+        internal protected XsrcGlobal GlobalEntity(Iroot rootEntities)
         {
             return new XsrcGlobal
             {
                 GlobalEntity =
-                rootEntities.entities.Where(r => r.@ref == "global")
+                rootEntities.RootEntities.Where(r => r.@Ref == "global")
                 .Select(g => new XsrcEntity
                 {
-                    PublicName = g.@ref,
-                    Name = g.@ref,
-                    Attributes = g.attribute.Select(ga =>
+                    PublicName = g.@Ref,
+                    Name = g.@Ref,
+                    Attributes = g.EntityAttributes.Select(ga =>
                     new XsrcAttribute
                     {
-                        PublicName = ga.publicname,
-                        Type = ga.type,
+                        PublicName = ga.PublicName,
+                        Type = ga.Type,
                         //Properties = ga.props.Select(gp => new XsrcAttributeProperty
                         //{
                         //    Name = gp.name,
                         //    Value = gp.Value
                         //})
                     }),
-                    Children = GetChildren(g.@ref, rootEntities)
+                    Children = GetChildren(g.@Ref, rootEntities)
                 }).Single()
             };
         }
 
-        internal protected IEnumerable<XsrcEntity> GetChildren(string parentName, root rootEntities)
+        internal protected IEnumerable<XsrcEntity> GetChildren(string parentName, Iroot rootEntities)
         {
             return
-               rootEntities.entities.Where(r => r.containmentparentid == parentName)
+               rootEntities.RootEntities.Where(r => r.ContainmentParentId == parentName)
                .Select(c => new XsrcEntity
                {
-                   PublicName = c.publicid,
-                   Name = c.id,
+                   PublicName = c.PublicId,
+                   Name = c.Id,
                    Parent = parentName,
-                   Attributes = c.attribute.Select(ca =>
+                   Attributes = c.EntityAttributes.Select(ca =>
                    new XsrcAttribute
                    {
-                       PublicName = ca.publicname,
-                       Type = ca.type,
+                       PublicName = ca.PublicName,
+                       Type = ca.Type,
                        //Properties = ca.props.Select(cp => new XsrcAttributeProperty
                        //{
                        //    Name = cp.name,
                        //    Value = cp.Value
                        //})
                    }),
-                   Children = GetChildren(c.id, rootEntities)
+                   Children = GetChildren(c.Id, rootEntities)
                });
         }
     }
