@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    public partial class rootEntityAttribute : IrootEntityAttribute
+    public partial class RootEntityAttribute : IRootEntityAttribute
     {
-        public rootEntityAttributeText Text => textField;
+        public RootEntityAttributeText Text => textField;
 
-        public rootEntityAttributeProp[] Props => propsField;
+        public RootEntityAttributeProp[] Props => propsField;
    
         public string Name => nameField;
 
@@ -15,8 +15,8 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 
         public string PublicName => publicnameField;
 
-        public IrootEntityAttributeText AttributeText => Text;
+        public IRootEntityAttributeText AttributeText => Text;
 
-        public IEnumerable<IrootEntityAttributeProp> Properties => Props;
+        public IEnumerable<IRootEntityAttributeProp> Properties => Props;
     }
 }

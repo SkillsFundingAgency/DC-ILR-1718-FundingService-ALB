@@ -1,6 +1,6 @@
 ﻿namespace ESFA.DC.OPA.XSRC.Model.XSRC.Interface
 {
-    public interface IrootEntityAttributeProp
+    public interface IRootEntityAttributeProp
     {
         string Name { get; }
 

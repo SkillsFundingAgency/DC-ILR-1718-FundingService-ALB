@@ -3,15 +3,15 @@ using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    public partial class root : Iroot
+    public partial class Root : IRoot
     {
-        public rootEntity[] Entities => entitiesField;
+        public RootEntity[] Entities => entitiesField;
 
         public string Rules => rulesField;
 
-        public rootInteractiveitems InteractiveItems => interactiveitemsField;
+        public RootInteractiveitems InteractiveItems => interactiveitemsField;
 
-        public rootRelationship[] Relationship => relationshipsField;
+        public RootRelationship[] Relationship => relationshipsField;
 
         public string RuleFolders => rulefoldersField;
 
@@ -23,11 +23,11 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 
         public string ProductVersion => productversionField;
 
-        public IEnumerable<IrootEntity> RootEntities => Entities;
+        public IEnumerable<IRootEntity> RootEntities => Entities;
 
-        public IrootInteractiveitems RootInteractiveItems => InteractiveItems;
+        public IRootInteractiveitems RootInteractiveItems => InteractiveItems;
 
-        public IEnumerable<IrootRelationship> RootRelationship => Relationship;
+        public IEnumerable<IRootRelationship> RootRelationship => Relationship;
 
     }
 }

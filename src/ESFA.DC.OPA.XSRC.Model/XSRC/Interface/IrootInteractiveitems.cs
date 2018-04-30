@@ -1,6 +1,6 @@
 ﻿namespace ESFA.DC.OPA.XSRC.Model.XSRC.Interface
 {
-    public interface IrootInteractiveitems
+    public interface IRootInteractiveitems
     {
         string Folders { get; }
 

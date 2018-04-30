@@ -48,23 +48,23 @@
     <Compile Include="XSRCEntity\Models\XsrcAttributeProperty.cs" />
     <Compile Include="XSRCEntity\Models\XsrcEntity.cs" />
     <Compile Include="XSRCEntity\Models\XsrcGlobal.cs" />
-    <Compile Include="XSRC\Interface\Iroot.cs" />
-    <Compile Include="XSRC\Interface\IrootEntity.cs" />
-    <Compile Include="XSRC\Interface\IrootEntityAttribute.cs" />
-    <Compile Include="XSRC\Interface\IrootEntityAttributeProp.cs" />
-    <Compile Include="XSRC\Interface\IrootEntityAttributeText.cs" />
-    <Compile Include="XSRC\Interface\IrootInteractiveitems.cs" />
-    <Compile Include="XSRC\Interface\IrootRelationship.cs" />
+    <Compile Include="XSRC\Interface\IRoot.cs" />
+    <Compile Include="XSRC\Interface\IRootEntity.cs" />
+    <Compile Include="XSRC\Interface\IRootEntityAttribute.cs" />
+    <Compile Include="XSRC\Interface\IRootEntityAttributeProp.cs" />
+    <Compile Include="XSRC\Interface\IRootEntityAttributeText.cs" />
+    <Compile Include="XSRC\Interface\IRootInteractiveitems.cs" />
+    <Compile Include="XSRC\Interface\IRootRelationship.cs" />
     <Compile Include="XSRC\Models\Xsrc.cs">
       <DependentUpon>Xsrc.xsd</DependentUpon>
     </Compile>
-    <Compile Include="XSRC\Models\root.cs" />
-    <Compile Include="XSRC\Models\rootEntity.cs" />
-    <Compile Include="XSRC\Models\rootEntityAttribute.cs" />
-    <Compile Include="XSRC\Models\rootEntityAttributeProp.cs" />
+    <Compile Include="XSRC\Models\Root.cs" />
+    <Compile Include="XSRC\Models\RootEntity.cs" />
+    <Compile Include="XSRC\Models\RootEntityAttribute.cs" />
+    <Compile Include="XSRC\Models\RootEntityAttributeProp.cs" />
     <Compile Include="XSRC\Models\rootEntityAttributeText.cs" />
-    <Compile Include="XSRC\Models\rootInteractiveitems.cs" />
-    <Compile Include="XSRC\Models\rootRelationship.cs" />
+    <Compile Include="XSRC\Models\RootInteractiveitems.cs" />
+    <Compile Include="XSRC\Models\RootRelationship.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

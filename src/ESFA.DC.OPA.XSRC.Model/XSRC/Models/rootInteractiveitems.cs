@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    public partial class rootInteractiveitems : IrootInteractiveitems
+    public partial class RootInteractiveitems : IRootInteractiveitems
     {
         public string Folders => foldersField;
 

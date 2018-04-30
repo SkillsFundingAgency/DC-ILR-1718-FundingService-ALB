@@ -2,13 +2,13 @@
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Interface
 {
-    public interface Iroot
+    public interface IRoot
     {
-        IEnumerable<IrootEntity> RootEntities { get; }
+        IEnumerable<IRootEntity> RootEntities { get; }
 
-        IrootInteractiveitems RootInteractiveItems { get; }
+        IRootInteractiveitems RootInteractiveItems { get; }
 
-        IEnumerable<IrootRelationship> RootRelationship { get; }
+        IEnumerable<IRootRelationship> RootRelationship { get; }
 
         string Rules { get; }
 

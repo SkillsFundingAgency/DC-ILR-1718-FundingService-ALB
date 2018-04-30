@@ -18,7 +18,7 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
     {
         private string _xsrcInput;
 
-        Iroot model;
+        IRoot model;
 
         public XsrcEntityBuilder(string xsrcInput)
         {
@@ -32,14 +32,14 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
             return GlobalEntity(rootEntities);
         }
 
-        internal protected Iroot Deserialize()
+        internal protected IRoot Deserialize()
         {
             Stream stream = new FileStream(_xsrcInput, FileMode.Open);
 
             using (var reader = XmlReader.Create(stream))
             {
-                var serializer = new XmlSerializer(typeof(root));
-                model = serializer.Deserialize(reader) as root;
+                var serializer = new XmlSerializer(typeof(Root));
+                model = serializer.Deserialize(reader) as Root;
             }
 
             stream.Close();
@@ -47,7 +47,7 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
             return model;
         }
 
-        internal protected XsrcGlobal GlobalEntity(Iroot rootEntities)
+        internal protected XsrcGlobal GlobalEntity(IRoot rootEntities)
         {
             return new XsrcGlobal
             {
@@ -73,7 +73,7 @@ namespace ESFA.DC.OPA.XSRC.Service.Implementation
             };
         }
 
-        internal protected IEnumerable<XsrcEntity> GetChildren(string parentName, Iroot rootEntities)
+        internal protected IEnumerable<XsrcEntity> GetChildren(string parentName, IRoot rootEntities)
         {
             return
                rootEntities.RootEntities.Where(r => r.ContainmentParentId == parentName)

@@ -17,7 +17,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             // Use Test Helpers
 
             //ACT
-            root xsrc = TestRoot;
+            Root xsrc = TestRoot;
 
             //ASSERT
             xsrc.Should().NotBeNull();
@@ -33,7 +33,7 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
             // Use Test Helpers
 
             //ACT
-            root xsrc = TestRoot;
+            Root xsrc = TestRoot;
 
             //ASSERT
             xsrc.Should().BeEquivalentTo(TestRoot);
@@ -45,28 +45,28 @@ namespace ESFA.DC.OPA.XSRC.Model.Tests
 
         #region Test Helpers
 
-        private root TestRoot => new root
+        private Root TestRoot => new Root
         {
             entities = TestRootEntities,
             rules = "rules",
-            interactiveitems = new rootInteractiveitems(),
+            interactiveitems = new RootInteractiveitems(),
             relationships = TestRootRelationships,
             rulefolders = "folders",
             schemaversion = 1,
             productversion = "Version_1"
         };
 
-        private rootEntity TestRootEntity => new rootEntity();
+        private RootEntity TestRootEntity => new RootEntity();
 
-        private rootEntity[] TestRootEntities => new rootEntity[]
+        private RootEntity[] TestRootEntities => new RootEntity[]
         {
             TestRootEntity,
             TestRootEntity
         };
 
-        private rootRelationship TestRootRelationship => new rootRelationship();
+        private RootRelationship TestRootRelationship => new RootRelationship();
 
-        private rootRelationship[] TestRootRelationships => new rootRelationship[]
+        private RootRelationship[] TestRootRelationships => new RootRelationship[]
         {
             TestRootRelationship,
             TestRootRelationship

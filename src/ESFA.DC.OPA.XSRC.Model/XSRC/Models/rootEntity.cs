@@ -3,9 +3,9 @@ using ESFA.DC.OPA.XSRC.Model.XSRC.Interface;
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    public partial class rootEntity : IrootEntity
+    public partial class RootEntity : IRootEntity
     {
-        public rootEntityAttribute[] Attribute => attributeField;
+        public RootEntityAttribute[] Attribute => attributeField;
 
         public string @Ref => refField;
 
@@ -19,6 +19,6 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 
         public string PublicId => publicidField;
 
-        public IEnumerable<IrootEntityAttribute> EntityAttributes => Attribute;
+        public IEnumerable<IRootEntityAttribute> EntityAttributes => Attribute;
     }
 }

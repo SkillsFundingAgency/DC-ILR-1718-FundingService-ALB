@@ -2,9 +2,9 @@
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Interface
 {
-    public interface IrootEntity
+    public interface IRootEntity
     {
-        IEnumerable<IrootEntityAttribute> EntityAttributes { get; }
+        IEnumerable<IRootEntityAttribute> EntityAttributes { get; }
 
         string @Ref { get; }
 

@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    public partial class rootRelationship : IrootRelationship
+    public partial class RootRelationship : IRootRelationship
     {
         public string Source => sourceField;
 

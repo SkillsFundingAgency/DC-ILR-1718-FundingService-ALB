@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    public partial class rootEntityAttributeText : IrootEntityAttributeText
+    public partial class RootEntityAttributeText : IRootEntityAttributeText
     {
         public string @Base => baseField;
 

@@ -158,16 +158,16 @@ namespace ESFA.DC.OPA.XSRC.Service.Tests
         #region Test Helpers
 
 
-        private root RootEntities()
+        private Root RootEntities()
         {
             Stream stream = new FileStream(@"Rulebase\ALBInputs.xsrc", FileMode.Open);
 
-            root model;
+            Root model;
 
             using (var reader = XmlReader.Create(stream))
             {
-                var serializer = new XmlSerializer(typeof(root));
-                model = serializer.Deserialize(reader) as root;
+                var serializer = new XmlSerializer(typeof(Root));
+                model = serializer.Deserialize(reader) as Root;
             }
 
             stream.Close();

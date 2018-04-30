@@ -18,17 +18,17 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
-    [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
+    [System.Xml.Serialization.XmlTypeAttribute(TypeName = "root")]
     [System.Xml.Serialization.XmlRootAttribute(Namespace = "", IsNullable = false)]
-    public partial class root {
+    public partial class Root {
 
-        private rootEntity[] entitiesField;
+        private RootEntity[] entitiesField;
 
         private string rulesField;
 
-        private rootInteractiveitems interactiveitemsField;
+        private RootInteractiveitems interactiveitemsField;
 
-        private rootRelationship[] relationshipsField;
+        private RootRelationship[] relationshipsField;
 
         private string rulefoldersField;
 
@@ -40,7 +40,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("entity", IsNullable = false)]
-        public rootEntity[] entities {
+        public RootEntity[] entities {
             get {
                 return this.entitiesField;
             }
@@ -61,7 +61,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("interactive-items")]
-        public rootInteractiveitems interactiveitems {
+        public RootInteractiveitems interactiveitems {
             get {
                 return this.interactiveitemsField;
             }
@@ -72,7 +72,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("relationship", IsNullable = false)]
-        public rootRelationship[] relationships {
+        public RootRelationship[] relationships {
             get {
                 return this.relationshipsField;
             }
@@ -132,9 +132,9 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class rootEntity {
+    public partial class RootEntity {
 
-        private rootEntityAttribute[] attributeField;
+        private RootEntityAttribute[] attributeField;
 
         private string refField;
 
@@ -150,7 +150,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute("attribute")]
-        public rootEntityAttribute[] attribute {
+        public RootEntityAttribute[] attribute {
             get {
                 return this.attributeField;
             }
@@ -232,11 +232,11 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class rootEntityAttribute {
+    public partial class RootEntityAttribute {
 
-        private rootEntityAttributeText textField;
+        private RootEntityAttributeText textField;
 
-        private rootEntityAttributeProp[] propsField;
+        private RootEntityAttributeProp[] propsField;
 
         private string nameField;
 
@@ -245,7 +245,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
         private string publicnameField;
 
         /// <remarks/>
-        public rootEntityAttributeText text {
+        public RootEntityAttributeText text {
             get {
                 return this.textField;
             }
@@ -256,7 +256,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 
         /// <remarks/>
         [System.Xml.Serialization.XmlArrayItemAttribute("prop", IsNullable = false)]
-        public rootEntityAttributeProp[] props {
+        public RootEntityAttributeProp[] props {
             get {
                 return this.propsField;
             }
@@ -305,7 +305,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class rootEntityAttributeText {
+    public partial class RootEntityAttributeText {
 
         private string baseField;
 
@@ -338,7 +338,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class rootEntityAttributeProp {
+    public partial class RootEntityAttributeProp {
 
         private string nameField;
 
@@ -373,7 +373,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class rootInteractiveitems {
+    public partial class RootInteractiveitems {
 
         private string foldersField;
 
@@ -418,7 +418,7 @@ namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true)]
-    public partial class rootRelationship {
+    public partial class RootRelationship {
 
         private string sourceField;
 

@@ -2,7 +2,7 @@
 
 namespace ESFA.DC.OPA.XSRC.Model.XSRC.Models
 {
-    public partial class rootEntityAttributeProp : IrootEntityAttributeProp
+    public partial class RootEntityAttributeProp : IRootEntityAttributeProp
     {
         public string Name => nameField;
 

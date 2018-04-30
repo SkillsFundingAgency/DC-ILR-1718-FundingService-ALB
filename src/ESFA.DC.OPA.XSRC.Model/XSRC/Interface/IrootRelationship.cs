@@ -1,6 +1,6 @@
 ﻿namespace ESFA.DC.OPA.XSRC.Model.XSRC.Interface
 {
-    public interface IrootRelationship
+    public interface IRootRelationship
     {
         string Source { get; }
 
