@@ -18,7 +18,7 @@
       </attribute>
       <attribute name="p313" type="text" public-name="LARSVersion">
         <text>
-          <base>the LARS reference data version</base>
+          <base>the LARS reference data version</base>  
         </text>
         <props>
           <prop name="PassThrough">True</prop>

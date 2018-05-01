@@ -49,12 +49,7 @@ namespace ESFA.DC.ILR.FundingService.ALB.Service.Implementation
 
         protected internal void PopulateReferenceData(IEnumerable<ILearner> learners)
         {
-            //var learnAimRefsOLD = message.Learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.LearnAimRef)).Distinct().ToList();
-
-            //var postcodesListOLD = message.Learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.DelLocPostCode)).Distinct().ToList();
-
             var postcodesList = learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.DelLocPostCode)).Distinct().ToList();
-
             var learnAimRefs = learners.SelectMany(l => l.LearningDeliveries.Select(ld => ld.LearnAimRef)).Distinct().ToList();
 
             _referenceDataCachePopulationService.Populate(learnAimRefs, postcodesList);
